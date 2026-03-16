@@ -19,6 +19,7 @@
             --black-1: #080808;
             --black-2: #111111;
             --black-3: #151515;
+            --black-4: #1a1a1a;
             --accent-color: #ffffff;
             --accent-glow: rgba(255, 255, 255, 0.7);
             --text-primary: #ffffff;
@@ -154,18 +155,14 @@
         .logo {
             display: flex;
             align-items: center;
-            font-size: 1.8rem;
-            font-weight: 900;
             color: var(--text-primary);
             text-decoration: none;
             z-index: 1001;
-            transition: all 0.3s ease;
         }
 
         .logo-img {
             width: 45px;
             height: 45px;
-            margin-right: 10px;
             filter: drop-shadow(0 0 3px black);
             transition: all 0.3s ease;
         }
@@ -178,6 +175,8 @@
         .desktop-nav {
             display: flex;
             gap: 25px;
+            margin-left: auto;
+            margin-right: 20px;
         }
 
         .desktop-nav a {
@@ -230,7 +229,6 @@
             z-index: 1001;
             padding: 10px;
             transition: all 0.3s ease;
-            margin-left: 15px;
         }
 
         .mobile-menu-btn:hover {
@@ -387,11 +385,13 @@
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
         }
 
         .tool-title:hover {
+            text-shadow: 0 0 40px var(--red-glow), 0 0 80px rgba(255, 51, 51, 0.5);
             transform: scale(1.05);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .tool-subtitle {
@@ -427,6 +427,11 @@
         .tool-description strong {
             color: var(--red-primary);
             text-shadow: 0 0 8px var(--red-glow);
+            transition: all 0.3s ease;
+        }
+
+        .tool-description strong:hover {
+            text-shadow: 0 0 15px var(--red-glow), 0 0 30px rgba(255, 51, 51, 0.5);
         }
 
         .highlight-red {
@@ -466,7 +471,7 @@
 
         .screenshot-carousel {
             position: relative;
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
             opacity: 0;
             transform: translateY(50px);
@@ -480,19 +485,25 @@
             overflow: hidden;
             border-radius: 12px;
             background: var(--pure-black);
+            cursor: pointer;
         }
 
         .screenshot-image {
             width: 100%;
-            max-width: 1200px;
+            max-width: 900px;
             height: auto;
             border-radius: 12px;
             border: 2px solid rgba(255, 51, 51, 0.5);
             box-shadow: 0 0 40px rgba(255, 51, 51, 0.3);
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.5s ease-in-out, border-color 0.3s ease, box-shadow 0.3s ease;
             margin: 0 auto;
             display: block;
             opacity: 1;
+        }
+
+        .screenshot-image:hover {
+            border-color: var(--red-primary);
+            box-shadow: 0 0 70px var(--red-glow);
         }
 
         .screenshot-image.fade-out {
@@ -543,8 +554,8 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: var(--text-tertiary);
-            border: none;
+            background: transparent;
+            border: 2px solid var(--red-primary);
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -558,6 +569,39 @@
         .carousel-dot:hover {
             background: var(--red-primary);
             transform: scale(1.2);
+        }
+
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .image-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border: 2px solid var(--red-primary);
+            border-radius: 12px;
+            box-shadow: 0 0 50px var(--red-glow);
         }
 
         .download-section {
@@ -693,7 +737,7 @@
         }
 
         .download-option {
-            background: rgba(20, 20, 20, 0.9);
+            background: var(--black-2);
             border: 1px solid rgba(255, 51, 51, 0.2);
             border-radius: 16px;
             padding: 25px;
@@ -705,7 +749,7 @@
         }
 
         .download-option:hover {
-            background: rgba(30, 30, 30, 0.95);
+            background: var(--black-3);
             border-color: var(--red-primary);
             box-shadow: 0 0 40px rgba(255, 51, 51, 0.3);
             transform: translateY(-5px) scale(1.01);
@@ -719,12 +763,23 @@
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
+            transition: all 0.3s ease;
+        }
+
+        .option-title:hover {
+            text-shadow: 0 0 15px var(--red-glow);
         }
 
         .option-title i {
             color: var(--red-primary);
             text-shadow: 0 0 15px var(--red-glow);
             font-size: 1.6rem;
+            transition: all 0.3s ease;
+        }
+
+        .option-title i:hover {
+            transform: scale(1.2);
+            text-shadow: 0 0 25px var(--red-glow);
         }
 
         .option-desc {
@@ -759,7 +814,7 @@
         .download-link:hover {
             background: rgba(255, 51, 51, 0.15);
             box-shadow: 0 0 30px var(--red-glow);
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
         }
 
         .view-raw-link {
@@ -780,7 +835,7 @@
         .view-raw-link:hover {
             background: rgba(255, 51, 51, 0.15);
             box-shadow: 0 0 30px var(--red-glow);
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
         }
 
         .github-link {
@@ -801,7 +856,7 @@
         .github-link:hover {
             background: rgba(255, 51, 51, 0.15);
             box-shadow: 0 0 30px var(--red-glow);
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
         }
 
         .inactive-modal {
@@ -929,7 +984,7 @@
         .inactive-modal-button:hover {
             background: rgba(255, 51, 51, 0.15);
             box-shadow: 0 0 30px var(--red-glow);
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
         }
 
         footer {
@@ -957,7 +1012,6 @@
         .footer-logo-img {
             width: 40px;
             height: 40px;
-            margin-right: 10px;
             filter: drop-shadow(0 0 3px black);
             transition: all 0.3s ease;
         }
@@ -973,16 +1027,6 @@
             font-size: 1.2rem;
             position: relative;
             display: inline-block;
-        }
-
-        .footer-links h4::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: var(--text-primary);
         }
 
         .footer-links ul {
@@ -1080,6 +1124,9 @@
             .tool-title {
                 font-size: 3rem;
             }
+            .screenshot-carousel {
+                max-width: 700px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1117,6 +1164,9 @@
                 height: 45px;
                 font-size: 1.1rem;
             }
+            .screenshot-carousel {
+                max-width: 500px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1150,6 +1200,9 @@
                 width: 40px;
                 height: 40px;
                 font-size: 1rem;
+            }
+            .screenshot-carousel {
+                max-width: 350px;
             }
         }
     </style>
@@ -1193,19 +1246,21 @@
         </div>
     </div>
 
+    <div class="image-modal" id="imageModal">
+        <img src="" alt="Expanded screenshot" id="modalImage">
+    </div>
+
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
     <nav class="navbar" id="navbar">
         <a href="index.html" class="logo">
             <img src="wh.png" alt="White Box Logo" class="logo-img">
-            <span class="logo-text">WHITE BOX</span>
         </a>
         
         <div class="desktop-nav">
             <a href="index.html">Home</a>
             <a href="index.html#tools">Tools</a>
             <a href="index.html#about">About</a>
-            <a href="https://discord.gg/DbNQgMWJ8G" target="_blank">Join Discord</a>
         </div>
         
         <div style="display: flex; align-items: center; gap: 15px;">
@@ -1333,7 +1388,6 @@
             <div>
                 <div class="footer-logo">
                     <img src="wh.png" alt="White Box Logo" class="footer-logo-img">
-                    <span>WHITE BOX</span>
                 </div>
                 <p style="color: var(--text-secondary); margin-bottom: 20px;">Professional Doxbin group providing advanced digital tools and utilities including WHASH password cracker.</p>
                 <div style="display: flex; gap: 15px;">
@@ -1356,8 +1410,8 @@
                 <h4>Our Services</h4>
                 <ul>
                     <li><a href="#">WHASH Password Cracker</a></li>
-                    <li><a href="NexcordBasic.html">Nexcord Basic (Archived)</a></li>
-                    <li><a href="NexcordPlus.html">Nexcord Plus (Paused)</a></li>
+                    <li><a href="NexcordBasic.html">Nexcord Basic</a></li>
+                    <li><a href="NexcordPlus.html">Nexcord Plus</a></li>
                 </ul>
             </div>
         </div>
@@ -1382,6 +1436,9 @@
             const downloadDropdown = document.getElementById('downloadDropdown');
             const dropdownArrow = document.getElementById('dropdownArrow');
             const navbar = document.getElementById('navbar');
+            const imageModal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const screenshotImage = document.getElementById('screenshotImage');
             
             const images = [
                 'https://files.catbox.moe/tcws3m.png',
@@ -1391,7 +1448,6 @@
             ];
             
             let currentIndex = 0;
-            const screenshotImg = document.getElementById('screenshotImage');
             const carouselDots = document.getElementById('carouselDots');
             let autoSlideInterval;
             let isTransitioning = false;
@@ -1423,15 +1479,15 @@
                 if (isTransitioning) return;
                 isTransitioning = true;
                 
-                screenshotImg.classList.add('fade-out');
+                screenshotImage.classList.add('fade-out');
                 
                 setTimeout(() => {
-                    screenshotImg.src = images[currentIndex];
-                    screenshotImg.classList.remove('fade-out');
-                    screenshotImg.classList.add('fade-in');
+                    screenshotImage.src = images[currentIndex];
+                    screenshotImage.classList.remove('fade-out');
+                    screenshotImage.classList.add('fade-in');
                     
                     setTimeout(() => {
-                        screenshotImg.classList.remove('fade-in');
+                        screenshotImage.classList.remove('fade-in');
                         isTransitioning = false;
                     }, 100);
                     
@@ -1554,12 +1610,25 @@
                 resetAutoSlide();
             });
 
-            screenshotImg.addEventListener('mouseenter', function() {
+            screenshotImage.addEventListener('mouseenter', function() {
                 clearInterval(autoSlideInterval);
+                this.style.borderColor = 'var(--red-primary)';
+                this.style.boxShadow = '0 0 70px var(--red-glow)';
             });
             
-            screenshotImg.addEventListener('mouseleave', function() {
+            screenshotImage.addEventListener('mouseleave', function() {
                 startAutoSlide();
+                this.style.borderColor = 'rgba(255, 51, 51, 0.5)';
+                this.style.boxShadow = '0 0 40px rgba(255, 51, 51, 0.3)';
+            });
+
+            screenshotImage.addEventListener('click', function() {
+                modalImage.src = this.src;
+                imageModal.classList.add('active');
+            });
+
+            imageModal.addEventListener('click', function() {
+                this.classList.remove('active');
             });
 
             createDots();
