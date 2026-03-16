@@ -1680,482 +1680,6 @@
             &copy; 2026 WHITE BOX. ALL RIGHTS RESERVED.
         </div>
     </footer>
-
-    <script>
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
-    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
-
-    function toggleMobileMenu() {
-        mobileMenu.classList.toggle('active');
-        mobileMenuOverlay.classList.toggle('active');
-        document.body.classList.toggle('no-scroll');
-    }
-
-    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-    mobileCloseBtn.addEventListener('click', toggleMobileMenu);
-    mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
-
-    mobileMenuLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            if (this.href.includes('discord.gg') || this.href.includes('http')) {
-                return;
-            }
-            
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-            
-            if (targetSection) {
-                toggleMobileMenu();
-                
-                setTimeout(() => {
-                    targetSection.scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }, 300);
-            }
-        });
-    });
-
-    const loadingScreen = document.getElementById('loadingScreen');
-    const mainLogo = document.getElementById('mainLogo');
-
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            loadingScreen.classList.add('hidden');
-            setTimeout(() => {
-                mainLogo.classList.add('loaded');
-            }, 300);
-            startInitialAnimations();
-        }, 1500);
-    });
-
-    const canvas = document.getElementById('matrixCanvas');
-    const ctx = canvas.getContext('2d');
-
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-
-    resizeCanvas();
-
-    const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
-    const chars = matrixChars.split("");
-
-    const fontSize = 14;
-    let columns = canvas.width / fontSize;
-
-    let drops = [];
-
-    function initDrops() {
-        drops = [];
-        columns = canvas.width / fontSize;
-        for (let i = 0; i < columns; i++) {
-            drops[i] = Math.floor(Math.random() * canvas.height / fontSize) * fontSize;
-        }
-    }
-
-    initDrops();
-
-    function drawMatrix() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        ctx.fillStyle = "#ffffff";
-        ctx.font = `${fontSize}px 'Roboto Mono', monospace`;
-        
-        for (let i = 0; i < drops.length; i++) {
-            const text = chars[Math.floor(Math.random() * chars.length)];
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            drops[i] += fontSize;
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
-            }
-        }
-    }
-
-    const terminalLines = [
-        document.getElementById('terminal-line-1'),
-        document.getElementById('terminal-line-2'),
-        document.getElementById('terminal-line-3')
-    ];
-
-    let currentLineIndex = 0;
-    let rotationInterval;
-
-    function startTerminalRotation() {
-        terminalLines[0].classList.add('active');
-        
-        rotationInterval = setInterval(() => {
-            terminalLines[currentLineIndex].classList.remove('active');
-            terminalLines[currentLineIndex].classList.add('leaving');
-            
-            currentLineIndex = (currentLineIndex + 1) % terminalLines.length;
-            
-            setTimeout(() => {
-                terminalLines[(currentLineIndex + 2) % 3].classList.remove('leaving');
-            }, 500);
-            
-            setTimeout(() => {
-                terminalLines[currentLineIndex].classList.add('active');
-            }, 500);
-            
-        }, 3000);
-    }
-
-    const animatedElements = [];
-    const elementStates = new WeakMap();
-
-    function observeAnimations() {
-        const elements = [
-            { id: 'heroTitle', threshold: 0.3 },
-            { id: 'heroText', threshold: 0.3 },
-            { id: 'heroButton', threshold: 0.3 },
-            { id: 'scrollDown', threshold: 0.3 },
-            { id: 'toolsTitle', threshold: 0.3 },
-            { id: 'searchContainer', threshold: 0.3 },
-            { id: 'tool1', threshold: 0.2 },
-            { id: 'tool2', threshold: 0.2 },
-            { id: 'tool3', threshold: 0.2 },
-            { id: 'aboutTitle', threshold: 0.3 },
-            { id: 'aboutText1', threshold: 0.2 },
-            { id: 'aboutText2', threshold: 0.2 },
-            { id: 'stat1', threshold: 0.2 },
-            { id: 'stat2', threshold: 0.2 },
-            { id: 'stat3', threshold: 0.2 },
-            { id: 'link1', threshold: 0.2 },
-            { id: 'link2', threshold: 0.2 },
-            { id: 'link3', threshold: 0.2 }
-        ];
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const element = entry.target;
-                
-                if (!entry.isIntersecting) {
-                    if (elementStates.has(element)) {
-                        element.classList.remove('visible');
-                        elementStates.set(element, false);
-                    }
-                }
-                
-                if (entry.isIntersecting) {
-                    if (!elementStates.get(element)) {
-                        setTimeout(() => {
-                            element.classList.add('visible');
-                            elementStates.set(element, true);
-                        }, 100);
-                    }
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        elements.forEach(item => {
-            const element = document.getElementById(item.id);
-            if (element) {
-                animatedElements.push(element);
-                elementStates.set(element, false);
-                observer.observe(element);
-            }
-        });
-    }
-
-    let lastScrollTop = 0;
-    const navbar = document.getElementById('navbar');
-    let isNavbarHidden = false;
-
-    let isProgrammaticScroll = false;
-
-    function handleScroll() {
-        if (isProgrammaticScroll) {
-            isProgrammaticScroll = false;
-            return;
-        }
-        
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        if (scrollTop > lastScrollTop && scrollTop > 100) {
-            if (!isNavbarHidden) {
-                navbar.classList.add('hidden');
-                isNavbarHidden = true;
-            }
-        } else {
-            if (isNavbarHidden) {
-                navbar.classList.remove('hidden');
-                isNavbarHidden = false;
-            }
-        }
-        
-        lastScrollTop = scrollTop;
-    }
-
-    let touchStartY = 0;
-    let isScrolling = false;
-
-    document.addEventListener('touchstart', (e) => {
-        touchStartY = e.touches[0].clientY;
-        isScrolling = false;
-    }, { passive: true });
-
-    document.addEventListener('touchmove', (e) => {
-        isScrolling = true;
-    }, { passive: true });
-
-    document.addEventListener('touchend', (e) => {
-        if (!isScrolling) return;
-        
-        const touchEndY = e.changedTouches[0].clientY;
-        const diff = touchStartY - touchEndY;
-        
-        if (Math.abs(diff) > 10) {
-        }
-    }, { passive: true });
-
-    window.addEventListener('hashchange', (e) => {
-        e.preventDefault();
-    }, false);
-
-    function startInitialAnimations() {
-        startTerminalRotation();
-        observeAnimations();
-        animate();
-    }
-
-    function animate() {
-        drawMatrix();
-        requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', () => {
-        resizeCanvas();
-        initDrops();
-    });
-
-    window.addEventListener('resize', () => {
-    });
-
-    window.addEventListener('beforeunload', () => {
-        if (rotationInterval) {
-            clearInterval(rotationInterval);
-        }
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const whashTool = document.getElementById('tool1');
-        
-        whashTool.style.cursor = 'not-allowed';
-        whashTool.style.pointerEvents = 'none';
-        
-        whashTool.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        });
-    });
-
-    document.querySelectorAll('.desktop-nav a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            if (this.href.includes('discord.gg') || this.href.includes('http')) {
-                return;
-            }
-            
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-            
-            if (targetSection) {
-                isProgrammaticScroll = true;
-                targetSection.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    const returnHomeLink = document.querySelector('.mobile-menu-link.return-home');
-    if (returnHomeLink) {
-        returnHomeLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            toggleMobileMenu();
-            
-            setTimeout(() => {
-                isProgrammaticScroll = true;
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }, 300);
-        });
-    }
-
-    const scrollDownArrow = document.querySelector('.scroll-arrow');
-    if (scrollDownArrow) {
-        scrollDownArrow.addEventListener('click', function(e) {
-            e.preventDefault();
-            const toolsSection = document.getElementById('tools');
-            
-            if (toolsSection) {
-                isProgrammaticScroll = true;
-                toolsSection.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    }
-
-    // Search functionality
-    const searchInput = document.getElementById('searchInput');
-    const searchPreview = document.getElementById('searchPreview');
-    const tools = [
-        {
-            name: 'WHASH',
-            price: 'COMING SOON',
-            status: 'development',
-            theme: 'disabled',
-            icon: 'fa-solid fa-lock',
-            element: document.getElementById('tool1')
-        },
-        {
-            name: 'Nexcord Basic',
-            price: 'FREE',
-            status: 'archived',
-            theme: 'red',
-            icon: 'fab fa-discord',
-            element: document.getElementById('tool2')
-        },
-        {
-            name: 'Nexcord Plus',
-            price: '€3.99',
-            status: 'paused',
-            theme: 'gold',
-            icon: 'fab fa-discord',
-            element: document.getElementById('tool3')
-        }
-    ];
-
-    function filterTools(searchTerm) {
-        const term = searchTerm.toLowerCase().trim();
-        
-        tools.forEach(tool => {
-            const matches = tool.name.toLowerCase().includes(term);
-            if (term === '') {
-                tool.element.style.display = 'block';
-            } else {
-                tool.element.style.display = matches ? 'block' : 'none';
-            }
-        });
-    }
-
-    function updatePreview(searchTerm) {
-        const term = searchTerm.toLowerCase().trim();
-        
-        if (term === '') {
-            searchPreview.classList.remove('active');
-            return;
-        }
-
-        const matches = tools.filter(tool => tool.name.toLowerCase().includes(term));
-        
-        let previewHTML = '';
-        
-        if (matches.length > 0) {
-            matches.forEach(tool => {
-                previewHTML += `
-                    <div class="preview-item ${tool.theme}-theme" data-name="${tool.name.toLowerCase()}">
-                        <i class="${tool.icon}"></i>
-                        <div class="preview-info">
-                            <div class="preview-title">${tool.name}</div>
-                            <div class="preview-price">${tool.price} • ${tool.status}</div>
-                        </div>
-                    </div>
-                `;
-            });
-        } else {
-            previewHTML = '<div class="no-results">No tools found</div>';
-        }
-
-        searchPreview.innerHTML = previewHTML;
-        searchPreview.classList.add('active');
-
-            document.querySelectorAll('.preview-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    const toolName = item.dataset.name;
-                    const tool = tools.find(t => t.name.toLowerCase() === toolName);
-                    if (tool) {
-                        tool.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        tool.element.style.transform = 'scale(1.05)';
-                        
-                        let glowColor = 'var(--accent-glow)';
-                        if (tool.theme === 'red') glowColor = 'var(--red-glow)';
-                        if (tool.theme === 'gold') glowColor = 'var(--gold-glow)';
-                        if (tool.theme === 'disabled') glowColor = 'var(--gray-glow)';
-                        tool.element.style.boxShadow = `0 0 50px ${glowColor}`;
-                        
-                        setTimeout(() => {
-                            tool.element.style.transform = '';
-                            tool.element.style.boxShadow = '';
-                        }, 500);
-                    }
-                    searchPreview.classList.remove('active');
-                    searchInput.value = toolName;
-                    filterTools(toolName);
-                });
-            });
-    }
-
-    searchInput.addEventListener('input', (e) => {
-        const value = e.target.value;
-        
-        if (value.toLowerCase() === 'party at the beach') {
-            window.location.href = '/patb';
-            return;
-        }
-        
-        filterTools(value);
-        updatePreview(value);
-    });
-
-    searchInput.addEventListener('focus', () => {
-        if (searchInput.value.trim() !== '') {
-            updatePreview(searchInput.value);
-        }
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!searchPreview.contains(e.target) && e.target !== searchInput) {
-            searchPreview.classList.remove('active');
-        }
-    });
-
-    searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const value = searchInput.value.toLowerCase().trim();
-            if (value === 'party at the beach') {
-                window.location.href = '/patb';
-            }
-        }
-    });
-
-    // Always keep preview on top
-    const searchWrapper = document.querySelector('.search-wrapper');
-    if (searchWrapper) {
-        searchWrapper.style.zIndex = '100';
-    }
-    </script>
 <style>
 .news-button {
     position: fixed;
@@ -2173,16 +1697,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
 }
 
 .news-button:hover {
     transform: scale(1.1);
     border-color: white;
-    box-shadow: 0 0 30px var(--white-glow, rgba(255,255,255,0.7));
+    box-shadow: 0 0 30px rgba(255,255,255,0.7);
 }
 
 .news-modal-overlay {
@@ -2193,14 +1716,13 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
     z-index: 99999;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s ease;
     padding: 20px;
 }
 
@@ -2210,7 +1732,7 @@
 }
 
 .news-modal-content {
-    background: var(--black-1, #0a0a0a);
+    background: #0a0a0a;
     border: 2px solid rgba(255, 255, 255, 0.8);
     border-radius: 20px;
     padding: 30px;
@@ -2218,9 +1740,9 @@
     width: 100%;
     max-height: 85vh;
     position: relative;
-    box-shadow: 0 0 50px var(--white-glow, rgba(255,255,255,0.5));
+    box-shadow: 0 0 50px rgba(255,255,255,0.5);
     transform: scale(0.9);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s ease;
     display: flex;
     flex-direction: column;
     color: white;
@@ -2290,24 +1812,17 @@
     border-radius: 10px;
 }
 
-.news-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 10px white;
-}
-
 .news-entry {
     margin-bottom: 30px;
     padding: 20px;
     background: rgba(255, 255, 255, 0.03);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
 }
 
 .news-entry:hover {
     background: rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.3);
-    transform: translateX(5px);
 }
 
 .news-entry-title {
@@ -2315,7 +1830,6 @@
     color: white;
     margin-bottom: 10px;
     font-weight: 700;
-    text-shadow: 0 0 8px rgba(255,255,255,0.3);
 }
 
 .news-meta {
@@ -2330,7 +1844,6 @@
 
 .news-meta span i {
     margin-right: 5px;
-    opacity: 0.7;
 }
 
 .news-content {
@@ -2338,7 +1851,6 @@
     font-size: 0.95rem;
     line-height: 1.6;
     white-space: pre-wrap;
-    word-wrap: break-word;
 }
 
 .news-content p {
@@ -2364,14 +1876,12 @@
     border-color: white;
     background: rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
-    transform: scale(1.05);
 }
 
 .news-loading {
     text-align: center;
     padding: 40px;
     color: rgba(255,255,255,0.7);
-    font-size: 1.1rem;
 }
 
 .news-loading i {
@@ -2426,7 +1936,7 @@
         </div>
         <div class="news-container" id="newsContainer">
             <div class="news-loading">
-                <i class="fas fa-spinner"></i> Loading news...
+                <i class="fas fa-spinner"></i> Loading...
             </div>
         </div>
         <button class="toggle-news-btn" id="toggleNewsBtn" style="display: none;">SHOW MORE</button>
@@ -2441,15 +1951,36 @@
     const newsContainer = document.getElementById('newsContainer');
     const toggleBtn = document.getElementById('toggleNewsBtn');
     
-    const PASTEBIN_URL = 'https://pastebin.com/raw/7vwiJRF3';
+    const newsData = [
+        {
+            id: 1,
+            title: "New Domain!",
+            date: "03.17.2026",
+            author: "Nexoo",
+            content: "We have officially moved to our new domain: https://whitebox.group\nUpdate your bookmarks!"
+        },
+        {
+            id: 2,
+            title: "Site Maintenance",
+            date: "03.15.2026",
+            author: "Nexoo",
+            content: "The website will be under maintenance for 2 hours.\nSearch function might be temporarily unavailable."
+        },
+        {
+            id: 3,
+            title: "WHASH Update",
+            date: "03.10.2026",
+            author: "DevTeam",
+            content: "WHASH now supports 5 new hash algorithms.\nPerformance increased by 20%."
+        }
+    ];
     
-    let allNews = [];
     let showingAll = false;
     
     newsButton.addEventListener('click', () => {
         newsModal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        loadNews();
+        renderNews();
     });
     
     function closeModal() {
@@ -2462,104 +1993,14 @@
         if (e.target === newsModal) closeModal();
     });
     
-    async function loadNews() {
-        if (allNews.length > 0) {
-            renderNews();
-            return;
-        }
-        
-        newsContainer.innerHTML = '<div class="news-loading"><i class="fas fa-spinner"></i> Loading news...</div>';
-        
-        try {
-            const response = await fetch(PASTEBIN_URL);
-            if (!response.ok) throw new Error('Network error');
-            const text = await response.text();
-            parseNews(text);
-        } catch (error) {
-            newsContainer.innerHTML = '<div class="news-error">Failed to load news.</div>';
-            console.error('News fetch error:', error);
-        }
-    }
-    
-    function parseNews(rawText) {
-        const lines = rawText.split('\n');
-        const news = [];
-        let currentNews = null;
-        let inPaste = false;
-        let pasteContent = [];
-        
-        for (let line of lines) {
-            line = line.trim();
-            
-            const newsMatch = line.match(/^(\d+)\s*-\s*(.+)$/);
-            if (newsMatch) {
-                if (currentNews) {
-                    if (inPaste) {
-                        currentNews.paste = pasteContent.join('\n').trim();
-                        pasteContent = [];
-                        inPaste = false;
-                    }
-                    news.push(currentNews);
-                }
-                
-                currentNews = {
-                    id: parseInt(newsMatch[1]),
-                    title: newsMatch[2].trim(),
-                    date: 'Unknown date',
-                    author: 'Unknown',
-                    paste: ''
-                };
-                continue;
-            }
-            
-            if (!currentNews) continue;
-            
-            if (line.startsWith('Date -')) {
-                currentNews.date = line.substring(6).trim();
-            } else if (line.startsWith('Author -')) {
-                currentNews.author = line.substring(8).trim();
-            } else if (line.startsWith('Paste -')) {
-                inPaste = true;
-                const afterPaste = line.substring(7).trim();
-                if (afterPaste) {
-                    pasteContent.push(afterPaste);
-                }
-            } else if (inPaste) {
-                if (line === '') {
-                    pasteContent.push('');
-                } else {
-                    pasteContent.push(line);
-                }
-            }
-        }
-        
-        if (currentNews) {
-            if (inPaste) {
-                currentNews.paste = pasteContent.join('\n').trim();
-            }
-            news.push(currentNews);
-        }
-        
-        news.sort((a, b) => b.id - a.id);
-        allNews = news;
-        
-        renderNews();
-    }
-    
     function renderNews() {
-        if (allNews.length === 0) {
-            newsContainer.innerHTML = '<div class="news-error">No news available.</div>';
-            toggleBtn.style.display = 'none';
-            return;
-        }
-        
-        const displayNews = showingAll ? allNews : allNews.slice(0, 1);
+        const displayNews = showingAll ? newsData : newsData.slice(0, 1);
         
         let html = '';
         displayNews.forEach(item => {
-            const pasteHtml = item.paste.split('\n').map(p => {
-                if (p.trim() === '') return '<br>';
-                return `<p>${p}</p>`;
+            const contentHtml = item.content.split('\n').map(line => {
+                if (line.trim() === '') return '<br>';
+                return `<p>${line}</p>`;
             }).join('');
             
             html += `
@@ -2569,16 +2010,16 @@
                         <span><i class="far fa-calendar-alt"></i> ${item.date}</span>
                         <span><i class="far fa-user"></i> ${item.author}</span>
                     </div>
-                    <div class="news-content">${pasteHtml}</div>
+                    <div class="news-content">${contentHtml}</div>
                 </div>
             `;
         });
         
         newsContainer.innerHTML = html;
         
-        if (allNews.length > 1) {
+        if (newsData.length > 1) {
             toggleBtn.style.display = 'block';
-            toggleBtn.textContent = showingAll ? 'SHOW LESS' : 'SHOW MORE (' + (allNews.length - 1) + ' more)';
+            toggleBtn.textContent = showingAll ? 'SHOW LESS' : 'SHOW MORE (' + (newsData.length - 1) + ' more)';
         } else {
             toggleBtn.style.display = 'none';
         }
