@@ -593,13 +593,13 @@
         }
 
         .tool-card.red-theme {
-            border: 1px solid rgba(255, 50, 50, 0.5);
-            box-shadow: 0 0 20px rgba(255, 50, 50, 0.1);
+            border: 1px solid rgba(136, 0, 0, 0.5);  /* DUNKELROT Rahmen */
+            box-shadow: none;  /* Box-Schatten entfernen */
         }
 
         .tool-card.red-theme:hover {
-            border-color: #ff3333;
-            box-shadow: 0 0 30px rgba(255, 50, 50, 0.3);
+            border-color: #aa0000;  /* Etwas heller bei Hover */
+            box-shadow: 0 0 20px rgba(136, 0, 0, 0.2);  /* Leichter Glow */
         }
 
         .tool-card.gold-theme {
@@ -680,9 +680,8 @@
         }
 
         .tool-card.red-theme .tool-icon {
-            color: #ff3333;
-            text-shadow: 0 0 20px var(--red-glow), 0 0 40px rgba(255, 50, 50, 0.3);
-            filter: brightness(1.3);
+            color: #880000;
+            text-shadow: none;
         }
 
         .tool-card.gold-theme .tool-icon {
@@ -733,8 +732,8 @@
         }
 
         .tool-card.red-theme h3 {
-            color: #ff3333;
-            text-shadow: 0 0 10px rgba(255, 50, 50, 0.3);
+            color: #880000;  /* DUNKELROT - vorher #ff3333 */
+            text-shadow: none;  /* Glow entfernen */
         }
 
         .tool-card.gold-theme h3 {
@@ -769,8 +768,8 @@
         }
 
         .tool-card.red-theme .tool-price {
-            color: #ff3333;
-            text-shadow: 0 0 8px var(--red-glow);
+            color: #880000;  /* DUNKELROT */
+            text-shadow: none;
         }
 
         .tool-card.gold-theme .tool-price {
@@ -1372,7 +1371,7 @@
         <h2 class="section-title" id="toolsTitle">OUR TOOLS</h2>
         <div class="tools-container">
             <div class="tool-card disabled-theme" id="tool1">
-                <div class="in-development-badge">⚙️ IN DEVELOPMENT</div>
+                <div class="in-development-badge">IN DEVELOPMENT</div>
                 <div class="tool-icon">
                     <img src="whash.png" alt="WHASH Logo" class="tool-icon-img">
                 </div>
@@ -1383,7 +1382,7 @@
             </div>
             
             <a href="/NexcordBasic" target="_blank" class="tool-card red-theme" id="tool2">
-                <div class="archived-badge">📦 ARCHIVED</div>
+                <div class="archived-badge">ARCHIVED</div>
                 <div class="tool-icon">
                     <i class="fab fa-discord"></i>
                 </div>
@@ -1394,7 +1393,7 @@
             </a>
             
             <a href="/NexcordPlus" target="_blank" class="tool-card gold-theme" id="tool3">
-                <div class="paused-badge">⏸️ PAUSED</div>
+                <div class="paused-badge">PAUSED</div>
                 <div class="tool-icon">
                     <i class="fab fa-discord"></i>
                 </div>
