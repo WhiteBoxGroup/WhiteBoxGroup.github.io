@@ -8,30 +8,46 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&amp;family=Roboto+Mono:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
     <style>
+   
         :root {
-            --pure-black: #000000;
-            --black-1: #080808;
-            --black-2: #111111;
-            --black-3: #151515;
-            --accent-color: #ffffff;
-            --accent-glow: rgba(255, 255, 255, 0.7);
-            --text-primary: #ffffff;
-            --text-secondary: #bbbbbb;
-            --danger-color: #ff3333;
-            --success-color: #33ff33;
-            --warning-color: #ffaa00;
-            --discord-blue: #5865F2;
+        
+            --bg-main: #000000;       
+            --bg-card: #080808;           
+            --bg-nav: rgba(0, 0, 0, 0.95); 
+            
+          
+            --text-white: #ffffff;        
+            --text-gray: #bbbbbb;      
+            --text-dark: #888888;         
+            
+     
+            --discord-blue: #5865F2;        
             --discord-glow: rgba(88, 101, 242, 0.7);
-            --red-glow: rgba(255, 50, 50, 0.5);
-            --gold-glow: rgba(255, 215, 0, 0.7);
-            --pink-color: #ff00ff;
-            --pink-glow: rgba(255, 0, 255, 0.7);
-            --purple-color: #9d00ff;
-            --purple-glow: rgba(157, 0, 255, 0.7);
-            --white-glow: rgba(255, 255, 255, 0.7);
-            --gray-color: #666666;
-            --gray-glow: rgba(100, 100, 100, 0.5);
+            
+          
+            --whash-text: #888888;          
+            --whash-border: #666666;         
+            --whash-glow: rgba(100, 100, 100, 0.5);
+            --whash-badge-bg: #666666;        
+            --whash-badge-text: #ffffff;  
+            
+            --basic-text: #880000;            
+            --basic-border: #880000;           
+            --basic-glow: rgba(136, 0, 0, 0.3); 
+            --basic-badge-bg: #880000;        
+            --basic-badge-text: #ffffff;        
+            
+       
+            --plus-text: #886600;              
+            --plus-border: #886600;           
+            --plus-glow: rgba(136, 102, 0, 0.3); 
+            --plus-badge-bg: #886600;         
+            --plus-badge-text: #ffffff;        
+            
+           
+            --glow-intensity: 0.3;            
         }
+
 
         * {
             margin: 0;
@@ -41,12 +57,10 @@
 
         body {
             font-family: 'Roboto Mono', monospace;
-            background-color: var(--pure-black);
-            color: var(--text-primary);
+            background-color: var(--bg-main);
+            color: var(--text-white);
             overflow-x: hidden;
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -60,17 +74,12 @@
         }
 
         ::-webkit-scrollbar-track {
-            background: var(--black-2);
+            background: var(--bg-card);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--accent-color);
+            background: var(--text-white);
             border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-glow);
-            box-shadow: 0 0 10px var(--accent-glow);
         }
 
         html {
@@ -84,7 +93,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--pure-black);
+            background-color: var(--bg-main);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -115,7 +124,7 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 1.5rem;
             letter-spacing: 5px;
-            color: var(--text-primary);
+            color: var(--text-white);
             text-transform: uppercase;
             position: relative;
             left: 15px;
@@ -137,11 +146,11 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 5%;
-            background-color: rgba(0, 0, 0, 0.95);
+            background-color: var(--bg-nav);
             backdrop-filter: blur(15px);
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s ease;
             transform: translateY(0);
             height: 70px;
         }
@@ -155,14 +164,9 @@
             align-items: center;
             font-size: 1.8rem;
             font-weight: 900;
-            color: var(--text-primary);
+            color: var(--text-white);
             text-decoration: none;
             z-index: 1001;
-            transition: all 0.3s ease;
-        }
-
-        .logo-text {
-            transition: opacity 0.5s ease, margin-right 0.5s ease;
         }
 
         .logo-img {
@@ -176,14 +180,6 @@
         .logo.loaded .logo-img {
             width: 60px;
             height: 60px;
-            margin-right: 0;
-        }
-
-        .logo.loaded .logo-text {
-            opacity: 0;
-            margin-right: 0;
-            width: 0;
-            overflow: hidden;
         }
 
         .desktop-nav {
@@ -192,7 +188,7 @@
         }
 
         .desktop-nav a {
-            color: var(--text-primary);
+            color: var(--text-white);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.9rem;
@@ -203,24 +199,23 @@
         }
 
         .desktop-nav a:hover {
-            color: var(--accent-color);
-            text-shadow: 0 0 8px var(--accent-glow);
+            color: var(--text-white);
+            text-shadow: 0 0 8px rgba(255,255,255,0.5);
         }
 
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
-            color: var(--text-primary);
+            color: var(--text-white);
             font-size: 1.8rem;
             cursor: pointer;
             z-index: 1001;
             padding: 10px;
-            transition: all 0.3s ease;
         }
 
         .mobile-menu-btn:hover {
-            color: var(--accent-color);
+            color: var(--text-white);
         }
 
         .mobile-menu-overlay {
@@ -275,7 +270,7 @@
         .mobile-close-btn {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-primary);
+            color: var(--text-white);
             font-size: 1.5rem;
             cursor: pointer;
             padding: 10px 15px;
@@ -285,7 +280,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
         }
 
         .mobile-close-btn:hover {
@@ -364,11 +358,11 @@
             font-size: 4rem;
             margin-bottom: 20px;
             text-transform: uppercase;
-            color: var(--accent-color);
-            text-shadow: 0 0 20px var(--accent-glow);
+            color: var(--text-white);
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.8s ease;
         }
 
         .hero h1.visible {
@@ -380,10 +374,10 @@
             font-size: 1.2rem;
             max-width: 800px;
             margin-bottom: 40px;
-            color: var(--text-secondary);
+            color: var(--text-gray);
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+            transition: all 0.8s ease 0.2s;
         }
 
         .hero p.visible {
@@ -409,7 +403,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: var(--accent-color);
+            color: var(--text-white);
             text-decoration: none;
             animation: bounce 2s infinite;
             cursor: pointer;
@@ -419,21 +413,14 @@
             font-size: 0.9rem;
             margin-bottom: 10px;
             letter-spacing: 2px;
-            color: var(--text-secondary);
+            color: var(--text-gray);
             text-transform: uppercase;
         }
 
         .arrow-down {
             font-size: 2rem;
-            color: var(--accent-color);
-            text-shadow: 0 0 15px var(--accent-glow);
-            transition: all 0.3s ease;
-        }
-
-        .scroll-arrow:hover .arrow-down {
-            color: var(--accent-color);
-            text-shadow: 0 0 20px var(--accent-glow);
-            transform: translateY(5px);
+            color: var(--text-white);
+            text-shadow: 0 0 15px rgba(255,255,255,0.5);
         }
 
         .cta-button {
@@ -453,7 +440,7 @@
             z-index: 1;
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+            transition: all 0.8s ease 0.4s;
         }
 
         .cta-button.visible {
@@ -463,25 +450,8 @@
 
         .cta-button:hover {
             color: var(--discord-blue);
-            text-shadow: 0 0 5px rgba(88, 101, 242, 0.5);
             box-shadow: 0 0 30px var(--discord-glow);
             background-color: rgba(88, 101, 242, 0.1);
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--discord-blue), transparent);
-            transition: left 0.7s ease;
-            z-index: -1;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
         }
 
         .terminal-container {
@@ -496,7 +466,7 @@
         .terminal-line {
             font-family: 'Roboto Mono', monospace;
             font-size: 1rem;
-            color: var(--text-secondary);
+            color: var(--text-gray);
             position: absolute;
             top: 0;
             left: 0;
@@ -527,14 +497,14 @@
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 60px;
-            color: var(--text-primary);
+            color: var(--text-white);
             position: relative;
             display: inline-block;
             left: 50%;
             transform: translateX(-50%);
             opacity: 0;
             transform: translateX(-50%) translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.8s ease;
         }
 
         .section-title.visible {
@@ -549,7 +519,7 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            background: linear-gradient(90deg, transparent, var(--text-white), transparent);
             transform: scaleX(0);
             transform-origin: center;
             transition: transform 0.8s ease 0.3s;
@@ -567,18 +537,18 @@
         }
 
         .tool-card {
-            background-color: #080808;
+            background-color: var(--bg-card);
             border-radius: 8px;
             padding: 40px 30px;
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s ease;
             position: relative;
             overflow: visible;
             opacity: 0;
             transform: translateY(50px) scale(0.95);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.8s ease;
             text-decoration: none;
-            color: var(--text-primary);
+            color: var(--text-white);
             display: block;
         }
 
@@ -589,176 +559,23 @@
 
         .tool-card:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .tool-card.red-theme {
-            border: 1px solid rgba(136, 0, 0, 0.5);  /* DUNKELROT Rahmen */
-            box-shadow: none;  /* Box-Schatten entfernen */
-        }
-
-        .tool-card.red-theme:hover {
-            border-color: #aa0000;  /* Etwas heller bei Hover */
-            box-shadow: 0 0 20px rgba(136, 0, 0, 0.2);  /* Leichter Glow */
-        }
-
-        .tool-card.gold-theme {
-            border: 1px solid rgba(255, 215, 0, 0.5);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
-        }
-
-        .tool-card.gold-theme:hover {
-            border-color: #ffd700;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-        }
-
-        .tool-card.pink-theme {
-            border: 1px solid rgba(255, 0, 255, 0.5);
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.1);
-        }
-
-        .tool-card.pink-theme:hover {
-            border-color: var(--pink-color);
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
-        }
-
-        .tool-card.purple-theme {
-            border: 1px solid rgba(157, 0, 255, 0.5);
-            box-shadow: 0 0 20px rgba(157, 0, 255, 0.1);
-        }
-
-        .tool-card.purple-theme:hover {
-            border-color: var(--purple-color);
-            box-shadow: 0 0 30px rgba(157, 0, 255, 0.3);
-        }
-
-        .tool-card.white-theme {
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-        }
-
-        .tool-card.white-theme:hover {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 30px var(--white-glow);
-        }
-
-        .tool-card.disabled-theme {
-            border: 1px solid rgba(100, 100, 100, 0.5);
-            box-shadow: 0 0 20px rgba(100, 100, 100, 0.1);
-            background-color: rgba(30, 30, 30, 0.8);
-            cursor: not-allowed;
-            position: relative;
-        }
-
-        .tool-card.disabled-theme:hover {
-            transform: translateY(0) scale(1);
-            box-shadow: 0 0 20px rgba(100, 100, 100, 0.1);
-            border-color: rgba(100, 100, 100, 0.5);
         }
 
         .tool-icon {
             font-size: 3rem;
             margin-bottom: 25px;
-            transition: all 0.4s ease;
         }
 
         .tool-icon-img {
             width: 80px;
             height: 80px;
             margin-bottom: 25px;
-            transition: all 0.4s ease;
             filter: drop-shadow(0 0 3px black);
-        }
-
-        .tool-card.disabled-theme .tool-icon-img {
-            filter: grayscale(100%) brightness(0.7);
-            opacity: 0.7;
-        }
-
-        .tool-card.white-theme .tool-icon-img {
-            filter: drop-shadow(0 0 8px var(--white-glow));
-        }
-
-        .tool-card.red-theme .tool-icon {
-            color: #880000;
-            text-shadow: none;
-        }
-
-        .tool-card.gold-theme .tool-icon {
-            color: #ffd700;
-            text-shadow: 0 0 20px var(--gold-glow), 0 0 40px rgba(255, 215, 0, 0.3);
-        }
-
-        .tool-card.pink-theme .tool-icon {
-            color: var(--pink-color);
-            text-shadow: 0 0 20px var(--pink-glow), 0 0 40px rgba(255, 0, 255, 0.3);
-        }
-
-        .tool-card.purple-theme .tool-icon {
-            color: var(--purple-color);
-            text-shadow: 0 0 20px var(--purple-glow), 0 0 40px rgba(157, 0, 255, 0.3);
-        }
-
-        .tool-card.white-theme .tool-icon {
-            color: var(--accent-color);
-            text-shadow: 0 0 20px var(--white-glow), 0 0 40px rgba(255, 255, 255, 0.3);
-        }
-
-        .tool-card.disabled-theme .tool-icon {
-            color: var(--gray-color);
-            text-shadow: 0 0 10px rgba(100, 100, 100, 0.3);
-        }
-
-        .tool-card:hover .tool-icon {
-            transform: scale(1.2) rotate(5deg);
-        }
-
-        .tool-card.disabled-theme:hover .tool-icon {
-            transform: scale(1) rotate(0deg);
-        }
-
-        .tool-card:hover .tool-icon-img {
-            transform: scale(1.2) rotate(5deg);
-        }
-
-        .tool-card.disabled-theme:hover .tool-icon-img {
-            transform: scale(1) rotate(0deg);
         }
 
         .tool-card h3 {
             font-size: 1.8rem;
             margin-bottom: 15px;
-            color: var(--text-primary);
-        }
-
-        .tool-card.red-theme h3 {
-            color: #880000;  /* DUNKELROT - vorher #ff3333 */
-            text-shadow: none;  /* Glow entfernen */
-        }
-
-        .tool-card.gold-theme h3 {
-            color: #ffd700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
-
-        .tool-card.pink-theme h3 {
-            color: var(--pink-color);
-            text-shadow: 0 0 10px var(--pink-glow);
-        }
-
-        .tool-card.purple-theme h3 {
-            color: var(--purple-color);
-            text-shadow: 0 0 10px var(--purple-glow);
-        }
-
-        .tool-card.white-theme h3 {
-            color: var(--accent-color);
-            text-shadow: 0 0 10px var(--white-glow);
-        }
-
-        .tool-card.disabled-theme h3 {
-            color: #888888;
-            text-shadow: 0 0 10px rgba(136, 136, 136, 0.3);
         }
 
         .tool-price {
@@ -767,48 +584,14 @@
             font-weight: bold;
         }
 
-        .tool-card.red-theme .tool-price {
-            color: #880000;  /* DUNKELROT */
-            text-shadow: none;
-        }
-
-        .tool-card.gold-theme .tool-price {
-            color: #ffd700;
-            text-shadow: 0 0 8px var(--gold-glow);
-        }
-
-        .tool-card.pink-theme .tool-price {
-            color: var(--pink-color);
-            text-shadow: 0 0 8px var(--pink-glow);
-        }
-
-        .tool-card.purple-theme .tool-price {
-            color: var(--purple-color);
-            text-shadow: 0 0 8px var(--purple-glow);
-        }
-
-        .tool-card.white-theme .tool-price {
-            color: var(--accent-color);
-            text-shadow: 0 0 8px var(--white-glow);
-        }
-
-        .tool-card.disabled-theme .tool-price {
-            color: #777777;
-            text-shadow: 0 0 5px rgba(119, 119, 119, 0.3);
-        }
-
         .tool-card p {
-            color: var(--text-secondary);
+            color: var(--text-gray);
             font-size: 0.95rem;
             margin-bottom: 20px;
         }
 
-        .tool-card.disabled-theme p {
-            color: #999999;
-        }
-
         .tool-link {
-            color: var(--accent-color);
+            color: var(--text-white);
             text-decoration: none;
             font-weight: bold;
             font-size: 0.9rem;
@@ -818,125 +601,100 @@
             transition: all 0.3s ease;
         }
 
-        .tool-card.red-theme .tool-link {
-            border-color: #ff3333;
-            color: #ff3333;
-            text-shadow: 0 0 5px var(--red-glow);
-        }
-
-        .tool-card.gold-theme .tool-link {
-            border-color: #ffd700;
-            color: #ffd700;
-            text-shadow: 0 0 5px var(--gold-glow);
-        }
-
-        .tool-card.pink-theme .tool-link {
-            border-color: var(--pink-color);
-            color: var(--pink-color);
-            text-shadow: 0 0 5px var(--pink-glow);
-        }
-
-        .tool-card.purple-theme .tool-link {
-            border-color: var(--purple-color);
-            color: var(--purple-color);
-            text-shadow: 0 0 5px var(--purple-glow);
-        }
-
-        .tool-card.white-theme .tool-link {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-            text-shadow: 0 0 5px var(--white-glow);
-        }
-
-        .tool-card.disabled-theme .tool-link {
-            border-color: #666666;
-            color: #666666;
-            text-shadow: none;
-            background-color: rgba(80, 80, 80, 0.2);
-            pointer-events: none;
-            position: relative;
-            padding-left: 35px;
-        }
-
-        .tool-card.disabled-theme .tool-link::before {
-            content: '\f023';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
         .tool-link:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
 
-        .tool-card.disabled-theme .tool-link:hover {
-            background-color: rgba(80, 80, 80, 0.2);
-        }
-
-        .in-development-badge {
+        .badge {
             position: absolute;
             top: -10px;
             right: -10px;
-            background-color: rgba(128, 128, 128, 0.9);
-            color: white;
             font-size: 0.8rem;
             padding: 5px 12px;
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255,255,255,0.3);
             z-index: 10;
             font-weight: bold;
         }
 
-        .archived-badge {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background-color: #ff3333;
-            color: white;
-            font-size: 0.8rem;
-            padding: 5px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.7);
-            z-index: 10;
-            font-weight: bold;
+        .tool-card.disabled-theme .badge {
+            background-color: var(--whash-badge-bg);
+            color: var(--whash-badge-text);
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
         }
 
-        .paused-badge {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background-color: #ff9e00;
-            color: black;
-            font-size: 0.8rem;
-            padding: 5px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 15px rgba(255, 158, 0, 0.7);
-            z-index: 10;
-            font-weight: bold;
+        .tool-card.red-theme .badge {
+            background-color: var(--basic-badge-bg);
+            color: var(--basic-badge-text);
+            box-shadow: 0 0 calc(10px * var(--glow-intensity)) var(--basic-glow);
         }
 
-        .tool-card.disabled-theme::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent 30%, rgba(128, 128, 128, 0.05) 50%, transparent 70%);
-            z-index: 1;
+        .tool-card.gold-theme .badge {
+            background-color: var(--plus-badge-bg);
+            color: var(--plus-badge-text);
+            box-shadow: 0 0 calc(10px * var(--glow-intensity)) var(--plus-glow);
+        }
+
+        .tool-card.disabled-theme {
+            border: 1px solid var(--whash-border);
+            cursor: not-allowed;
+        }
+
+        .tool-card.disabled-theme h3 {
+            color: var(--whash-text);
+        }
+
+        .tool-card.disabled-theme .tool-price {
+            color: var(--whash-text);
+        }
+
+        .tool-card.disabled-theme .tool-link {
+            border-color: var(--whash-border);
+            color: var(--whash-text);
             pointer-events: none;
+        }
+
+        .tool-card.red-theme {
+            border: 1px solid var(--basic-border);
+            box-shadow: 0 0 calc(20px * var(--glow-intensity)) var(--basic-glow);
+        }
+
+        .tool-card.red-theme h3 {
+            color: var(--basic-text);
+        }
+
+        .tool-card.red-theme .tool-price {
+            color: var(--basic-text);
+        }
+
+        .tool-card.red-theme .tool-link {
+            border-color: var(--basic-border);
+            color: var(--basic-text);
+        }
+
+        .tool-card.gold-theme {
+            border: 1px solid var(--plus-border);
+            box-shadow: 0 0 calc(20px * var(--glow-intensity)) var(--plus-glow);
+        }
+
+        .tool-card.gold-theme h3 {
+            color: var(--plus-text);
+        }
+
+        .tool-card.gold-theme .tool-price {
+            color: var(--plus-text);
+        }
+
+        .tool-card.gold-theme .tool-link {
+            border-color: var(--plus-border);
+            color: var(--plus-text);
+        }
+
+        .tool-card.disabled-theme .tool-icon-img {
+            filter: grayscale(100%) brightness(0.7);
+            opacity: 0.7;
         }
 
         .about-content {
@@ -948,12 +706,12 @@
 
         .about-text p {
             margin-bottom: 20px;
-            color: var(--text-secondary);
+            color: var(--text-gray);
             font-size: 1.1rem;
             line-height: 1.8;
             opacity: 0;
             transform: translateX(-30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.8s ease;
         }
 
         .about-text p.visible {
@@ -966,17 +724,15 @@
         }
 
         .owner-link {
-            color: #ffffff;
+            color: var(--text-white);
             text-decoration: none;
             font-weight: bold;
             border-bottom: 1px solid white;
-            transition: all 0.3s ease;
         }
 
         .owner-link:hover {
-            color: var(--accent-color);
-            text-shadow: 0 0 8px var(--accent-glow);
-            border-bottom-color: var(--accent-color);
+            color: var(--text-white);
+            text-shadow: 0 0 8px rgba(255,255,255,0.5);
         }
 
         .stats {
@@ -989,12 +745,12 @@
         .stat-item {
             text-align: center;
             padding: 25px;
-            background-color: #080808;
+            background-color: var(--bg-card);
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             opacity: 0;
             transform: scale(0.8);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.8s ease;
         }
 
         .stat-item.visible {
@@ -1005,9 +761,9 @@
         .stat-number {
             font-size: 2.5rem;
             font-weight: 900;
-            color: var(--accent-color);
+            color: var(--text-white);
             margin-bottom: 10px;
-            text-shadow: 0 0 10px var(--accent-glow);
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
 
         .links-container {
@@ -1018,7 +774,7 @@
         }
 
         .link-item {
-            background-color: #080808;
+            background-color: var(--bg-card);
             padding: 25px;
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1026,9 +782,9 @@
             transition: all 0.3s ease;
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.8s ease;
             text-decoration: none;
-            color: var(--text-primary);
+            color: var(--text-white);
             display: block;
         }
 
@@ -1040,31 +796,24 @@
         .link-item:hover {
             transform: translateY(-5px);
             border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         .link-item a {
-            color: var(--accent-color);
+            color: var(--text-white);
             text-decoration: none;
             font-weight: bold;
             font-size: 1.1rem;
             display: block;
             margin-bottom: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .link-item a:hover {
-            color: var(--text-primary);
-            text-shadow: 0 0 8px var(--accent-glow);
         }
 
         .link-desc {
-            color: var(--text-secondary);
+            color: var(--text-gray);
             font-size: 0.9rem;
         }
 
         footer {
-            background-color: var(--black-2);
+            background-color: var(--bg-card);
             padding: 60px 5% 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -1081,7 +830,7 @@
             align-items: center;
             font-size: 1.8rem;
             font-weight: 900;
-            color: var(--text-primary);
+            color: var(--text-white);
             margin-bottom: 20px;
         }
 
@@ -1093,7 +842,7 @@
         }
 
         .footer-links h4 {
-            color: var(--accent-color);
+            color: var(--text-white);
             margin-bottom: 25px;
             font-size: 1.2rem;
         }
@@ -1107,13 +856,13 @@
         }
 
         .footer-links a {
-            color: var(--text-secondary);
+            color: var(--text-gray);
             text-decoration: none;
             transition: all 0.3s ease;
         }
 
         .footer-links a:hover {
-            color: var(--accent-color);
+            color: var(--text-white);
             padding-left: 5px;
         }
 
@@ -1121,7 +870,7 @@
             text-align: center;
             padding-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-secondary);
+            color: var(--text-gray);
             font-size: 0.9rem;
         }
 
@@ -1137,14 +886,8 @@
         }
 
         @keyframes loadingPulse {
-            0% { 
-                transform: scale(1); 
-                filter: drop-shadow(0 0 5px black);
-            }
-            100% { 
-                transform: scale(1.1); 
-                filter: drop-shadow(0 0 8px black);
-            }
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
 
         @keyframes loadingDots {
@@ -1154,132 +897,38 @@
         }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-10px);
-            }
-            60% {
-                transform: translateY(-5px);
-            }
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
         }
 
         @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
-            
-            .desktop-nav {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .tools-container {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            }
-            
-            .stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .logo.loaded .logo-img {
-                width: 55px;
-                height: 55px;
-            }
+            .hero h1 { font-size: 3rem; }
+            .desktop-nav { display: none; }
+            .mobile-menu-btn { display: block; }
+            .tools-container { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+            .stats { grid-template-columns: 1fr; }
+            .logo.loaded .logo-img { width: 55px; height: 55px; }
         }
 
         @media (max-width: 768px) {
-            .hero {
-                padding-top: 80px;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .section {
-                padding: 80px 5% 70px;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .tool-card {
-                padding: 30px 20px;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .navbar {
-                padding: 10px 4%;
-                height: 70px;
-            }
-            
-            .logo.loaded .logo-img {
-                width: 50px;
-                height: 50px;
-            }
-            
-            .in-development-badge, .archived-badge, .paused-badge {
-                position: relative;
-                top: 0;
-                right: 0;
-                display: inline-block;
-                margin-bottom: 10px;
-            }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+            .section { padding: 80px 5% 70px; }
+            .section-title { font-size: 2rem; }
+            .tool-card { padding: 30px 20px; }
+            .footer-content { grid-template-columns: 1fr; }
+            .navbar { padding: 10px 4%; height: 70px; }
         }
 
         @media (max-width: 480px) {
-            .hero {
-                padding-top: 70px;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .cta-button {
-                padding: 12px 30px;
-                font-size: 0.9rem;
-            }
-            
-            .tool-card {
-                padding: 25px 15px;
-            }
-            
-            .stat-item {
-                padding: 20px 15px;
-            }
-            
-            .stat-number {
-                font-size: 2rem;
-            }
-            
-            .navbar {
-                padding: 8px 3%;
-                height: 65px;
-            }
-            
-            .logo.loaded .logo-img {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .mobile-menu {
-                width: 250px;
-            }
+            .hero h1 { font-size: 2rem; }
+            .cta-button { padding: 12px 30px; font-size: 0.9rem; }
+            .tool-card { padding: 25px 15px; }
+            .stat-number { font-size: 2rem; }
+            .navbar { padding: 8px 3%; height: 65px; }
+            .mobile-menu { width: 250px; }
+            .badge { position: relative; top: 0; right: 0; display: inline-block; margin-bottom: 10px; }
         }
 
         canvas {
@@ -1302,7 +951,6 @@
     <nav class="navbar" id="navbar">
         <a href="#home" class="logo" id="mainLogo">
             <img src="wh.png" alt="White Box Logo" class="logo-img">
-            <span class="logo-text"></span>
         </a>
         
         <div class="desktop-nav">
@@ -1371,18 +1019,18 @@
         <h2 class="section-title" id="toolsTitle">OUR TOOLS</h2>
         <div class="tools-container">
             <div class="tool-card disabled-theme" id="tool1">
-                <div class="in-development-badge">IN DEVELOPMENT</div>
+                <div class="badge">⚙️ IN DEVELOPMENT</div>
                 <div class="tool-icon">
                     <img src="whash.png" alt="WHASH Logo" class="tool-icon-img">
                 </div>
                 <h3>WHASH</h3>
                 <div class="tool-price">COMING SOON</div>
-                <p>The fastest password cracker White Box has ever made. Main feature is a Rare Username Finder for Doxbin.com, Discord, TikTok, YouTube and more. Ultra-fast performance with advanced algorithms.</p>
+                <p>The fastest password cracker White Box has ever made. Main feature is a Rare Username Finder for Doxbin.com, Discord, TikTok, YouTube and more.</p>
                 <div class="tool-link">Get Tool</div>
             </div>
             
             <a href="/NexcordBasic" target="_blank" class="tool-card red-theme" id="tool2">
-                <div class="archived-badge">ARCHIVED</div>
+                <div class="badge">📦 ARCHIVED</div>
                 <div class="tool-icon">
                     <i class="fab fa-discord"></i>
                 </div>
@@ -1393,7 +1041,7 @@
             </a>
             
             <a href="/NexcordPlus" target="_blank" class="tool-card gold-theme" id="tool3">
-                <div class="paused-badge">PAUSED</div>
+                <div class="badge">⏸️ PAUSED</div>
                 <div class="tool-icon">
                     <i class="fab fa-discord"></i>
                 </div>
@@ -1453,10 +1101,10 @@
                 <div class="footer-logo">
                     <img src="wh.png" alt="White Box Logo" class="footer-logo-img">
                 </div>
-                <p style="color: var(--text-secondary); margin-bottom: 20px;">Professional Doxbin group providing advanced digital tools and utilities including WHASH password cracker.</p>
+                <p style="color: var(--text-gray); margin-bottom: 20px;">Professional Doxbin group providing advanced digital tools and utilities including WHASH password cracker.</p>
                 <div style="display: flex; gap: 15px;">
-                    <a href="https://github.com/danexoo/" target="_blank" style="color: var(--text-secondary); font-size: 1.2rem; transition: all 0.3s ease;"><i class="fab fa-github"></i></a>
-                    <a href="https://discord.gg/DbNQgMWJ8G" target="_blank" style="color: var(--text-secondary); font-size: 1.2rem; transition: all 0.3s ease;"><i class="fab fa-discord"></i></a>
+                    <a href="https://github.com/danexoo/" target="_blank" style="color: var(--text-gray); font-size: 1.2rem;"><i class="fab fa-github"></i></a>
+                    <a href="https://discord.gg/DbNQgMWJ8G" target="_blank" style="color: var(--text-gray); font-size: 1.2rem;"><i class="fab fa-discord"></i></a>
                 </div>
             </div>
             
@@ -1504,23 +1152,14 @@
 
     mobileMenuLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            if (this.href.includes('discord.gg') || this.href.includes('http')) {
-                return;
-            }
-            
+            if (this.href.includes('discord.gg') || this.href.includes('http')) return;
             e.preventDefault();
-            
             const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
-            
             if (targetSection) {
                 toggleMobileMenu();
-                
                 setTimeout(() => {
-                    targetSection.scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 300);
             }
         });
@@ -1551,10 +1190,8 @@
 
     const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
     const chars = matrixChars.split("");
-
     const fontSize = 14;
     let columns = canvas.width / fontSize;
-
     let drops = [];
 
     function initDrops() {
@@ -1570,10 +1207,8 @@
     function drawMatrix() {
         ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
         ctx.fillStyle = "#ffffff";
         ctx.font = `${fontSize}px 'Roboto Mono', monospace`;
-        
         for (let i = 0; i < drops.length; i++) {
             const text = chars[Math.floor(Math.random() * chars.length)];
             ctx.fillText(text, i * fontSize, drops[i] * fontSize);
@@ -1595,21 +1230,16 @@
 
     function startTerminalRotation() {
         terminalLines[0].classList.add('active');
-        
         rotationInterval = setInterval(() => {
             terminalLines[currentLineIndex].classList.remove('active');
             terminalLines[currentLineIndex].classList.add('leaving');
-            
             currentLineIndex = (currentLineIndex + 1) % terminalLines.length;
-            
             setTimeout(() => {
                 terminalLines[(currentLineIndex + 2) % 3].classList.remove('leaving');
             }, 500);
-            
             setTimeout(() => {
                 terminalLines[currentLineIndex].classList.add('active');
             }, 500);
-            
         }, 3000);
     }
 
@@ -1618,49 +1248,25 @@
 
     function observeAnimations() {
         const elements = [
-            { id: 'heroTitle', threshold: 0.3 },
-            { id: 'heroText', threshold: 0.3 },
-            { id: 'heroButton', threshold: 0.3 },
-            { id: 'scrollDown', threshold: 0.3 },
-            { id: 'toolsTitle', threshold: 0.3 },
-            { id: 'tool1', threshold: 0.2 },
-            { id: 'tool2', threshold: 0.2 },
-            { id: 'tool3', threshold: 0.2 },
-            { id: 'aboutTitle', threshold: 0.3 },
-            { id: 'aboutText1', threshold: 0.2 },
-            { id: 'aboutText2', threshold: 0.2 },
-            { id: 'stat1', threshold: 0.2 },
-            { id: 'stat2', threshold: 0.2 },
-            { id: 'stat3', threshold: 0.2 },
-            { id: 'link1', threshold: 0.2 },
-            { id: 'link2', threshold: 0.2 },
-            { id: 'link3', threshold: 0.2 }
+            { id: 'heroTitle' }, { id: 'heroText' }, { id: 'heroButton' },
+            { id: 'scrollDown' }, { id: 'toolsTitle' }, { id: 'tool1' },
+            { id: 'tool2' }, { id: 'tool3' }, { id: 'aboutTitle' },
+            { id: 'aboutText1' }, { id: 'aboutText2' }, { id: 'stat1' },
+            { id: 'stat2' }, { id: 'stat3' }, { id: 'link1' },
+            { id: 'link2' }, { id: 'link3' }
         ];
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const element = entry.target;
-                
-                if (!entry.isIntersecting) {
-                    if (elementStates.has(element)) {
-                        element.classList.remove('visible');
-                        elementStates.set(element, false);
-                    }
-                }
-                
-                if (entry.isIntersecting) {
-                    if (!elementStates.get(element)) {
-                        setTimeout(() => {
-                            element.classList.add('visible');
-                            elementStates.set(element, true);
-                        }, 100);
-                    }
+                if (entry.isIntersecting && !elementStates.get(element)) {
+                    setTimeout(() => {
+                        element.classList.add('visible');
+                        elementStates.set(element, true);
+                    }, 100);
                 }
             });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
+        }, { threshold: 0.1 });
 
         elements.forEach(item => {
             const element = document.getElementById(item.id);
@@ -1675,7 +1281,6 @@
     let lastScrollTop = 0;
     const navbar = document.getElementById('navbar');
     let isNavbarHidden = false;
-
     let isProgrammaticScroll = false;
 
     function handleScroll() {
@@ -1683,9 +1288,7 @@
             isProgrammaticScroll = false;
             return;
         }
-        
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
         if (scrollTop > lastScrollTop && scrollTop > 100) {
             if (!isNavbarHidden) {
                 navbar.classList.add('hidden');
@@ -1697,35 +1300,10 @@
                 isNavbarHidden = false;
             }
         }
-        
         lastScrollTop = scrollTop;
     }
 
-    let touchStartY = 0;
-    let isScrolling = false;
-
-    document.addEventListener('touchstart', (e) => {
-        touchStartY = e.touches[0].clientY;
-        isScrolling = false;
-    }, { passive: true });
-
-    document.addEventListener('touchmove', (e) => {
-        isScrolling = true;
-    }, { passive: true });
-
-    document.addEventListener('touchend', (e) => {
-        if (!isScrolling) return;
-        
-        const touchEndY = e.changedTouches[0].clientY;
-        const diff = touchStartY - touchEndY;
-        
-        if (Math.abs(diff) > 10) {
-        }
-    }, { passive: true });
-
-    window.addEventListener('hashchange', (e) => {
-        e.preventDefault();
-    }, false);
+    window.addEventListener('hashchange', (e) => e.preventDefault(), false);
 
     function startInitialAnimations() {
         startTerminalRotation();
@@ -1744,22 +1322,15 @@
         initDrops();
     });
 
-    window.addEventListener('resize', () => {
-    });
-
     window.addEventListener('beforeunload', () => {
-        if (rotationInterval) {
-            clearInterval(rotationInterval);
-        }
+        if (rotationInterval) clearInterval(rotationInterval);
     });
 
     document.addEventListener('DOMContentLoaded', () => {
         const whashTool = document.getElementById('tool1');
-        
         whashTool.style.cursor = 'not-allowed';
         whashTool.style.pointerEvents = 'none';
-        
-        whashTool.addEventListener('click', function(e) {
+        whashTool.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
             return false;
@@ -1768,20 +1339,13 @@
 
     document.querySelectorAll('.desktop-nav a').forEach(link => {
         link.addEventListener('click', function(e) {
-            if (this.href.includes('discord.gg') || this.href.includes('http')) {
-                return;
-            }
-            
+            if (this.href.includes('discord.gg') || this.href.includes('http')) return;
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
-            
             if (targetSection) {
                 isProgrammaticScroll = true;
-                targetSection.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     });
@@ -1790,15 +1354,10 @@
     if (returnHomeLink) {
         returnHomeLink.addEventListener('click', function(e) {
             e.preventDefault();
-            
             toggleMobileMenu();
-            
             setTimeout(() => {
                 isProgrammaticScroll = true;
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }, 300);
         });
     }
@@ -1808,13 +1367,9 @@
         scrollDownArrow.addEventListener('click', function(e) {
             e.preventDefault();
             const toolsSection = document.getElementById('tools');
-            
             if (toolsSection) {
                 isProgrammaticScroll = true;
-                toolsSection.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                toolsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     }
