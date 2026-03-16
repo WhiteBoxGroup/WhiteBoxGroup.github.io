@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>White Box | 404 Not Found</title>
+    <link rel="icon" type="image/png" href="wh.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pure-black: #000000;
+            --black-1: #080808;
+            --black-2: #111111;
+            --black-3: #151515;
+            --black-4: #1a1a1a;
+            --accent-color: #ffffff;
+            --accent-glow: rgba(255, 255, 255, 0.7);
+            --text-primary: #ffffff;
+            --text-secondary: #bbbbbb;
+            --danger-color: #ff3333;
+            --success-color: #33ff33;
+            --warning-color: #ffaa00;
+            --discord-blue: #5865F2;
+            --discord-glow: rgba(88, 101, 242, 0.7);
+            --red-glow: rgba(255, 50, 50, 0.5);
+            --red-primary: #ff3333;
+            --gold-glow: rgba(255, 215, 0, 0.7);
+            --pink-color: #ff00ff;
+            --pink-glow: rgba(255, 0, 255, 0.7);
+            --purple-color: #9d00ff;
+            --purple-glow: rgba(157, 0, 255, 0.7);
+            --white-glow: rgba(255, 255, 255, 0.7);
+            --gray-color: #666666;
+            --gray-glow: rgba(100, 100, 100, 0.5);
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: var(--pure-black);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            overflow-y: auto;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            width: 100%;
+            max-width: 100vw;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--black-2);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-glow);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 70px;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+            height: 100%;
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--pure-black);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .loading-icon {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 5px black);
+            animation: loadingPulse 1.5s infinite alternate;
+        }
+
+        .loading-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 5px;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            position: relative;
+            left: 15px;
+        }
+
+        .loading-dots {
+            display: inline-block;
+            width: 20px;
+            overflow: hidden;
+            vertical-align: bottom;
+            animation: loadingDots 1.5s infinite;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5%;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+            height: 70px;
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: var(--text-primary);
+            text-decoration: none;
+            z-index: 1001;
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            filter: drop-shadow(0 0 3px black);
+            transition: all 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px var(--white-glow));
+        }
+
+        .desktop-nav {
+            display: flex;
+            gap: 25px;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+
+        .desktop-nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .desktop-nav a:hover {
+            color: var(--accent-color);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--red-primary);
+            transform: rotate(90deg);
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9998;
+            display: none;
+            backdrop-filter: blur(5px);
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.98);
+            z-index: 9999;
+            transition: right 0.3s ease;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            padding: 25px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-header img {
+            width: 40px;
+            height: 40px;
+            filter: drop-shadow(0 0 3px black);
+        }
+
+        .mobile-close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-close-btn:hover {
+            background: rgba(255, 51, 51, 0.2);
+            border-color: var(--red-primary);
+            color: var(--red-primary);
+            transform: rotate(90deg);
+        }
+
+        .mobile-menu-content {
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-menu-link {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .mobile-menu-link i {
+            margin-right: 15px;
+            width: 24px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--red-primary);
+        }
+
+        .mobile-menu-link:hover {
+            background: rgba(255, 51, 51, 0.1);
+            border-color: var(--red-primary);
+            transform: translateX(5px);
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        .main-content {
+            padding-top: 70px;
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            min-height: calc(100vh - 70px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-section {
+            min-height: calc(100vh - 70px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 70px 5%;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .error-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 51, 51, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 51, 51, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 40% 80%, rgba(255, 51, 51, 0.04) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        .error-code {
+            font-size: 10rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            color: var(--red-primary);
+            text-shadow: 0 0 30px var(--red-glow), 0 0 60px rgba(255, 51, 51, 0.5);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 10px;
+        }
+
+        .error-code:hover {
+            text-shadow: 0 0 50px var(--red-glow), 0 0 100px rgba(255, 51, 51, 0.5);
+            transform: scale(1.05);
+        }
+
+        .error-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+        }
+
+        .error-message {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+            color: var(--text-secondary);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+        }
+
+        .error-description {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            padding: 25px;
+            background: rgba(255, 51, 51, 0.03);
+            border: 1px solid rgba(255, 51, 51, 0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+        }
+
+        .error-description p {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .error-description strong {
+            color: var(--red-primary);
+            text-shadow: 0 0 8px var(--red-glow);
+            transition: all 0.3s ease;
+        }
+
+        .error-description strong:hover {
+            text-shadow: 0 0 15px var(--red-glow), 0 0 30px rgba(255, 51, 51, 0.5);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+        }
+
+        .home-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--red-primary);
+            border: 2px solid var(--red-primary);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            min-width: 200px;
+        }
+
+        .home-button:hover {
+            background: rgba(255, 51, 51, 0.15);
+            box-shadow: 0 0 30px var(--red-glow);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .discord-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            color: #5865F2;
+            border: 2px solid #5865F2;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            min-width: 200px;
+        }
+
+        .discord-button:hover {
+            background: rgba(88, 101, 242, 0.15);
+            box-shadow: 0 0 30px var(--discord-glow);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        footer {
+            background-color: var(--black-2);
+            padding: 60px 5% 30px;
+            border-top: 1px solid rgba(255, 51, 51, 0.2);
+            width: 100%;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+            filter: drop-shadow(0 0 3px black);
+            transition: all 0.3s ease;
+        }
+
+        .footer-logo-img:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px var(--white-glow));
+        }
+
+        .footer-links h4 {
+            color: var(--text-primary);
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+            transform: translateX(5px);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .github-link-footer {
+            color: var(--text-secondary);
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            margin-right: 15px;
+        }
+
+        .github-link-footer:hover {
+            color: var(--text-primary);
+            transform: translateY(-3px);
+        }
+
+        .discord-link-footer {
+            color: var(--text-secondary);
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+        }
+
+        .discord-link-footer:hover {
+            color: #5865F2;
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes loadingPulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 5px black); }
+            100% { transform: scale(1.1); filter: drop-shadow(0 0 8px black); }
+        }
+
+        @keyframes loadingDots {
+            0%, 20% { content: "."; }
+            40% { content: ".."; }
+            60%, 100% { content: "..."; }
+        }
+
+        @media (max-width: 992px) {
+            .desktop-nav {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .error-code {
+                font-size: 8rem;
+            }
+            .error-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+            }
+            .error-title {
+                font-size: 2rem;
+            }
+            .error-message {
+                font-size: 1rem;
+            }
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+            .home-button, .discord-button {
+                width: 100%;
+                max-width: 300px;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-code {
+                font-size: 4rem;
+                letter-spacing: 5px;
+            }
+            .error-title {
+                font-size: 1.5rem;
+            }
+            .error-description p {
+                font-size: 0.85rem;
+            }
+            .home-button, .discord-button {
+                padding: 12px 30px;
+                font-size: 0.9rem;
+                min-width: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">
+            <img src="wh.png" alt="White Box Logo" class="loading-icon">
+            <div class="loading-text">WHITE BOX<span class="loading-dots"></span></div>
+        </div>
+    </div>
+
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+    <nav class="navbar" id="navbar">
+        <a href="/" class="logo">
+            <img src="wh.png" alt="White Box Logo" class="logo-img">
+        </a>
+        
+        <div class="desktop-nav">
+            <a href="/">Home</a>
+            <a href="/#tools">Tools</a>
+            <a href="/#about">About</a>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <div style="display: flex; align-items: center;">
+                <img src="wh.png" alt="Logo">
+                <span style="font-size: 1.2rem; margin-left: 10px; font-weight: bold;">WHITE BOX</span>
+            </div>
+            <button class="mobile-close-btn" id="mobileCloseBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-menu-content">
+            <a href="/" class="mobile-menu-link">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="/#tools" class="mobile-menu-link">
+                <i class="fas fa-tools"></i> Tools
+            </a>
+            <a href="/#about" class="mobile-menu-link">
+                <i class="fas fa-info-circle"></i> About
+            </a>
+            <a href="https://discord.gg/DbNQgMWJ8G" target="_blank" class="mobile-menu-link">
+                <i class="fab fa-discord"></i> Join Discord
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <section class="error-section">
+            <div class="error-bg"></div>
+            <h1 class="error-code">404</h1>
+            <h2 class="error-title">PAGE NOT FOUND</h2>
+            <p class="error-message">The page you are looking for doesn't exist or has been moved.</p>
+            
+            <div class="error-description">
+                <p><strong class="highlight-red">White Box</strong> couldn't find the requested resource. This might be because:</p>
+                <p>• The page was removed or renamed<br>
+                • The URL was typed incorrectly<br>
+                • The link you followed is broken</p>
+                <p>Don't worry — you can return to our homepage or join our Discord community for assistance.</p>
+            </div>
+
+            <div class="button-group">
+                <a href="/" class="home-button">
+                    <i class="fas fa-home"></i> BACK TO HOME
+                </a>
+                <a href="https://discord.gg/DbNQgMWJ8G" target="_blank" class="discord-button">
+                    <i class="fab fa-discord"></i> JOIN DISCORD
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">
+                    <img src="wh.png" alt="White Box Logo" class="footer-logo-img">
+                </div>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">Professional Doxbin group providing advanced digital tools and utilities including WHASH password cracker.</p>
+                <div style="display: flex; gap: 15px;">
+                    <a href="https://github.com/danexoo/" target="_blank" class="github-link-footer"><i class="fab fa-github"></i></a>
+                    <a href="https://discord.gg/DbNQgMWJ8G" target="_blank" class="discord-link-footer"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/#tools">Tools</a></li>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="https://discord.gg/DbNQgMWJ8G" target="_blank">Join Discord</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Our Services</h4>
+                <ul>
+                    <li><a href="#">WHASH Password Cracker</a></li>
+                    <li><a href="/NexcordBasic">Nexcord Basic</a></li>
+                    <li><a href="/NexcordPlus">Nexcord Plus</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2026 WHITE BOX. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            const navbar = document.getElementById('navbar');
+
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+            }, 1500);
+
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('active');
+                mobileMenuOverlay.classList.toggle('active');
+                document.body.classList.toggle('no-scroll');
+            }
+
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+            mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 767 && mobileMenu.classList.contains('active')) {
+                    toggleMobileMenu();
+                }
+            });
+
+            let lastScrollTop = 0;
+            let isNavbarHidden = false;
+
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    if (!isNavbarHidden) {
+                        navbar.classList.add('hidden');
+                        isNavbarHidden = true;
+                    }
+                } else {
+                    if (isNavbarHidden) {
+                        navbar.classList.remove('hidden');
+                        isNavbarHidden = false;
+                    }
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+        })();
+    </script>
+</body>
+</html>
