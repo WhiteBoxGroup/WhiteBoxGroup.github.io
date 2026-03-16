@@ -1944,8 +1944,365 @@
 </div>
 
 <script>
+// Mobile Menu Functions
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+function toggleMobileMenu() {
+    mobileMenu.classList.toggle('active');
+    mobileMenuOverlay.classList.toggle('active');
+    document.body.classList.toggle('no-scroll');
+}
+
+mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+
+mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        if (this.href.includes('discord.gg') || this.href.includes('http')) {
+            return;
+        }
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+            toggleMobileMenu();
+            setTimeout(() => {
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
+        }
+    });
+});
+
+// Loading Screen
+const loadingScreen = document.getElementById('loadingScreen');
+const mainLogo = document.getElementById('mainLogo');
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+        setTimeout(() => {
+            mainLogo.classList.add('loaded');
+        }, 300);
+        startInitialAnimations();
+    }, 1500);
+});
+
+// Matrix Background
+const canvas = document.getElementById('matrixCanvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+
+const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
+const chars = matrixChars.split("");
+const fontSize = 14;
+let columns = canvas.width / fontSize;
+let drops = [];
+
+function initDrops() {
+    drops = [];
+    columns = canvas.width / fontSize;
+    for (let i = 0; i < columns; i++) {
+        drops[i] = Math.floor(Math.random() * canvas.height / fontSize) * fontSize;
+    }
+}
+
+initDrops();
+
+function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = `${fontSize}px 'Roboto Mono', monospace`;
+    for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        drops[i] += fontSize;
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+        }
+    }
+}
+
+// Terminal Rotation
+const terminalLines = [
+    document.getElementById('terminal-line-1'),
+    document.getElementById('terminal-line-2'),
+    document.getElementById('terminal-line-3')
+];
+
+let currentLineIndex = 0;
+let rotationInterval;
+
+function startTerminalRotation() {
+    terminalLines[0].classList.add('active');
+    rotationInterval = setInterval(() => {
+        terminalLines[currentLineIndex].classList.remove('active');
+        terminalLines[currentLineIndex].classList.add('leaving');
+        currentLineIndex = (currentLineIndex + 1) % terminalLines.length;
+        setTimeout(() => {
+            terminalLines[(currentLineIndex + 2) % 3].classList.remove('leaving');
+        }, 500);
+        setTimeout(() => {
+            terminalLines[currentLineIndex].classList.add('active');
+        }, 500);
+    }, 3000);
+}
+
+// Animation Observer
+const animatedElements = [];
+const elementStates = new WeakMap();
+
+function observeAnimations() {
+    const elements = [
+        { id: 'heroTitle' }, { id: 'heroText' }, { id: 'heroButton' }, { id: 'scrollDown' },
+        { id: 'toolsTitle' }, { id: 'searchContainer' }, { id: 'tool1' }, { id: 'tool2' },
+        { id: 'tool3' }, { id: 'aboutTitle' }, { id: 'aboutText1' }, { id: 'aboutText2' },
+        { id: 'stat1' }, { id: 'stat2' }, { id: 'stat3' }, { id: 'link1' }, { id: 'link2' }, { id: 'link3' }
+    ];
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const element = entry.target;
+            if (!entry.isIntersecting) {
+                if (elementStates.has(element)) {
+                    element.classList.remove('visible');
+                    elementStates.set(element, false);
+                }
+            }
+            if (entry.isIntersecting) {
+                if (!elementStates.get(element)) {
+                    setTimeout(() => {
+                        element.classList.add('visible');
+                        elementStates.set(element, true);
+                    }, 100);
+                }
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    elements.forEach(item => {
+        const element = document.getElementById(item.id);
+        if (element) {
+            animatedElements.push(element);
+            elementStates.set(element, false);
+            observer.observe(element);
+        }
+    });
+}
+
+// Scroll Handler
+let lastScrollTop = 0;
+const navbar = document.getElementById('navbar');
+let isNavbarHidden = false;
+let isProgrammaticScroll = false;
+
+function handleScroll() {
+    if (isProgrammaticScroll) {
+        isProgrammaticScroll = false;
+        return;
+    }
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollTop > lastScrollTop && scrollTop > 100) {
+        if (!isNavbarHidden) {
+            navbar.classList.add('hidden');
+            isNavbarHidden = true;
+        }
+    } else {
+        if (isNavbarHidden) {
+            navbar.classList.remove('hidden');
+            isNavbarHidden = false;
+        }
+    }
+    lastScrollTop = scrollTop;
+}
+
+// Initialize
+function startInitialAnimations() {
+    startTerminalRotation();
+    observeAnimations();
+    animate();
+}
+
+function animate() {
+    drawMatrix();
+    requestAnimationFrame(animate);
+}
+
+// Event Listeners
+window.addEventListener('scroll', handleScroll);
+window.addEventListener('resize', () => {
+    resizeCanvas();
+    initDrops();
+});
+
+window.addEventListener('beforeunload', () => {
+    if (rotationInterval) {
+        clearInterval(rotationInterval);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const whashTool = document.getElementById('tool1');
+    whashTool.style.cursor = 'not-allowed';
+    whashTool.style.pointerEvents = 'none';
+    whashTool.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    });
+});
+
+document.querySelectorAll('.desktop-nav a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        if (this.href.includes('discord.gg') || this.href.includes('http')) {
+            return;
+        }
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+            isProgrammaticScroll = true;
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+const returnHomeLink = document.querySelector('.mobile-menu-link.return-home');
+if (returnHomeLink) {
+    returnHomeLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        toggleMobileMenu();
+        setTimeout(() => {
+            isProgrammaticScroll = true;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 300);
+    });
+}
+
+const scrollDownArrow = document.querySelector('.scroll-arrow');
+if (scrollDownArrow) {
+    scrollDownArrow.addEventListener('click', function(e) {
+        e.preventDefault();
+        const toolsSection = document.getElementById('tools');
+        if (toolsSection) {
+            isProgrammaticScroll = true;
+            toolsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+}
+
+// Search Functionality
+const searchInput = document.getElementById('searchInput');
+const searchPreview = document.getElementById('searchPreview');
+const tools = [
+    { name: 'WHASH', price: 'COMING SOON', status: 'development', theme: 'disabled', icon: 'fa-solid fa-lock', element: document.getElementById('tool1') },
+    { name: 'Nexcord Basic', price: 'FREE', status: 'archived', theme: 'red', icon: 'fab fa-discord', element: document.getElementById('tool2') },
+    { name: 'Nexcord Plus', price: '€3.99', status: 'paused', theme: 'gold', icon: 'fab fa-discord', element: document.getElementById('tool3') }
+];
+
+function filterTools(searchTerm) {
+    const term = searchTerm.toLowerCase().trim();
+    tools.forEach(tool => {
+        const matches = tool.name.toLowerCase().includes(term);
+        tool.element.style.display = (term === '' || matches) ? 'block' : 'none';
+    });
+}
+
+function updatePreview(searchTerm) {
+    const term = searchTerm.toLowerCase().trim();
+    if (term === '') {
+        searchPreview.classList.remove('active');
+        return;
+    }
+    const matches = tools.filter(tool => tool.name.toLowerCase().includes(term));
+    let previewHTML = '';
+    if (matches.length > 0) {
+        matches.forEach(tool => {
+            previewHTML += `
+                <div class="preview-item ${tool.theme}-theme" data-name="${tool.name.toLowerCase()}">
+                    <i class="${tool.icon}"></i>
+                    <div class="preview-info">
+                        <div class="preview-title">${tool.name}</div>
+                        <div class="preview-price">${tool.price} • ${tool.status}</div>
+                    </div>
+                </div>
+            `;
+        });
+    } else {
+        previewHTML = '<div class="no-results">No tools found</div>';
+    }
+    searchPreview.innerHTML = previewHTML;
+    searchPreview.classList.add('active');
+
+    document.querySelectorAll('.preview-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const toolName = item.dataset.name;
+            const tool = tools.find(t => t.name.toLowerCase() === toolName);
+            if (tool) {
+                tool.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                tool.element.style.transform = 'scale(1.05)';
+                let glowColor = 'var(--accent-glow)';
+                if (tool.theme === 'red') glowColor = 'var(--red-glow)';
+                if (tool.theme === 'gold') glowColor = 'var(--gold-glow)';
+                if (tool.theme === 'disabled') glowColor = 'var(--gray-glow)';
+                tool.element.style.boxShadow = `0 0 50px ${glowColor}`;
+                setTimeout(() => {
+                    tool.element.style.transform = '';
+                    tool.element.style.boxShadow = '';
+                }, 500);
+            }
+            searchPreview.classList.remove('active');
+            searchInput.value = toolName;
+            filterTools(toolName);
+        });
+    });
+}
+
+searchInput.addEventListener('input', (e) => {
+    const value = e.target.value;
+    if (value.toLowerCase() === 'party at the beach') {
+        window.location.href = '/patb';
+        return;
+    }
+    filterTools(value);
+    updatePreview(value);
+});
+
+searchInput.addEventListener('focus', () => {
+    if (searchInput.value.trim() !== '') {
+        updatePreview(searchInput.value);
+    }
+});
+
+document.addEventListener('click', (e) => {
+    if (!searchPreview.contains(e.target) && e.target !== searchInput) {
+        searchPreview.classList.remove('active');
+    }
+});
+
+searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        const value = searchInput.value.toLowerCase().trim();
+        if (value === 'party at the beach') {
+            window.location.href = '/patb';
+        }
+    }
+});
+
+// News System
 (function() {
-    // Nur ausführen wenn Elemente existieren
     const newsButton = document.getElementById('newsButton');
     if (!newsButton) return;
     
@@ -1998,14 +2355,12 @@
     
     function renderNews() {
         const displayNews = showingAll ? newsData : newsData.slice(0, 1);
-        
         let html = '';
         displayNews.forEach(item => {
             const contentHtml = item.content.split('\n').map(line => {
                 if (line.trim() === '') return '<br>';
                 return `<p>${line}</p>`;
             }).join('');
-            
             html += `
                 <div class="news-entry">
                     <div class="news-entry-title">${item.title}</div>
@@ -2017,9 +2372,7 @@
                 </div>
             `;
         });
-        
         newsContainer.innerHTML = html;
-        
         if (newsData.length > 1) {
             toggleBtn.style.display = 'block';
             toggleBtn.textContent = showingAll ? 'SHOW LESS' : 'SHOW MORE (' + (newsData.length - 1) + ' more)';
