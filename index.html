@@ -2091,24 +2091,30 @@
         searchPreview.innerHTML = previewHTML;
         searchPreview.classList.add('active');
 
-        document.querySelectorAll('.preview-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const toolName = item.dataset.name;
-                const tool = tools.find(t => t.name.toLowerCase() === toolName);
-                if (tool) {
-                    tool.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    tool.element.style.transform = 'scale(1.05)';
-                    tool.element.style.boxShadow = '0 0 50px var(--accent-glow)';
-                    setTimeout(() => {
-                        tool.element.style.transform = '';
-                        tool.element.style.boxShadow = '';
-                    }, 500);
-                }
-                searchPreview.classList.remove('active');
-                searchInput.value = toolName;
-                filterTools(toolName);
+            document.querySelectorAll('.preview-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const toolName = item.dataset.name;
+                    const tool = tools.find(t => t.name.toLowerCase() === toolName);
+                    if (tool) {
+                        tool.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        tool.element.style.transform = 'scale(1.05)';
+                        
+                        let glowColor = 'var(--accent-glow)';
+                        if (tool.theme === 'red') glowColor = 'var(--red-glow)';
+                        if (tool.theme === 'gold') glowColor = 'var(--gold-glow)';
+                        if (tool.theme === 'disabled') glowColor = 'var(--gray-glow)';
+                        tool.element.style.boxShadow = `0 0 50px ${glowColor}`;
+                        
+                        setTimeout(() => {
+                            tool.element.style.transform = '';
+                            tool.element.style.boxShadow = '';
+                        }, 500);
+                    }
+                    searchPreview.classList.remove('active');
+                    searchInput.value = toolName;
+                    filterTools(toolName);
+                });
             });
-        });
     }
 
     searchInput.addEventListener('input', (e) => {
