@@ -526,7 +526,7 @@
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
             color: var(--text-primary);
             position: relative;
             display: inline-block;
@@ -559,11 +559,157 @@
             transform: scaleX(1);
         }
 
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 50px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .search-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 18px 25px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--text-primary);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            letter-spacing: 1px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 30px var(--accent-glow);
+            background: rgba(20, 20, 20, 0.98);
+        }
+
+        .search-box::placeholder {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus + .search-icon {
+            color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .search-preview {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .search-preview.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .preview-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .preview-item:last-child {
+            border-bottom: none;
+        }
+
+        .preview-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .preview-item i {
+            width: 30px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .preview-item.red-theme i {
+            color: #ff3333;
+            text-shadow: 0 0 10px var(--red-glow);
+        }
+
+        .preview-item.gold-theme i {
+            color: #ffd700;
+            text-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        .preview-item.disabled-theme i {
+            color: var(--gray-color);
+        }
+
+        .preview-item.white-theme i {
+            color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .preview-info {
+            flex: 1;
+        }
+
+        .preview-title {
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .preview-price {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .no-results {
+            padding: 30px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
         .tools-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 40px;
-            margin-top: 60px;
+            margin-top: 20px;
         }
 
         .tool-card {
@@ -1225,6 +1371,10 @@
                 width: 50px;
                 height: 50px;
             }
+
+            .search-container {
+                max-width: 400px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1265,6 +1415,15 @@
             
             .mobile-menu {
                 width: 250px;
+            }
+
+            .search-container {
+                max-width: 300px;
+            }
+
+            .search-box {
+                padding: 15px 20px;
+                font-size: 0.9rem;
             }
         }
 
@@ -1355,8 +1514,15 @@
 
     <section class="section" id="tools">
         <h2 class="section-title" id="toolsTitle">OUR TOOLS</h2>
-        <div class="tools-container">
-            <div class="tool-card disabled-theme" id="tool1">
+        
+        <div class="search-container" id="searchContainer">
+            <input type="text" class="search-box" id="searchInput" placeholder="Search tools... (try 'PARTY AT THE BEACH')" autocomplete="off">
+            <i class="fas fa-search search-icon"></i>
+            <div class="search-preview" id="searchPreview"></div>
+        </div>
+
+        <div class="tools-container" id="toolsContainer">
+            <div class="tool-card disabled-theme" id="tool1" data-name="whash" data-price="coming soon" data-status="development">
                 <div class="in-development-badge">IN DEVELOPMENT</div>
                 <div class="tool-icon">
                     <img src="whash.png" alt="WHASH Logo" class="tool-icon-img">
@@ -1367,7 +1533,7 @@
                 <div class="tool-link">Get Tool</div>
             </div>
             
-            <a href="/NexcordBasic" class="tool-card red-theme" id="tool2">
+            <a href="/NexcordBasic" class="tool-card red-theme" id="tool2" data-name="nexcord basic" data-price="free" data-status="archived">
                 <div class="archived-badge">ARCHIVED</div>
                 <div class="tool-icon">
                     <i class="fab fa-discord"></i>
@@ -1378,7 +1544,7 @@
                 <div class="tool-link">View on WhiteBox</div>
             </a>
             
-            <a href="/NexcordPlus" class="tool-card gold-theme" id="tool3">
+            <a href="/NexcordPlus" class="tool-card gold-theme" id="tool3" data-name="nexcord plus" data-price="€3.99" data-status="paused">
                 <div class="paused-badge">PAUSED</div>
                 <div class="tool-icon">
                     <i class="fab fa-discord"></i>
@@ -1609,6 +1775,7 @@
             { id: 'heroButton', threshold: 0.3 },
             { id: 'scrollDown', threshold: 0.3 },
             { id: 'toolsTitle', threshold: 0.3 },
+            { id: 'searchContainer', threshold: 0.3 },
             { id: 'tool1', threshold: 0.2 },
             { id: 'tool2', threshold: 0.2 },
             { id: 'tool3', threshold: 0.2 },
@@ -1804,6 +1971,132 @@
             }
         });
     }
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchPreview = document.getElementById('searchPreview');
+    const tools = [
+        {
+            name: 'WHASH',
+            price: 'COMING SOON',
+            status: 'development',
+            theme: 'disabled',
+            icon: 'fa-solid fa-lock',
+            element: document.getElementById('tool1')
+        },
+        {
+            name: 'Nexcord Basic',
+            price: 'FREE',
+            status: 'archived',
+            theme: 'red',
+            icon: 'fab fa-discord',
+            element: document.getElementById('tool2')
+        },
+        {
+            name: 'Nexcord Plus',
+            price: '€3.99',
+            status: 'paused',
+            theme: 'gold',
+            icon: 'fab fa-discord',
+            element: document.getElementById('tool3')
+        }
+    ];
+
+    function filterTools(searchTerm) {
+        const term = searchTerm.toLowerCase().trim();
+        
+        tools.forEach(tool => {
+            const matches = tool.name.toLowerCase().includes(term);
+            if (term === '') {
+                tool.element.style.display = 'block';
+            } else {
+                tool.element.style.display = matches ? 'block' : 'none';
+            }
+        });
+    }
+
+    function updatePreview(searchTerm) {
+        const term = searchTerm.toLowerCase().trim();
+        
+        if (term === '') {
+            searchPreview.classList.remove('active');
+            return;
+        }
+
+        const matches = tools.filter(tool => tool.name.toLowerCase().includes(term));
+        
+        let previewHTML = '';
+        
+        if (matches.length > 0) {
+            matches.forEach(tool => {
+                previewHTML += `
+                    <div class="preview-item ${tool.theme}-theme" data-name="${tool.name.toLowerCase()}">
+                        <i class="${tool.icon}"></i>
+                        <div class="preview-info">
+                            <div class="preview-title">${tool.name}</div>
+                            <div class="preview-price">${tool.price} • ${tool.status}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        } else {
+            previewHTML = '<div class="no-results">No tools found</div>';
+        }
+
+        searchPreview.innerHTML = previewHTML;
+        searchPreview.classList.add('active');
+
+        document.querySelectorAll('.preview-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const toolName = item.dataset.name;
+                const tool = tools.find(t => t.name.toLowerCase() === toolName);
+                if (tool) {
+                    tool.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    tool.element.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        tool.element.style.transform = '';
+                    }, 500);
+                }
+                searchPreview.classList.remove('active');
+                searchInput.value = toolName;
+                filterTools(toolName);
+            });
+        });
+    }
+
+    searchInput.addEventListener('input', (e) => {
+        const value = e.target.value;
+        
+        if (value.toLowerCase() === 'party at the beach') {
+            window.location.href = '/patb';
+            return;
+        }
+        
+        filterTools(value);
+        updatePreview(value);
+    });
+
+    searchInput.addEventListener('focus', () => {
+        if (searchInput.value.trim() !== '') {
+            updatePreview(searchInput.value);
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!searchPreview.contains(e.target) && e.target !== searchInput) {
+            searchPreview.classList.remove('active');
+        }
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const value = searchInput.value.toLowerCase().trim();
+            if (value === 'party at the beach') {
+                window.location.href = '/patb';
+            }
+        }
+    });
     </script>
 </body>
 </html>
