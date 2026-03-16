@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>White Box | Nexcord Basic</title>
     <link rel="icon" type="image/png" href="wh.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -46,9 +46,13 @@
             background-color: var(--pure-black);
             color: var(--text-primary);
             overflow-x: hidden;
+            overflow-y: auto;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            width: 100%;
+            max-width: 100vw;
+            position: relative;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -78,6 +82,9 @@
         html {
             scroll-behavior: smooth;
             scroll-padding-top: 70px;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
         }
 
         .loading-screen {
@@ -134,6 +141,7 @@
         .navbar {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
             display: flex;
             justify-content: space-between;
@@ -349,6 +357,9 @@
 
         .main-content {
             padding-top: 70px;
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
         }
 
         .hero-section {
@@ -361,6 +372,7 @@
             padding: 70px 5% 0;
             position: relative;
             overflow: hidden;
+            width: 100%;
         }
 
         .hero-bg {
@@ -444,6 +456,10 @@
             text-align: center;
             position: relative;
             border-bottom: 1px solid rgba(255, 51, 51, 0.1);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .section-title {
@@ -452,20 +468,22 @@
             color: var(--text-primary);
             position: relative;
             display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
+            text-align: center;
+            width: auto;
+            max-width: 90%;
             opacity: 0;
-            transform: translateX(-50%) translateY(30px);
+            transform: translateY(30px);
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
-            white-space: nowrap;
+            white-space: normal;
+            word-wrap: break-word;
         }
 
         .section-title::after {
             content: '';
             position: absolute;
             bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
+            right: 0;
             width: 100%;
             height: 3px;
             background: linear-gradient(90deg, transparent, var(--red-primary), transparent);
@@ -474,6 +492,7 @@
         .screenshot-carousel {
             position: relative;
             max-width: 900px;
+            width: 100%;
             margin: 0 auto;
             opacity: 0;
             transform: translateY(50px);
@@ -498,7 +517,6 @@
 
         .screenshot-image {
             width: 100%;
-            max-width: 900px;
             height: auto;
             border-radius: 12px;
             border: 2px solid rgba(255, 51, 51, 0.5);
@@ -615,6 +633,10 @@
             text-align: center;
             position: relative;
             background: linear-gradient(180deg, transparent 0%, rgba(255, 51, 51, 0.02) 100%);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .download-header {
@@ -624,6 +646,7 @@
             gap: 20px;
             margin-bottom: 40px;
             flex-wrap: wrap;
+            width: 100%;
         }
 
         .download-title {
@@ -633,14 +656,15 @@
             margin: 0;
             letter-spacing: 4px;
             position: relative;
+            display: inline-block;
         }
 
         .download-title::after {
             content: '';
             position: absolute;
             bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
+            right: 0;
             width: 100%;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--red-primary), transparent);
@@ -679,6 +703,7 @@
 
         .download-wrapper {
             max-width: 900px;
+            width: 100%;
             margin: 0 auto;
             background: rgba(10, 10, 10, 0.95);
             border-radius: 20px;
@@ -998,6 +1023,7 @@
             background-color: var(--black-2);
             padding: 60px 5% 30px;
             border-top: 1px solid rgba(255, 51, 51, 0.2);
+            width: 100%;
         }
 
         .footer-content {
@@ -1005,6 +1031,9 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 40px;
             margin-bottom: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .footer-logo {
@@ -1134,10 +1163,6 @@
             .screenshot-carousel {
                 max-width: 700px;
             }
-            .section-title {
-                font-size: 2rem;
-                white-space: normal;
-            }
         }
 
         @media (max-width: 768px) {
@@ -1151,7 +1176,7 @@
                 font-size: 1rem;
             }
             .section-title {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             .download-title {
                 font-size: 2rem;
@@ -1214,10 +1239,6 @@
             }
             .screenshot-carousel {
                 max-width: 350px;
-            }
-            .section-title {
-                white-space: normal;
-                font-size: 1.3rem;
             }
         }
     </style>
