@@ -642,6 +642,34 @@
             box-shadow: 0 0 30px var(--white-glow);
         }
 
+        .tool-card.disabled-theme {
+            border: 1px solid rgba(100, 100, 100, 0.5);
+            box-shadow: 0 0 20px rgba(100, 100, 100, 0.1);
+            background-color: rgba(30, 30, 30, 0.8);
+            cursor: not-allowed;
+            position: relative;
+        }
+
+        .tool-card.disabled-theme:hover {
+            transform: translateY(0) scale(1);
+            box-shadow: 0 0 20px rgba(100, 100, 100, 0.1);
+            border-color: rgba(100, 100, 100, 0.5);
+        }
+
+        .in-development-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(128, 128, 128, 0.3);
+            color: #cccccc;
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(128, 128, 128, 0.5);
+        }
+
         .archived-badge {
             position: absolute;
             top: 15px;
@@ -686,6 +714,11 @@
             filter: drop-shadow(0 0 3px black);
         }
 
+        .tool-card.disabled-theme .tool-icon-img {
+            filter: grayscale(100%) brightness(0.7);
+            opacity: 0.7;
+        }
+
         .tool-card.white-theme .tool-icon-img {
             filter: drop-shadow(0 0 8px var(--white-glow));
         }
@@ -716,12 +749,25 @@
             text-shadow: 0 0 20px var(--white-glow), 0 0 40px rgba(255, 255, 255, 0.3);
         }
 
+        .tool-card.disabled-theme .tool-icon {
+            color: var(--gray-color);
+            text-shadow: 0 0 10px rgba(100, 100, 100, 0.3);
+        }
+
         .tool-card:hover .tool-icon {
             transform: scale(1.2) rotate(5deg);
         }
 
+        .tool-card.disabled-theme:hover .tool-icon {
+            transform: scale(1) rotate(0deg);
+        }
+
         .tool-card:hover .tool-icon-img {
             transform: scale(1.2) rotate(5deg);
+        }
+
+        .tool-card.disabled-theme:hover .tool-icon-img {
+            transform: scale(1) rotate(0deg);
         }
 
         .tool-card h3 {
@@ -755,6 +801,11 @@
             text-shadow: 0 0 10px var(--white-glow);
         }
 
+        .tool-card.disabled-theme h3 {
+            color: #888888;
+            text-shadow: 0 0 10px rgba(136, 136, 136, 0.3);
+        }
+
         .tool-price {
             font-size: 1.2rem;
             margin-bottom: 20px;
@@ -786,10 +837,19 @@
             text-shadow: 0 0 8px var(--white-glow);
         }
 
+        .tool-card.disabled-theme .tool-price {
+            color: #777777;
+            text-shadow: 0 0 5px rgba(119, 119, 119, 0.3);
+        }
+
         .tool-card p {
             color: var(--text-secondary);
             font-size: 0.95rem;
             margin-bottom: 20px;
+        }
+
+        .tool-card.disabled-theme p {
+            color: #999999;
         }
 
         .tool-link {
@@ -833,8 +893,44 @@
             text-shadow: 0 0 5px var(--white-glow);
         }
 
+        .tool-card.disabled-theme .tool-link {
+            border-color: #666666;
+            color: #666666;
+            text-shadow: none;
+            background-color: rgba(80, 80, 80, 0.2);
+            pointer-events: none;
+            position: relative;
+            padding-left: 35px;
+        }
+
+        .tool-card.disabled-theme .tool-link::before {
+            content: '\f023';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
         .tool-link:hover {
             background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .tool-card.disabled-theme .tool-link:hover {
+            background-color: rgba(80, 80, 80, 0.2);
+        }
+
+        .tool-card.disabled-theme::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 30%, rgba(128, 128, 128, 0.05) 50%, transparent 70%);
+            z-index: 1;
+            pointer-events: none;
         }
 
         .about-content {
@@ -1260,15 +1356,16 @@
     <section class="section" id="tools">
         <h2 class="section-title" id="toolsTitle">OUR TOOLS</h2>
         <div class="tools-container">
-            <a href="/whash" target="_blank" class="tool-card white-theme" id="tool1">
+            <div class="tool-card disabled-theme" id="tool1">
+                <div class="in-development-badge">IN DEVELOPMENT</div>
                 <div class="tool-icon">
                     <img src="whash.png" alt="WHASH Logo" class="tool-icon-img">
                 </div>
                 <h3>WHASH</h3>
-                <div class="tool-price">FREE / PREMIUM</div>
+                <div class="tool-price">COMING SOON</div>
                 <p>The fastest password cracker White Box has ever made. Main feature is a Rare Username Finder for Doxbin.com, Discord, TikTok, YouTube and more. Ultra-fast performance with advanced algorithms.</p>
-                <div class="tool-link">Access WHASH</div>
-            </a>
+                <div class="tool-link">Get Tool</div>
+            </div>
             
             <a href="/NexcordBasic" target="_blank" class="tool-card red-theme" id="tool2">
                 <div class="archived-badge">ARCHIVED</div>
@@ -1362,7 +1459,7 @@
             <div class="footer-links">
                 <h4>Our Services</h4>
                 <ul>
-                    <li><a href="/whash" target="_blank">WHASH Password Cracker</a></li>
+                    <li><a href="#tools">WHASH Password Cracker (Soon)</a></li>
                     <li><a href="/NexcordBasic" target="_blank">Nexcord Basic (ARCHIVED)</a></li>
                     <li><a href="/NexcordPlus" target="_blank">Nexcord Plus (PAUSED)</a></li>
                 </ul>
@@ -1640,6 +1737,19 @@
         if (rotationInterval) {
             clearInterval(rotationInterval);
         }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const whashTool = document.getElementById('tool1');
+        
+        whashTool.style.cursor = 'not-allowed';
+        whashTool.style.pointerEvents = 'none';
+        
+        whashTool.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        });
     });
 
     document.querySelectorAll('.desktop-nav a').forEach(link => {
