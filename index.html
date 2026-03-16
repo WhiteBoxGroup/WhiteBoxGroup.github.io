@@ -659,30 +659,23 @@
             overflow: hidden;
         }
 
-        .preview-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s ease;
-            z-index: -1;
-        }
-
-        .preview-item:hover::before {
-            left: 100%;
-        }
-
-        .preview-item:last-child {
-            border-bottom: none;
+        .preview-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            background: transparent;
         }
 
         .preview-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateX(8px) scale(1.02);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border-bottom-color: transparent;
         }
 
         .preview-item i {
@@ -693,42 +686,27 @@
         }
 
         .preview-item:hover i {
-            transform: scale(1.2) rotate(5deg);
-        }
-
-        .preview-item.red-theme i {
-            color: #ff3333;
-            text-shadow: 0 0 15px var(--red-glow);
+            transform: scale(1.2);
         }
 
         .preview-item.red-theme:hover {
-            border-left: 3px solid #ff3333;
-        }
-
-        .preview-item.gold-theme i {
-            color: #ffd700;
-            text-shadow: 0 0 15px var(--gold-glow);
+            background: rgba(255, 51, 51, 0.15);
+            box-shadow: 0 0 25px rgba(255, 51, 51, 0.5);
         }
 
         .preview-item.gold-theme:hover {
-            border-left: 3px solid #ffd700;
-        }
-
-        .preview-item.disabled-theme i {
-            color: var(--gray-color);
+            background: rgba(255, 215, 0, 0.15);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
         }
 
         .preview-item.disabled-theme:hover {
-            border-left: 3px solid var(--gray-color);
-        }
-
-        .preview-item.white-theme i {
-            color: var(--accent-color);
-            text-shadow: 0 0 15px var(--accent-glow);
+            background: rgba(100, 100, 100, 0.15);
+            box-shadow: 0 0 25px rgba(100, 100, 100, 0.5);
         }
 
         .preview-item.white-theme:hover {
-            border-left: 3px solid var(--accent-color);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
         }
 
         .preview-info {
