@@ -1326,7 +1326,6 @@
     <section class="section" id="tools">
         <h2 class="section-title" id="toolsTitle">OUR TOOLS</h2>
         <div class="tools-container">
-            <!-- WHASH TOOL - IN DEVELOPMENT -->
             <div class="tool-card disabled-theme" id="tool1">
                 <div class="in-development-badge">In Development</div>
                 <div class="tool-icon">
@@ -1709,14 +1708,11 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-        // WHASH-Button deaktivieren
         const whashTool = document.getElementById('tool1');
         
-        // Sicherstellen, dass es nicht klickbar ist
         whashTool.style.cursor = 'not-allowed';
         whashTool.style.pointerEvents = 'none';
         
-        // Klick-Event verhindern
         whashTool.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
