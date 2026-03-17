@@ -2055,7 +2055,7 @@
     </div>
     <script>
 
-    // Review Slider - Simple Rotation
+    // Review Slider - Unendlicher Circle mit Animation
     if (document.querySelectorAll('.review-card').length > 0) {
         const reviewCards = document.querySelectorAll('.review-card');
         const dots = document.querySelectorAll('.review-dot');
@@ -2063,26 +2063,40 @@
         let reviewInterval;
         
         function updateReviews(index) {
-            reviewCards.forEach((card, i) => {
+            // Alle Cards zurücksetzen
+            reviewCards.forEach((card) => {
                 card.style.borderColor = 'rgba(255, 255, 255, 0.05)';
                 card.style.boxShadow = 'none';
                 card.style.background = 'rgba(255, 255, 255, 0.03)';
                 card.style.opacity = '0.4';
+                card.style.transform = 'translateY(0)';
+                card.style.transition = 'all 0.5s ease';
             });
             
-            reviewCards[index].style.borderColor = 'rgba(255, 255, 255, 0.3)';
-            reviewCards[index].style.boxShadow = '0 0 15px var(--accent-glow)';
-            reviewCards[index].style.background = 'rgba(255, 255, 255, 0.08)';
-            reviewCards[index].style.opacity = '1';
+            // Aktuelle Card nach oben schieben (verschwinden)
+            reviewCards[index].style.transform = 'translateY(-30px)';
+            reviewCards[index].style.opacity = '0';
             
+            // Nächste Card (die nach oben kommt) bekommt Glow
             let nextIndex = (index + 1) % reviewCards.length;
-            reviewCards[nextIndex].style.opacity = '0.8';
+            setTimeout(() => {
+                reviewCards[nextIndex].style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                reviewCards[nextIndex].style.boxShadow = '0 0 15px var(--accent-glow)';
+                reviewCards[nextIndex].style.background = 'rgba(255, 255, 255, 0.08)';
+                reviewCards[nextIndex].style.opacity = '1';
+                reviewCards[nextIndex].style.transform = 'translateY(0)';
+            }, 100);
             
-            let nextNextIndex = (index + 2) % reviewCards.length;
-            reviewCards[nextNextIndex].style.opacity = '0.6';
+            // Die anderen Cards nach oben rücken
+            for (let i = 0; i < reviewCards.length; i++) {
+                if (i !== index && i !== nextIndex) {
+                    reviewCards[i].style.transform = 'translateY(-15px)';
+                }
+            }
             
+            // Dots aktualisieren
             dots.forEach((dot, i) => {
-                if (i === index) {
+                if (i === nextIndex) {
                     dot.classList.add('active');
                 } else {
                     dot.classList.remove('active');
@@ -2101,12 +2115,23 @@
                 updateReviews(currentIndex);
                 
                 clearInterval(reviewInterval);
-                reviewInterval = setInterval(nextReview, 2000);
+                reviewInterval = setInterval(nextReview, 1500); // 1.5 Sekunden
             });
         });
         
-        reviewInterval = setInterval(nextReview, 2000);
-        updateReviews(0);
+        // Initial: Erste Card leuchtet
+        reviewCards.forEach((card, i) => {
+            if (i === 0) {
+                card.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                card.style.boxShadow = '0 0 15px var(--accent-glow)';
+                card.style.background = 'rgba(255, 255, 255, 0.08)';
+                card.style.opacity = '1';
+            } else {
+                card.style.opacity = '0.6';
+            }
+        });
+        
+        reviewInterval = setInterval(nextReview, 1500); // 1.5 Sekunden
     }
         
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
