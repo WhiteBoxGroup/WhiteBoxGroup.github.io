@@ -2213,12 +2213,20 @@
     const mainLogo = document.getElementById('mainLogo');
 
     window.addEventListener('load', () => {
-        setTimeout(() => {
-            loadingScreen.classList.add('hidden');
-            setTimeout(() => mainLogo.classList.add('loaded'), 300);
-            startInitialAnimations();
-        }, 1500);
-    });
+    setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+        setTimeout(() => mainLogo.classList.add('loaded'), 300);
+        
+        // Matrix starten
+        animate();
+        
+        // Terminal Rotation starten
+        startTerminalRotation();
+        
+        // Animation Observer starten
+        observeAnimations();
+    }, 1500);
+});
 
     const canvas = document.getElementById('matrixCanvas');
     const ctx = canvas.getContext('2d');
