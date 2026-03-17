@@ -2527,7 +2527,6 @@
                 parseNews(text);
             } catch (error) {
                 newsContainer.innerHTML = '<div class="news-error">Failed to load news</div>';
-                console.error('News error:', error);
             }
         }
         
@@ -2647,210 +2646,87 @@
         const chatTabs = document.getElementById('chatTabs');
         const chatMessages = document.getElementById('chatMessages');
         const chatOptions = document.getElementById('chatOptions');
-        const chatModalContent = document.getElementById('chatModalContent');
         
         if (!chatButton) return;
         
-        const STORAGE_KEY = 'whitebox_chats';
-        let chats = [];
-        let currentChatId = null;
-        let isTyping = false;
-        
-        function loadChats() {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                try { chats = JSON.parse(saved); } catch (e) { chats = []; }
-            }
-            if (chats.length === 0) {
-                createNewChat();
-            } else {
-                currentChatId = chats[0].id;
-            }
-        }
-        
-        function saveChats() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(chats));
-        }
-        
-        function createNewChat() {
-            if (chats.length >= 5) {
-                alert('Maximum 5 chats allowed');
-                return null;
-            }
-            const newChat = {
-                id: Date.now() + Math.random(),
-                name: `Temporary Chat ${chats.length + 1}`,
-                messages: [{
-                    sender: 'bot',
-                    text: '👋 Welcome to White Box Support!\n\nWe are a professional Doxbin group providing advanced tools like WHASH password cracker, Discord nukers, DDoS tools, rare username finders, doxxes, and more.\n\nHow can I help you today? 🚀',
-                    timestamp: Date.now()
-                }],
-                createdAt: Date.now()
-            };
-            chats.push(newChat);
-            currentChatId = newChat.id;
-            saveChats();
-            renderTabs();
-            renderCurrentChat();
-            return newChat;
-        }
-        
-        function deleteChat(chatId) {
-            if (chats.length <= 1) {
-                alert('Cannot delete last chat');
-                return;
-            }
-            chats = chats.filter(c => c.id !== chatId);
-            if (currentChatId === chatId) currentChatId = chats[0].id;
-            saveChats();
-            renderTabs();
-            renderCurrentChat();
-        }
-        
-        function addBotResponse(chatId, responseText) {
-            const chat = chats.find(c => c.id === chatId);
-            if (!chat) return;
-            showTypingIndicator(chatId);
-            setTimeout(() => {
-                hideTypingIndicator(chatId);
-                chat.messages.push({ sender: 'bot', text: responseText, timestamp: Date.now() });
-                saveChats();
-                if (currentChatId === chatId) {
-                    renderCurrentChat();
-                    scrollToBottom();
-                }
-            }, 1500);
-        }
-        
-        function showTypingIndicator(chatId) {
-            isTyping = true;
-            if (currentChatId === chatId) {
-                renderCurrentChat();
-                scrollToBottom();
-            }
-        }
-        
-        function hideTypingIndicator(chatId) {
-            isTyping = false;
-            if (currentChatId === chatId) {
-                renderCurrentChat();
-                scrollToBottom();
-            }
-        }
-        
-        function scrollToBottom() {
-            setTimeout(() => chatMessages.scrollTop = chatMessages.scrollHeight, 100);
-        }
-        
-        function renderTabs() {
-            let html = '';
-            chats.forEach(chat => {
-                html += `
-                    <div class="chat-tab ${currentChatId === chat.id ? 'active' : ''}" data-chat-id="${chat.id}">
-                        <i class="fas fa-comment"></i> ${chat.name}
-                        <i class="fas fa-trash" onclick="event.stopPropagation(); deleteChatHandler(${chat.id})"></i>
-                    </div>
-                `;
-            });
-            if (chats.length < 5) {
-                html += `<div class="chat-tab new-chat" id="newChatTab"><i class="fas fa-plus"></i> New Chat</div>`;
-            }
-            chatTabs.innerHTML = html;
-            
-            document.querySelectorAll('.chat-tab[data-chat-id]').forEach(tab => {
-                tab.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('fa-trash')) return;
-                    const chatId = parseFloat(tab.dataset.chatId);
-                    currentChatId = chatId;
-                    renderTabs();
-                    renderCurrentChat();
-                });
-            });
-            
-            const newChatTab = document.getElementById('newChatTab');
-            if (newChatTab) newChatTab.addEventListener('click', () => createNewChat());
-        }
-        
-        window.deleteChatHandler = function(chatId) { deleteChat(chatId); };
-        
-        function renderCurrentChat() {
-            const chat = chats.find(c => c.id === currentChatId);
-            if (!chat) return;
-            let messagesHtml = '';
-            chat.messages.forEach(msg => {
-                messagesHtml += `
-                    <div class="chat-message ${msg.sender}">
-                        <div class="chat-avatar">
-                            ${msg.sender === 'bot' ? '<img src="wh.png" alt="Bot">' : '<i class="fas fa-user"></i>'}
-                        </div>
-                        <div class="chat-bubble">${msg.text.replace(/\n/g, '<br>')}</div>
-                    </div>
-                `;
-            });
-            if (isTyping) {
-                messagesHtml += `
-                    <div class="chat-message bot">
-                        <div class="chat-avatar"><img src="wh.png" alt="Bot"></div>
-                        <div class="chat-typing"><span></span><span></span><span></span></div>
-                    </div>
-                `;
-            }
-            chatMessages.innerHTML = messagesHtml;
-            chatOptions.innerHTML = `
-                <button class="chat-option-btn" data-action="person"><i class="fab fa-discord"></i><span>I want to talk to a person</span></button>
-                <button class="chat-option-btn" data-action="tools"><i class="fas fa-tools"></i><span>Tell me about your tools</span></button>
-                <button class="chat-option-btn" data-action="whash"><i class="fas fa-lock"></i><span>WHASH information</span></button>
-            `;
-            
-            document.querySelectorAll('.chat-option-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const action = btn.dataset.action;
-                    const chat = chats.find(c => c.id === currentChatId);
-                    if (!chat) return;
-                    let userText = '';
-                    let botResponse = '';
-                    switch(action) {
-                        case 'person':
-                            userText = 'I want to talk to a person';
-                            botResponse = 'To talk to a real person, please join our Discord server. Our support team is active there 24/7!\n\nClick the button below to join:';
-                            break;
-                        case 'tools':
-                            userText = 'Tell me about your tools';
-                            botResponse = 'We currently offer:\n\n🔹 WHASH - Password Cracker (Coming Soon)\n🔹 Nexcord Basic - Free Discord Tool (Archived)\n🔹 Nexcord Plus - Premium Discord Tool (€3.99)\n\nWhich one interests you?';
-                            break;
-                        case 'whash':
-                            userText = 'WHASH information';
-                            botResponse = 'WHASH is our upcoming password cracker with:\n\n✅ Rare Username Finder\n✅ Multi-platform support\n✅ Ultra-fast algorithms\n✅ Doxbin.com integration\n\nCurrently in development! Stay tuned. 🚀';
-                            break;
-                    }
-                    chat.messages.push({ sender: 'user', text: userText, timestamp: Date.now() });
-                    saveChats();
-                    renderCurrentChat();
-                    scrollToBottom();
-                    addBotResponse(currentChatId, botResponse);
-                });
-            });
-            
-            const lastMsg = chat.messages[chat.messages.length - 1];
-            if (lastMsg && lastMsg.sender === 'bot' && lastMsg.text.includes('Discord')) {
-                const discordBtn = document.createElement('a');
-                discordBtn.href = 'https://discord.gg/sMEkW6M4MQ';
-                discordBtn.target = '_blank';
-                discordBtn.className = 'discord-link-btn';
-                discordBtn.innerHTML = '<i class="fab fa-discord"></i> Join Discord Server';
-                chatOptions.appendChild(discordBtn);
-            }
-        }
-        
-        loadChats();
-        renderTabs();
-        renderCurrentChat();
+        let chatActive = false;
         
         chatButton.addEventListener('click', () => {
             chatModal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            renderCurrentChat();
-            scrollToBottom();
+            chatActive = true;
+            
+            chatTabs.innerHTML = `
+                <div class="chat-tab active"><i class="fas fa-comment"></i> Support Chat</div>
+                <div class="chat-tab new-chat"><i class="fas fa-plus"></i> New Chat</div>
+            `;
+            
+            chatMessages.innerHTML = `
+                <div class="chat-message bot">
+                    <div class="chat-avatar"><img src="wh.png" alt="Bot"></div>
+                    <div class="chat-bubble">👋 Welcome to White Box Support! How can I help you today?</div>
+                </div>
+            `;
+            
+            chatOptions.innerHTML = `
+                <button class="chat-option-btn" id="fakeOption1"><i class="fab fa-discord"></i><span>I want to talk to a person</span></button>
+                <button class="chat-option-btn" id="fakeOption2"><i class="fas fa-tools"></i><span>Tell me about your tools</span></button>
+                <button class="chat-option-btn" id="fakeOption3"><i class="fas fa-lock"></i><span>WHASH information</span></button>
+            `;
+            
+            document.getElementById('fakeOption1').addEventListener('click', () => {
+                chatMessages.innerHTML += `
+                    <div class="chat-message user">
+                        <div class="chat-avatar"><i class="fas fa-user"></i></div>
+                        <div class="chat-bubble">I want to talk to a person</div>
+                    </div>
+                `;
+                setTimeout(() => {
+                    chatMessages.innerHTML += `
+                        <div class="chat-message bot">
+                            <div class="chat-avatar"><img src="wh.png" alt="Bot"></div>
+                            <div class="chat-bubble">Please join our Discord server for human support: <a href="https://discord.gg/DbNQgMWJ8G" target="_blank">discord.gg/DbNQgMWJ8G</a></div>
+                        </div>
+                    `;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            });
+            
+            document.getElementById('fakeOption2').addEventListener('click', () => {
+                chatMessages.innerHTML += `
+                    <div class="chat-message user">
+                        <div class="chat-avatar"><i class="fas fa-user"></i></div>
+                        <div class="chat-bubble">Tell me about your tools</div>
+                    </div>
+                `;
+                setTimeout(() => {
+                    chatMessages.innerHTML += `
+                        <div class="chat-message bot">
+                            <div class="chat-avatar"><img src="wh.png" alt="Bot"></div>
+                            <div class="chat-bubble">We offer WHASH (password cracker), Nexcord Basic (free Discord tool), and Nexcord Plus (premium Discord tool). Check them out in the Tools section!</div>
+                        </div>
+                    `;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            });
+            
+            document.getElementById('fakeOption3').addEventListener('click', () => {
+                chatMessages.innerHTML += `
+                    <div class="chat-message user">
+                        <div class="chat-avatar"><i class="fas fa-user"></i></div>
+                        <div class="chat-bubble">WHASH information</div>
+                    </div>
+                `;
+                setTimeout(() => {
+                    chatMessages.innerHTML += `
+                        <div class="chat-message bot">
+                            <div class="chat-avatar"><img src="wh.png" alt="Bot"></div>
+                            <div class="chat-bubble">WHASH is our upcoming password cracker with rare username finder for multiple platforms. Coming soon!</div>
+                        </div>
+                    `;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            });
         });
         
         function closeChatModal() {
@@ -2862,14 +2738,6 @@
         chatModal.addEventListener('click', (e) => {
             if (e.target === chatModal) closeChatModal();
         });
-        
-        chatModalContent.addEventListener('wheel', (e) => {
-            if (e.deltaX !== 0) e.preventDefault();
-        }, { passive: false });
-        
-        chatModalContent.addEventListener('touchmove', (e) => {
-            if (Math.abs(e.touches[0].clientX - e.touches[0].clientX) > 10) e.preventDefault();
-        }, { passive: false });
     })();
     </script>
 </body>
