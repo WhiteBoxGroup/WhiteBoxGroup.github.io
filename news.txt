@@ -2,9 +2,9 @@
 Date - 03.17.2026
 Author - Nexoo
 Paste - 
-Discord Message:
-We have changed our domain and name to avoid
-conflicts with the White House (https://www.whitehouse.gov/).
+**Discord Message:**
+We have **changed** our domain and name to avoid
+conflicts with the White House https://www.whitehouse.gov/
 
 Our project is now officially called **WhiteBox**.
 
