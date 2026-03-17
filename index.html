@@ -1708,6 +1708,32 @@
     box-shadow: 0 0 30px rgba(255,255,255,0.7);
 }
 
+.news-bold {
+    font-weight: 900;
+    font-size: 1.1em;
+    color: white;
+    text-shadow: 0 0 8px var(--white-glow);
+    letter-spacing: 0.5px;
+}
+
+.news-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.news-link:hover {
+    color: white;
+    text-shadow: 0 0 10px var(--white-glow);
+    border-bottom-color: white;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
 .news-modal-overlay {
     position: fixed;
     top: 0;
@@ -2402,7 +2428,9 @@ searchInput.addEventListener('keydown', (e) => {
         let html = '';
         
         displayNews.forEach(item => {
-            const contentHtml = item.paste.split('\n').map(line => {
+            const withBold = item.paste.replace(/\*\*(.*?)\*\*/g, '<span class="news-bold">$1</span>');
+            const withLinks = withBold.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="news-link">$1</a>');
+            const contentHtml = withLinks.split('\n').map(line => {
                 if (line.trim() === '') return '<br>';
                 return `<p>${line}</p>`;
             }).join('');
