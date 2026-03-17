@@ -1,5 +1,5 @@
 2 - We got our real Domain!
-Date - 18.03.2026
+Date - 17.03.2026
 Author - Nexoo
 Paste - 
 **Discord Message:**
@@ -8,8 +8,8 @@ website now has its **official domain**:
 https://whiteboxgroup.site
 
 We are very happy to finally use **Cloudflare security**
-and all the other features to
-keep our website safe and fast.
+and all the other features to keep our
+website safe and fast.
 
 Please use this website from now on!
 
