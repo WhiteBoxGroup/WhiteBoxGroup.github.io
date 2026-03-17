@@ -8,5 +8,5 @@ conflicts with the White House https://www.whitehouse.gov/
 
 Our project is now officially called **WhiteBox**.
 
-New Domain: https://whiteboxgroup.github.io/
+**New Domain:** https://whiteboxgroup.github.io/
 Please use this website from now on.
