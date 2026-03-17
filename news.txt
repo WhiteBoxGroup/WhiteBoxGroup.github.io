@@ -1,45 +1,12 @@
-4 - JOIN OUR DISCORD
+1 - Domain & Name Change!
 Date - 03.17.2026
 Author - Nexoo
 Paste - 
-Join our Discord community to get the latest updates, support, and tools:
+Discord Message:
+We have changed our domain and name to avoid
+conflicts with the White House (https://www.whitehouse.gov/).
 
-🔗 https://discord.gg/DbNQgMWJ8G
+Our project is now officially called **WhiteBox**.
 
-👉 Get help with tools
-👉 Report bugs
-👉 Early access to new features
-👉 Community discussions
-
-3 - WHASH Update
-Date - 03.10.2026
-Author - DevTeam
-Paste - 
-WHASH now supports 5 new hash algorithms.
-
-Performance increased by 20%.
-
-New features:
-- MD5 support
-- SHA256 support
-- Custom wordlists
-
-2 - Site Maintenance
-Date - 03.15.2026
-Author - Nexoo
-Paste - 
-The website will be under maintenance for 2 hours.
-
-Search function might be temporarily unavailable.
-
-We apologize for the inconvenience.
-
-1 - New Domain!
-Date - 03.17.2026
-Author - Nexoo
-Paste - 
-We have officially moved to our new domain: https://whitebox.group
-
-Update your bookmarks!
-
-More features coming soon.
+New Domain: https://whiteboxgroup.github.io/
+Please use this website from now on.
