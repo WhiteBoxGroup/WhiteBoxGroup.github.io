@@ -1613,25 +1613,15 @@
         }
 
         @media (max-width: 768px) {
-            .hero { padding-top: 80px; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero p { font-size: 1rem; }
-            .section { padding: 80px 5% 70px; }
-            .section-title { font-size: 2rem; }
-            .tool-card { padding: 30px 20px; }
-            .footer-content { grid-template-columns: 1fr; gap: 30px; }
-            .navbar { padding: 10px 4%; height: 70px; }
-            .logo.loaded .logo-img { width: 50px; height: 50px; }
-            .search-wrapper { max-width: 400px; }
-            
-            .preview-item {
-                scroll-margin-top: 100px;
+            .tool-card {
+                scroll-margin-top: -50vh;
+                scroll-margin-bottom: 50vh;
             }
-            .search-preview.active + .tools-container .tool-card {
-                scroll-margin-top: 100px;
+            .tool-card:target {
+                scroll-margin-top: 25vh;
             }
             html {
-                scroll-padding-top: 100px;
+                scroll-padding-top: 30vh;
             }
         }
 
