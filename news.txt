@@ -1,4 +1,19 @@
-1 - Domain & Name Change!
+1 - We got our real Domain!
+Date - 03.17.2026
+Author - Nexoo
+Paste - 
+**Discord Message:**
+We are excited to announce that our WhiteBox
+website now has its **official domain**:
+https://whiteboxgroup.site
+
+We are very happy to finally use **Cloudflare security**
+and all the other features to
+keep our website safe and fast.
+
+Please use this website from now on!
+
+2 - Domain & Name Change!
 Date - 03.17.2026
 Author - Nexoo
 Paste - 
