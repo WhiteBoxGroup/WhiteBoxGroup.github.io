@@ -1310,6 +1310,352 @@
             opacity: 0.02;
         }
 
+        /* CHAT SYSTEM STYLES */
+.chat-button {
+    position: fixed;
+    bottom: 95px;
+    right: 25px;
+    width: 55px;
+    height: 55px;
+    background: var(--black-2, #111);
+    border: 2px solid var(--discord-blue, #5865F2);
+    border-radius: 50%;
+    color: var(--discord-blue, #5865F2);
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(88, 101, 242, 0.3);
+    backdrop-filter: blur(8px);
+}
+
+.chat-button:hover {
+    transform: scale(1.1);
+    border-color: white;
+    color: white;
+    box-shadow: 0 0 30px var(--discord-glow);
+}
+
+.chat-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(15px);
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    padding: 20px;
+}
+
+.chat-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.chat-modal-content {
+    background: #0a0a0a;
+    border: 2px solid var(--discord-blue, #5865F2);
+    border-radius: 20px;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 80vh;
+    position: relative;
+    box-shadow: 0 0 50px var(--discord-glow);
+    transform: scale(0.9);
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.chat-modal-overlay.active .chat-modal-content {
+    transform: scale(1);
+}
+
+.chat-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.chat-modal-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    color: var(--discord-blue, #5865F2);
+    text-shadow: 0 0 15px var(--discord-glow);
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.chat-modal-close {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+    transform: rotate(90deg);
+    box-shadow: 0 0 25px white;
+}
+
+.chat-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+}
+
+.chat-tab {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chat-tab.active {
+    background: var(--discord-blue);
+    border-color: var(--discord-blue);
+    box-shadow: 0 0 20px var(--discord-glow);
+}
+
+.chat-tab:hover {
+    border-color: var(--discord-blue);
+}
+
+.chat-tab i {
+    font-size: 0.8rem;
+}
+
+.chat-tab .fa-trash {
+    color: #ff6666;
+    margin-left: 5px;
+}
+
+.chat-tab .fa-trash:hover {
+    color: #ff3333;
+    transform: scale(1.1);
+}
+
+.chat-tab.new-chat {
+    background: transparent;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    color: var(--discord-blue);
+}
+
+.chat-tab.new-chat:hover {
+    border-color: var(--discord-blue);
+    background: rgba(88, 101, 242, 0.1);
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
+    margin-bottom: 20px;
+    max-height: 40vh;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.chat-message {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.chat-message.bot {
+    flex-direction: row;
+}
+
+.chat-message.user {
+    flex-direction: row-reverse;
+}
+
+.chat-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 2px solid var(--discord-blue);
+    overflow: hidden;
+}
+
+.chat-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chat-avatar i {
+    color: var(--discord-blue);
+    font-size: 1.2rem;
+}
+
+.chat-bubble {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 12px 15px;
+    max-width: 70%;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+    position: relative;
+}
+
+.chat-message.bot .chat-bubble {
+    border-top-left-radius: 5px;
+    background: rgba(88, 101, 242, 0.1);
+    border-left: 3px solid var(--discord-blue);
+}
+
+.chat-message.user .chat-bubble {
+    border-top-right-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-right: 3px solid var(--discord-blue);
+}
+
+.chat-typing {
+    display: flex;
+    gap: 5px;
+    padding: 15px 20px;
+    background: rgba(88, 101, 242, 0.1);
+    border-radius: 20px;
+    width: fit-content;
+    border: 1px solid rgba(88, 101, 242, 0.3);
+}
+
+.chat-typing span {
+    width: 8px;
+    height: 8px;
+    background: var(--discord-blue);
+    border-radius: 50%;
+    display: inline-block;
+    animation: typingWave 1.4s infinite ease-in-out;
+}
+
+.chat-typing span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.chat-typing span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.chat-typing span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typingWave {
+    0%, 60%, 100% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-10px);
+    }
+}
+
+.chat-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.chat-option-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px 20px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-align: left;
+    width: 100%;
+}
+
+.chat-option-btn:hover {
+    background: rgba(88, 101, 242, 0.1);
+    border-color: var(--discord-blue);
+    transform: translateX(5px);
+    box-shadow: 0 0 20px var(--discord-glow);
+}
+
+.chat-option-btn i {
+    color: var(--discord-blue);
+    font-size: 1.2rem;
+    width: 25px;
+    text-align: center;
+}
+
+.discord-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(88, 101, 242, 0.1);
+    border: 2px solid var(--discord-blue);
+    border-radius: 30px;
+    padding: 12px 25px;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    width: fit-content;
+}
+
+.discord-link-btn:hover {
+    background: var(--discord-blue);
+    box-shadow: 0 0 30px var(--discord-glow);
+    transform: scale(1.05);
+}
+
         @keyframes loadingPulse {
             0% { 
                 transform: scale(1); 
@@ -1955,6 +2301,25 @@
     }
 }
 </style>
+<!-- CHAT BUTTON & MODAL -->
+<div class="chat-button" id="chatButton">
+    <i class="fab fa-discord"></i>
+</div>
+
+<div class="chat-modal-overlay" id="chatModal">
+    <div class="chat-modal-content" id="chatModalContent">
+        <div class="chat-modal-header">
+            <h2 class="chat-modal-title">SUPPORT CHAT</h2>
+            <button class="chat-modal-close" id="closeChatModal"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="chat-tabs" id="chatTabs"></div>
+        
+        <div class="chat-messages" id="chatMessages"></div>
+        
+        <div class="chat-options" id="chatOptions"></div>
+    </div>
+</div>
 
 <div class="news-button" id="newsButton">
     <i class="fas fa-newspaper"></i>
@@ -2480,6 +2845,330 @@ searchInput.addEventListener('keydown', (e) => {
         showingAll = !showingAll;
         renderNews();
     });
+})();
+// Chat System
+(function() {
+    const chatButton = document.getElementById('chatButton');
+    const chatModal = document.getElementById('chatModal');
+    const closeChatModal = document.getElementById('closeChatModal');
+    const chatTabs = document.getElementById('chatTabs');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatOptions = document.getElementById('chatOptions');
+    const chatModalContent = document.getElementById('chatModalContent');
+    
+    if (!chatButton) return;
+    
+    // Local Storage Key
+    const STORAGE_KEY = 'whitebox_chats';
+    
+    // Chat Sessions
+    let chats = [];
+    let currentChatId = null;
+    let isTyping = false;
+    
+    // Load from localStorage
+    function loadChats() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            try {
+                chats = JSON.parse(saved);
+            } catch (e) {
+                chats = [];
+            }
+        }
+        
+        if (chats.length === 0) {
+            createNewChat();
+        } else {
+            currentChatId = chats[0].id;
+        }
+    }
+    
+    // Save to localStorage
+    function saveChats() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(chats));
+    }
+    
+    // Create new chat
+    function createNewChat() {
+        if (chats.length >= 5) {
+            alert('Maximum 5 chats allowed');
+            return null;
+        }
+        
+        const newChat = {
+            id: Date.now() + Math.random(),
+            name: `Temporary Chat ${chats.length + 1}`,
+            messages: [{
+                sender: 'bot',
+                text: '👋 Welcome to White Box Support!\n\nWe are a professional Doxbin group providing advanced tools like WHASH password cracker, Discord nukers, DDoS tools, rare username finders, doxxes, and more.\n\nHow can I help you today? 🚀',
+                timestamp: Date.now()
+            }],
+            createdAt: Date.now()
+        };
+        
+        chats.push(newChat);
+        currentChatId = newChat.id;
+        saveChats();
+        renderTabs();
+        renderCurrentChat();
+        return newChat;
+    }
+    
+    // Delete chat
+    function deleteChat(chatId) {
+        if (chats.length <= 1) {
+            alert('Cannot delete last chat');
+            return;
+        }
+        
+        chats = chats.filter(c => c.id !== chatId);
+        if (currentChatId === chatId) {
+            currentChatId = chats[0].id;
+        }
+        saveChats();
+        renderTabs();
+        renderCurrentChat();
+    }
+    
+    // Add bot response with typing animation
+    function addBotResponse(chatId, responseText) {
+        const chat = chats.find(c => c.id === chatId);
+        if (!chat) return;
+        
+        // Show typing indicator
+        showTypingIndicator(chatId);
+        
+        // Wait and add response
+        setTimeout(() => {
+            hideTypingIndicator(chatId);
+            
+            chat.messages.push({
+                sender: 'bot',
+                text: responseText,
+                timestamp: Date.now()
+            });
+            
+            saveChats();
+            if (currentChatId === chatId) {
+                renderCurrentChat();
+                scrollToBottom();
+            }
+        }, 1500);
+    }
+    
+    // Show typing indicator
+    function showTypingIndicator(chatId) {
+        isTyping = true;
+        if (currentChatId === chatId) {
+            renderCurrentChat();
+            scrollToBottom();
+        }
+    }
+    
+    // Hide typing indicator
+    function hideTypingIndicator(chatId) {
+        isTyping = false;
+        if (currentChatId === chatId) {
+            renderCurrentChat();
+            scrollToBottom();
+        }
+    }
+    
+    // Scroll to bottom
+    function scrollToBottom() {
+        setTimeout(() => {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 100);
+    }
+    
+    // Render chat tabs
+    function renderTabs() {
+        let html = '';
+        
+        chats.forEach(chat => {
+            html += `
+                <div class="chat-tab ${currentChatId === chat.id ? 'active' : ''}" data-chat-id="${chat.id}">
+                    <i class="fas fa-comment"></i>
+                    ${chat.name}
+                    <i class="fas fa-trash" onclick="event.stopPropagation(); deleteChatHandler(${chat.id})"></i>
+                </div>
+            `;
+        });
+        
+        if (chats.length < 5) {
+            html += `<div class="chat-tab new-chat" id="newChatTab"><i class="fas fa-plus"></i> New Chat</div>`;
+        }
+        
+        chatTabs.innerHTML = html;
+        
+        // Add click handlers
+        document.querySelectorAll('.chat-tab[data-chat-id]').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                if (e.target.classList.contains('fa-trash')) return;
+                const chatId = parseFloat(tab.dataset.chatId);
+                currentChatId = chatId;
+                renderTabs();
+                renderCurrentChat();
+            });
+        });
+        
+        const newChatTab = document.getElementById('newChatTab');
+        if (newChatTab) {
+            newChatTab.addEventListener('click', () => createNewChat());
+        }
+    }
+    
+    // Delete chat handler
+    window.deleteChatHandler = function(chatId) {
+        deleteChat(chatId);
+    };
+    
+    // Render current chat
+    function renderCurrentChat() {
+        const chat = chats.find(c => c.id === currentChatId);
+        if (!chat) return;
+        
+        let messagesHtml = '';
+        
+        chat.messages.forEach(msg => {
+            messagesHtml += `
+                <div class="chat-message ${msg.sender}">
+                    <div class="chat-avatar">
+                        ${msg.sender === 'bot' 
+                            ? '<img src="wh.png" alt="Bot">' 
+                            : '<i class="fas fa-user"></i>'
+                        }
+                    </div>
+                    <div class="chat-bubble">${msg.text.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+        });
+        
+        if (isTyping) {
+            messagesHtml += `
+                <div class="chat-message bot">
+                    <div class="chat-avatar">
+                        <img src="wh.png" alt="Bot">
+                    </div>
+                    <div class="chat-typing">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            `;
+        }
+        
+        chatMessages.innerHTML = messagesHtml;
+        
+        // Show options
+        chatOptions.innerHTML = `
+            <button class="chat-option-btn" data-action="person">
+                <i class="fab fa-discord"></i>
+                <span>I want to talk to a person</span>
+            </button>
+            <button class="chat-option-btn" data-action="tools">
+                <i class="fas fa-tools"></i>
+                <span>Tell me about your tools</span>
+            </button>
+            <button class="chat-option-btn" data-action="whash">
+                <i class="fas fa-lock"></i>
+                <span>WHASH information</span>
+            </button>
+        `;
+        
+        // Option handlers
+        document.querySelectorAll('.chat-option-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const action = btn.dataset.action;
+                
+                // Add user message
+                const chat = chats.find(c => c.id === currentChatId);
+                if (!chat) return;
+                
+                let userText = '';
+                let botResponse = '';
+                
+                switch(action) {
+                    case 'person':
+                        userText = 'I want to talk to a person';
+                        botResponse = 'To talk to a real person, please join our Discord server. Our support team is active there 24/7!\n\nClick the button below to join:';
+                        break;
+                    case 'tools':
+                        userText = 'Tell me about your tools';
+                        botResponse = 'We currently offer:\n\n🔹 WHASH - Password Cracker (Coming Soon)\n🔹 Nexcord Basic - Free Discord Tool (Archived)\n🔹 Nexcord Plus - Premium Discord Tool (€3.99)\n\nWhich one interests you?';
+                        break;
+                    case 'whash':
+                        userText = 'WHASH information';
+                        botResponse = 'WHASH is our upcoming password cracker with:\n\n✅ Rare Username Finder\n✅ Multi-platform support\n✅ Ultra-fast algorithms\n✅ Doxbin.com integration\n\nCurrently in development! Stay tuned. 🚀';
+                        break;
+                }
+                
+                chat.messages.push({
+                    sender: 'user',
+                    text: userText,
+                    timestamp: Date.now()
+                });
+                
+                saveChats();
+                renderCurrentChat();
+                scrollToBottom();
+                
+                // Bot response with typing
+                addBotResponse(currentChatId, botResponse);
+            });
+        });
+        
+        // Add Discord link if last message was about person
+        const lastMsg = chat.messages[chat.messages.length - 1];
+        if (lastMsg && lastMsg.sender === 'bot' && lastMsg.text.includes('Discord')) {
+            const discordBtn = document.createElement('a');
+            discordBtn.href = 'https://discord.gg/sMEkW6M4MQ';
+            discordBtn.target = '_blank';
+            discordBtn.className = 'discord-link-btn';
+            discordBtn.innerHTML = '<i class="fab fa-discord"></i> Join Discord Server';
+            chatOptions.appendChild(discordBtn);
+        }
+    }
+    
+    // Initialize
+    loadChats();
+    renderTabs();
+    renderCurrentChat();
+    
+    // Event Listeners
+    chatButton.addEventListener('click', () => {
+        chatModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        renderCurrentChat();
+        scrollToBottom();
+    });
+    
+    function closeChatModal() {
+        chatModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    closeChatModal.addEventListener('click', closeChatModal);
+    chatModal.addEventListener('click', (e) => {
+        if (e.target === chatModal) closeChatModal();
+    });
+    
+    // Prevent horizontal scroll
+    chatModalContent.addEventListener('wheel', (e) => {
+        if (e.deltaX !== 0) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+    
+    // Touch move prevention for modal
+    chatModalContent.addEventListener('touchmove', (e) => {
+        if (Math.abs(e.touches[0].clientX - e.touches[0].clientX) > 10) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+    
 })();
 </script>
 </body>
