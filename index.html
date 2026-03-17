@@ -1676,122 +1676,116 @@
         }
         
         @media (min-width: 1200px) {
+        .reviews-section {
+            position: fixed;
+            left: 20px;
+            top: 120px;
+            width: 240px;
+            z-index: 100;
+            display: none;
+        }
+        
+        @media (min-width: 1200px) {
             .reviews-section {
                 display: block;
             }
         }
         
         .reviews-container {
-            background: rgba(10, 10, 10, 0.95);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-            transition: all 0.5s ease;
+            background: rgba(5, 5, 5, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 12px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
-        }
-        
-        .reviews-container:hover {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 50px var(--accent-glow);
-        }
-        
-        .reviews-container::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            border-radius: 20px;
-            z-index: -1;
-            animation: reviewGlow 3s linear infinite;
-        }
-        
-        @keyframes reviewGlow {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+            height: 300px;
         }
         
         .reviews-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .reviews-header h3 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1rem;
             color: var(--accent-color);
-            text-shadow: 0 0 10px var(--accent-glow);
+            text-shadow: 0 0 8px var(--accent-glow);
             margin: 0;
+            letter-spacing: 1px;
         }
         
         .reviews-header i {
-            color: var(--accent-color);
-            font-size: 1.2rem;
-            opacity: 0.7;
+            color: #ffd700;
+            font-size: 0.9rem;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+        }
+        
+        .reviews-slider {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
         }
         
         .review-card {
             background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            padding: 12px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            position: absolute;
+            width: 100%;
             transition: all 0.4s ease;
             opacity: 0;
-            transform: translateX(-30px);
-            animation: slideInReview 0.6s forwards;
+            transform: translateY(20px);
+            pointer-events: none;
         }
         
-        .review-card:nth-child(2) {
-            animation-delay: 0.2s;
+        .review-card.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px var(--accent-glow);
+            background: rgba(255, 255, 255, 0.06);
+            z-index: 10;
         }
         
-        .review-card:nth-child(3) {
-            animation-delay: 0.4s;
+        .review-card.prev {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.4s ease;
         }
         
-        @keyframes slideInReview {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .review-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateX(5px) scale(1.02);
-            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+        .review-card.next {
+            opacity: 0;
+            transform: translateY(40px);
         }
         
         .review-user {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
         }
         
         .review-avatar {
-            width: 45px;
-            height: 45px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-color), rgba(255, 255, 255, 0.3));
+            background: linear-gradient(135deg, #ffffff, rgba(255, 255, 255, 0.2));
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
-            font-size: 1.5rem;
+            margin-right: 8px;
+            font-size: 0.9rem;
             font-weight: bold;
-            color: var(--pure-black);
-            box-shadow: 0 0 15px var(--accent-glow);
+            color: #000;
+            box-shadow: 0 0 8px var(--accent-glow);
         }
         
         .review-user-info {
@@ -1800,24 +1794,20 @@
         
         .review-username {
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             color: var(--accent-color);
-            margin-bottom: 5px;
+            margin-bottom: 2px;
         }
         
         .review-stars {
             display: flex;
-            gap: 3px;
+            gap: 2px;
         }
         
         .review-stars i {
             color: #ffd700;
-            font-size: 0.9rem;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-        
-        .review-stars i.filled {
-            color: #ffd700;
+            font-size: 0.7rem;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
         }
         
         .review-stars i.empty {
@@ -1825,15 +1815,20 @@
         }
         
         .review-text {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 10px;
+            color: #dddddd;
+            font-size: 0.8rem;
+            line-height: 1.3;
+            margin-bottom: 6px;
             font-style: italic;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .review-date {
-            font-size: 0.8rem;
+            font-size: 0.65rem;
             color: rgba(255, 255, 255, 0.3);
             text-align: right;
         }
@@ -1841,13 +1836,17 @@
         .review-indicators {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 6px;
+            margin-top: 8px;
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            right: 0;
         }
         
         .review-dot {
-            width: 8px;
-            height: 8px;
+            width: 5px;
+            height: 5px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
@@ -1855,9 +1854,11 @@
         }
         
         .review-dot.active {
-            background: var(--accent-color);
-            box-shadow: 0 0 10px var(--accent-glow);
+            background: #ffd700;
+            box-shadow: 0 0 8px #ffd700;
             transform: scale(1.2);
+            width: 15px;
+            border-radius: 10px;
         }
         
         .review-dot:hover {
@@ -1865,6 +1866,7 @@
         }
         
         canvas { display: block; }
+        
         @media (max-width: 480px) {
             .hero h1 {
                 font-size: 2rem;
@@ -2067,21 +2069,23 @@
         </div>
     </div>
     <script>
-    // Review Slider
-    const reviews = document.querySelectorAll('.review-card');
+
+    // Review Slider - Vertical Stack
+    const reviewCards = document.querySelectorAll('.review-card');
     const dots = document.querySelectorAll('.review-dot');
-    let currentReviewIndex = 0;
+    let currentIndex = 0;
     let reviewInterval;
     
-    function showReview(index) {
-        reviews.forEach((review, i) => {
+    function updateReviews(index) {
+        reviewCards.forEach((card, i) => {
+            card.classList.remove('active', 'prev', 'next');
+            
             if (i === index) {
-                review.style.animation = 'none';
-                review.offsetHeight;
-                review.style.animation = 'slideInReview 0.6s forwards';
+                card.classList.add('active');
+            } else if (i === index - 1 || (index === 0 && i === reviewCards.length - 1)) {
+                card.classList.add('prev');
             } else {
-                review.style.opacity = '0';
-                review.style.transform = 'translateX(-30px)';
+                card.classList.add('next');
             }
         });
         
@@ -2095,23 +2099,22 @@
     }
     
     function nextReview() {
-        currentReviewIndex = (currentReviewIndex + 1) % reviews.length;
-        showReview(currentReviewIndex);
+        currentIndex = (currentIndex + 1) % reviewCards.length;
+        updateReviews(currentIndex);
     }
     
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
-            currentReviewIndex = index;
-            showReview(currentReviewIndex);
+            currentIndex = index;
+            updateReviews(currentIndex);
             
             clearInterval(reviewInterval);
-            reviewInterval = setInterval(nextReview, 5000);
+            reviewInterval = setInterval(nextReview, 2000);
         });
     });
     
-    reviewInterval = setInterval(nextReview, 5000);
-    
-    showReview(0);
+    reviewInterval = setInterval(nextReview, 2000);
+    updateReviews(0);
         
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -2575,26 +2578,26 @@
     <div class="reviews-section" id="reviewsSection">
         <div class="reviews-container" id="reviewsContainer">
             <div class="reviews-header">
-                <h3>COMMUNITY REVIEWS</h3>
+                <h3>REVIEWS</h3>
                 <i class="fas fa-star"></i>
             </div>
             <div class="reviews-slider" id="reviewsSlider">
-                <div class="review-card" id="review1">
+                <div class="review-card active" id="review1">
                     <div class="review-user">
                         <div class="review-avatar">N</div>
                         <div class="review-user-info">
                             <div class="review-username">Nexoo</div>
                             <div class="review-stars">
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="review-text">"White Box has the best tools I've ever used. WHASH is incredibly fast and the Discord nukers are top tier. 5/5!"</div>
-                    <div class="review-date">2 days ago</div>
+                    <div class="review-text">"Best tools ever. Fast and reliable."</div>
+                    <div class="review-date">2d ago</div>
                 </div>
                 <div class="review-card" id="review2">
                     <div class="review-user">
@@ -2602,16 +2605,16 @@
                         <div class="review-user-info">
                             <div class="review-username">MrSmith</div>
                             <div class="review-stars">
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                                 <i class="fas fa-star empty"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="review-text">"Great community and support. The tools work perfectly. Can't wait for WHASH to release!"</div>
-                    <div class="review-date">1 week ago</div>
+                    <div class="review-text">"Great support. Works perfectly."</div>
+                    <div class="review-date">1w ago</div>
                 </div>
                 <div class="review-card" id="review3">
                     <div class="review-user">
@@ -2619,16 +2622,16 @@
                         <div class="review-user-info">
                             <div class="review-username">Kraken</div>
                             <div class="review-stars">
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="review-text">"Nexcord Plus is worth every penny. Best Discord tool on the market. Support is always helpful!"</div>
-                    <div class="review-date">2 weeks ago</div>
+                    <div class="review-text">"Nexcord Plus is insane. Worth it."</div>
+                    <div class="review-date">2w ago</div>
                 </div>
             </div>
             <div class="review-indicators" id="reviewIndicators">
@@ -2638,7 +2641,5 @@
             </div>
         </div>
     </div>
-
-    
 </body>
 </html>
