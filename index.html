@@ -1623,27 +1623,16 @@
             .navbar { padding: 10px 4%; height: 70px; }
             .logo.loaded .logo-img { width: 50px; height: 50px; }
             .search-wrapper { max-width: 400px; }
-        }
-
-        @media (max-width: 480px) {
-            .hero { padding-top: 70px; }
-            .hero h1 { font-size: 2rem; }
-            .cta-button { padding: 12px 30px; font-size: 0.9rem; }
-            .tool-card { padding: 25px 15px; }
-            .stat-item { padding: 20px 15px; }
-            .stat-number { font-size: 2rem; }
-            .navbar { padding: 8px 3%; height: 65px; }
-            .logo.loaded .logo-img { width: 45px; height: 45px; }
-            .mobile-menu { width: 250px; }
-            .search-wrapper { max-width: 300px; }
-            .search-box { padding: 15px 20px; font-size: 0.9rem; }
-            .preview-item { padding: 12px 15px; }
-            .preview-title { font-size: 0.9rem; }
-            .news-content a {
-    word-break: break-all;
-    white-space: normal;
-}
-}
+            
+            .preview-item {
+                scroll-margin-top: 100px;
+            }
+            .search-preview.active + .tools-container .tool-card {
+                scroll-margin-top: 100px;
+            }
+            html {
+                scroll-padding-top: 100px;
+            }
         }
 
         canvas { display: block; }
