@@ -2056,56 +2056,58 @@
     <script>
 
     // Review Slider - Simple Rotation
-    const reviewCards = document.querySelectorAll('.review-card');
-    const dots = document.querySelectorAll('.review-dot');
-    let currentIndex = 0;
-    let reviewInterval;
-    
-    function updateReviews(index) {
-        reviewCards.forEach((card, i) => {
-            card.style.borderColor = 'rgba(255, 255, 255, 0.05)';
-            card.style.boxShadow = 'none';
-            card.style.background = 'rgba(255, 255, 255, 0.03)';
-            card.style.opacity = '0.4';
-        });
+    if (document.querySelectorAll('.review-card').length > 0) {
+        const reviewCards = document.querySelectorAll('.review-card');
+        const dots = document.querySelectorAll('.review-dot');
+        let currentIndex = 0;
+        let reviewInterval;
         
-        reviewCards[index].style.borderColor = 'rgba(255, 255, 255, 0.3)';
-        reviewCards[index].style.boxShadow = '0 0 15px var(--accent-glow)';
-        reviewCards[index].style.background = 'rgba(255, 255, 255, 0.08)';
-        reviewCards[index].style.opacity = '1';
-        
-        let nextIndex = (index + 1) % reviewCards.length;
-        reviewCards[nextIndex].style.opacity = '0.8';
-        
-        let nextNextIndex = (index + 2) % reviewCards.length;
-        reviewCards[nextNextIndex].style.opacity = '0.6';
-        
-        dots.forEach((dot, i) => {
-            if (i === index) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-            }
-        });
-    }
-    
-    function nextReview() {
-        currentIndex = (currentIndex + 1) % reviewCards.length;
-        updateReviews(currentIndex);
-    }
-    
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            currentIndex = index;
-            updateReviews(currentIndex);
+        function updateReviews(index) {
+            reviewCards.forEach((card, i) => {
+                card.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                card.style.boxShadow = 'none';
+                card.style.background = 'rgba(255, 255, 255, 0.03)';
+                card.style.opacity = '0.4';
+            });
             
-            clearInterval(reviewInterval);
-            reviewInterval = setInterval(nextReview, 2000);
+            reviewCards[index].style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            reviewCards[index].style.boxShadow = '0 0 15px var(--accent-glow)';
+            reviewCards[index].style.background = 'rgba(255, 255, 255, 0.08)';
+            reviewCards[index].style.opacity = '1';
+            
+            let nextIndex = (index + 1) % reviewCards.length;
+            reviewCards[nextIndex].style.opacity = '0.8';
+            
+            let nextNextIndex = (index + 2) % reviewCards.length;
+            reviewCards[nextNextIndex].style.opacity = '0.6';
+            
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+        
+        function nextReview() {
+            currentIndex = (currentIndex + 1) % reviewCards.length;
+            updateReviews(currentIndex);
+        }
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateReviews(currentIndex);
+                
+                clearInterval(reviewInterval);
+                reviewInterval = setInterval(nextReview, 2000);
+            });
         });
-    });
-    
-    reviewInterval = setInterval(nextReview, 2000);
-    updateReviews(0);
+        
+        reviewInterval = setInterval(nextReview, 2000);
+        updateReviews(0);
+    }
         
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
