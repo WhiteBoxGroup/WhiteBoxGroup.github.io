@@ -1729,43 +1729,38 @@
         }
         
         .reviews-slider {
-            position: relative;
-            height: 220px;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            height: auto;
+            min-height: 200px;
         }
         
         .review-card {
             background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            padding: 12px;
+            border-radius: 8px;
+            padding: 8px 10px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            position: absolute;
-            width: 100%;
-            transition: all 0.4s ease;
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-        }
-        
-        .review-card.active {
+            transition: all 0.3s ease;
             opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 20px var(--accent-glow);
-            background: rgba(255, 255, 255, 0.06);
-            z-index: 10;
+            transform: none;
+            position: relative;
+            width: 100%;
+            margin-bottom: 0;
         }
         
-        .review-card.prev {
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.4s ease;
+        .review-card:nth-child(1) {
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px var(--accent-glow);
+            background: rgba(255, 255, 255, 0.08);
         }
         
-        .review-card.next {
-            opacity: 0;
-            transform: translateY(40px);
+        .review-card:nth-child(2) {
+            opacity: 0.8;
+        }
+        
+        .review-card:nth-child(3) {
+            opacity: 0.6;
         }
         
         .review-user {
@@ -2071,7 +2066,7 @@
     </div>
     <script>
 
-    // Review Slider - Vertical Stack
+    // Review Slider - Simple Rotation
     const reviewCards = document.querySelectorAll('.review-card');
     const dots = document.querySelectorAll('.review-dot');
     let currentIndex = 0;
@@ -2079,16 +2074,22 @@
     
     function updateReviews(index) {
         reviewCards.forEach((card, i) => {
-            card.classList.remove('active', 'prev', 'next');
-            
-            if (i === index) {
-                card.classList.add('active');
-            } else if (i === index - 1 || (index === 0 && i === reviewCards.length - 1)) {
-                card.classList.add('prev');
-            } else {
-                card.classList.add('next');
-            }
+            card.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+            card.style.boxShadow = 'none';
+            card.style.background = 'rgba(255, 255, 255, 0.03)';
+            card.style.opacity = '0.4';
         });
+        
+        reviewCards[index].style.borderColor = 'rgba(255, 255, 255, 0.3)';
+        reviewCards[index].style.boxShadow = '0 0 15px var(--accent-glow)';
+        reviewCards[index].style.background = 'rgba(255, 255, 255, 0.08)';
+        reviewCards[index].style.opacity = '1';
+        
+        let nextIndex = (index + 1) % reviewCards.length;
+        reviewCards[nextIndex].style.opacity = '0.8';
+        
+        let nextNextIndex = (index + 2) % reviewCards.length;
+        reviewCards[nextNextIndex].style.opacity = '0.6';
         
         dots.forEach((dot, i) => {
             if (i === index) {
@@ -2583,7 +2584,7 @@
                 <i class="fas fa-star"></i>
             </div>
             <div class="reviews-slider" id="reviewsSlider">
-                <div class="review-card active" id="review1">
+                <div class="review-card" id="review1">
                     <div class="review-user">
                         <div class="review-avatar">N</div>
                         <div class="review-user-info">
@@ -2597,8 +2598,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="review-text">"Best tools ever. Fast and reliable."</div>
-                    <div class="review-date">2d ago</div>
+                    <div class="review-text">"Best tools ever"</div>
                 </div>
                 <div class="review-card" id="review2">
                     <div class="review-user">
@@ -2614,8 +2614,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="review-text">"Great support. Works perfectly."</div>
-                    <div class="review-date">1w ago</div>
+                    <div class="review-text">"Great support"</div>
                 </div>
                 <div class="review-card" id="review3">
                     <div class="review-user">
@@ -2631,8 +2630,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="review-text">"Nexcord Plus is insane. Worth it."</div>
-                    <div class="review-date">2w ago</div>
+                    <div class="review-text">"Nexcord is insane"</div>
                 </div>
             </div>
             <div class="review-indicators" id="reviewIndicators">
