@@ -1668,8 +1668,7 @@
         .reviews-section {
             position: fixed;
             left: 30px;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 120px;
             width: 240px;
             z-index: 100;
             display: none;
@@ -1678,6 +1677,12 @@
         @media (min-width: 1200px) {
             .reviews-section {
                 display: block;
+            }
+        }
+
+        @media (max-width: 1199px) {
+            .reviews-section {
+                display: none !important;
             }
         }
         
