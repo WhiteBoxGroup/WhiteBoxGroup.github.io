@@ -1686,6 +1686,22 @@
                 height: 60px;
             }
         }
+.reviews-section{padding:50px 5% 65px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.03)}
+.reviews-label{text-align:center;font-family:'Orbitron',sans-serif;font-size:.75rem;letter-spacing:5px;color:rgba(255,255,255,.22);margin-bottom:35px;text-transform:uppercase}
+.reviews-track{display:flex;justify-content:center;gap:18px;min-height:160px;align-items:flex-start;overflow:hidden}
+.review-card{width:255px;flex-shrink:0;background:#080808;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:20px;transition:border-color .5s ease,box-shadow .5s ease}
+.review-card.rv-active{border-color:rgba(255,255,255,.35);box-shadow:0 0 28px rgba(255,255,255,.12),0 0 55px rgba(255,255,255,.04)}
+.review-card.rv-exit{animation:rvExit .45s ease forwards}
+.review-card.rv-enter{animation:rvEnter .45s ease}
+.rv-header{display:flex;align-items:center;gap:11px;margin-bottom:11px}
+.rv-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.15)}
+.rv-name{font-family:'Orbitron',sans-serif;font-size:.72rem;color:#fff;letter-spacing:1px}
+.rv-stars{color:#ffd700;font-size:.78rem;margin-top:3px;text-shadow:0 0 8px rgba(255,215,0,.4)}
+.rv-text{font-size:.82rem;color:#999;line-height:1.55}
+@keyframes rvExit{to{opacity:0;transform:translateY(-55px)}}
+@keyframes rvEnter{from{opacity:0;transform:translateX(45px)}}
+@media(max-width:800px){.reviews-track{gap:10px}.review-card{width:195px;padding:14px}}
+@media(max-width:580px){.review-card{display:none}.review-card.rv-active{display:block;width:290px}}
     </style>
 </head>
 <body>
@@ -1751,7 +1767,10 @@
             </a>
         </div>
     </section>
-
+<section class="reviews-section">
+  <div class="reviews-label">TRUSTED BY USERS</div>
+  <div class="reviews-track" id="reviewsTrack"></div>
+</section>
     <section class="section" id="tools">
         <h2 class="section-title" id="toolsTitle">OUR TOOLS</h2>
         <div class="search-wrapper">
@@ -1870,50 +1889,73 @@
     </div>
     <script>
 
-        
-        // Initial: Erste Card leuchtet
-        reviewCards.forEach((card, i) => {
-            if (i === 0) {
-                card.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-                card.style.boxShadow = '0 0 15px var(--accent-glow)';
-                card.style.background = 'rgba(255, 255, 255, 0.08)';
-                card.style.opacity = '1';
-            } else {
-                card.style.opacity = '0.6';
-            }
-        });
-        
-        reviewInterval = setInterval(nextReview, 1500); // 1.5 Sekunden
-    }
-        
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
-    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
 
-    function toggleMobileMenu() {
-        mobileMenu.classList.toggle('active');
-        mobileMenuOverlay.classList.toggle('active');
-        document.body.classList.toggle('no-scroll');
-    }
+function toggleMobileMenu() {
+    mobileMenu.classList.toggle('active');
+    mobileMenuOverlay.classList.toggle('active');
+    document.body.classList.toggle('no-scroll');
+}
 
-    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-    mobileCloseBtn.addEventListener('click', toggleMobileMenu);
-    mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
 
-    mobileMenuLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            if (this.href.includes('discord.gg') || this.href.includes('http')) return;
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                toggleMobileMenu();
-                setTimeout(() => targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
-            }
-        });
+mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        if (this.href.includes('discord.gg') || this.href.includes('http')) return;
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+            toggleMobileMenu();
+            setTimeout(() => targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+        }
     });
+});
+
+        
+const rvData=[
+  {name:"xDarkShadow",img:"https://i.pravatar.cc/38?img=1",stars:5,text:"WHASH cracked my old hash in under a second. Insane speed."},
+  {name:"void_user99",img:"https://i.pravatar.cc/38?img=2",stars:5,text:"Nexcord Plus is worth every cent, best nuker hands down."},
+  {name:"n3xus_zero",img:"https://i.pravatar.cc/38?img=3",stars:5,text:"White Box is the real deal. No other group comes close."},
+  {name:"ph4ntom_x",img:"https://i.pravatar.cc/38?img=4",stars:5,text:"Finally a group that actually delivers on their promises."},
+  {name:"darkm00n",img:"https://i.pravatar.cc/38?img=5",stars:5,text:"Nexcord Basic for free is already wild, Plus is even better."},
+  {name:"sk1ll3d_dev",img:"https://i.pravatar.cc/38?img=6",stars:5,text:"24/7 Discord support is actually real. Always get help fast."},
+  {name:"null_byte",img:"https://i.pravatar.cc/38?img=7",stars:5,text:"Been with White Box since day one. Never disappoints."},
+  {name:"0xc0de",img:"https://i.pravatar.cc/38?img=8",stars:5,text:"The rare username finder in WHASH is absolutely next level."},
+];
+function rvMakeCard(d,active){
+  const c=document.createElement('div');
+  c.className='review-card'+(active?' rv-active':'');
+  c.innerHTML=`<div class="rv-header"><img class="rv-avatar" src="${d.img}" alt=""><div><div class="rv-name">${d.name}</div><div class="rv-stars">${'★'.repeat(d.stars)}</div></div></div><div class="rv-text">${d.text}</div>`;
+  return c;
+}
+(function(){
+  const track=document.getElementById('reviewsTrack');
+  if(!track)return;
+  let idx=0;
+  for(let i=0;i<3;i++){track.appendChild(rvMakeCard(rvData[idx%rvData.length],i===1));idx++;}
+  setInterval(()=>{
+    const cards=track.querySelectorAll('.review-card');
+    cards[0].classList.add('rv-exit');
+    setTimeout(()=>{
+      const ex=track.querySelector('.rv-exit');
+      if(ex)track.removeChild(ex);
+      const nc=rvMakeCard(rvData[idx%rvData.length],false);
+      nc.classList.add('rv-enter');
+      track.appendChild(nc);
+      idx++;
+      const a=track.querySelectorAll('.review-card');
+      a.forEach(c=>c.classList.remove('rv-active'));
+      if(a[1])a[1].classList.add('rv-active');
+    },450);
+  },2500);
+})();
 
     const loadingScreen = document.getElementById('loadingScreen');
     const mainLogo = document.getElementById('mainLogo');
