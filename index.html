@@ -370,6 +370,37 @@
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.8) !important;
         }
 
+        #stat4 {
+            position: relative;
+            overflow: hidden;
+        }
+        #stat4::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255, 215, 0, 0.03) 0px,
+                rgba(255, 215, 0, 0.01) 2px,
+                transparent 3px,
+                transparent 5px
+            );
+            pointer-events: none;
+            z-index: 0;
+            animation: matrixFlow 8s linear infinite;
+        }
+        #stat4 > * {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes matrixFlow {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 20px; }
+        }
+
         .hero h1 {
             font-size: 4rem;
             margin-bottom: 20px;
@@ -1693,6 +1724,23 @@
                 width: 60px;
                 height: 60px;
             }
+        @media (max-width: 768px) {
+            #about > div:last-child {
+                grid-template-columns: 1fr !important;
+            }
+            #about .stat-item {
+                padding: 20px 10px !important;
+            }
+            #about .stat-number {
+                font-size: 1.8rem !important;
+            }
+            #about .link-item {
+                padding: 20px !important;
+            }
+            .owner-link {
+                white-space: normal !important;
+                word-break: break-word;
+            }
         }
     </style>
 </head>
@@ -1806,51 +1854,52 @@
         </div>
     </section>
     <section class="section" id="about">
+    <section class="section" id="about">
         <h2 class="section-title" id="aboutTitle">ABOUT US</h2>
         
-        <div class="about-text" style="text-align: center; max-width: 900px; margin: 0 auto 50px auto;">
-            <p id="aboutText1" style="font-size: 1.2rem; margin-bottom: 20px;">White Box is a professional Doxbin group founded in 2024 by our current owner <a href="http://doxbin.com/user/nexooo" target="_blank" class="owner-link">Nexoo</a>.</p>
-            <p id="aboutText2" style="font-size: 1.2rem;">Our team creates and distributes various tools including WHASH password cracker, DDoS tools, Discord multi-tools, rare username finders, nukers, doxxes database, and other utilities.</p>
+        <div class="about-text" style="text-align: center; max-width: 900px; margin: 0 auto 40px auto; padding: 0 15px;">
+            <p id="aboutText1" style="font-size: 1.2rem; margin-bottom: 20px; line-height: 1.6;">White Box is a professional Doxbin group founded in 2024 by our current owner <a href="http://doxbin.com/user/nexooo" target="_blank" class="owner-link" style="color: #ffd700; text-decoration: none; border-bottom: 1px solid #ffd700; white-space: nowrap;">Nexoo</a>.</p>
+            <p id="aboutText2" style="font-size: 1.2rem; line-height: 1.6;">Our team creates and distributes various tools including WHASH password cracker, DDoS tools, Discord multi-tools, rare username finders, nukers, doxxes database, and other utilities.</p>
         </div>
         
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1200px; margin: 0 auto; padding: 0 15px;">
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div class="stat-item" id="stat1" style="margin: 0; padding: 30px 20px;">
-                    <div class="stat-number">3+</div>
-                    <div>Tools Developed</div>
+                <div class="stat-item" id="stat1" style="margin: 0; padding: 25px 15px;">
+                    <div class="stat-number" style="font-size: 2.2rem;">3+</div>
+                    <div style="font-size: 0.9rem;">Tools Developed</div>
                 </div>
                 
-                <div class="stat-item" id="stat2" style="margin: 0; padding: 30px 20px;">
-                    <div class="stat-number">Free/Paid</div>
-                    <div>Tools Available</div>
+                <div class="stat-item" id="stat2" style="margin: 0; padding: 25px 15px;">
+                    <div class="stat-number" style="font-size: 2.2rem;">Free/Paid</div>
+                    <div style="font-size: 0.9rem;">Tools Available</div>
                 </div>
                 
-                <div class="stat-item" id="stat3" style="margin: 0; padding: 30px 20px;">
-                    <div class="stat-number">24/7</div>
-                    <div>Support Available</div>
+                <div class="stat-item" id="stat3" style="margin: 0; padding: 25px 15px;">
+                    <div class="stat-number" style="font-size: 2.2rem;">24/7</div>
+                    <div style="font-size: 0.9rem;">Support Available</div>
                 </div>
                 
-                <div class="stat-item" id="stat4" style="margin: 0; padding: 30px 20px; border: 2px solid #ffd700; cursor: pointer; transition: all 0.3s ease; background: rgba(255, 215, 0, 0.05);" onclick="window.open('https://discord.gg/DbNQgMWJ8G', '_blank');">
-                    <div class="stat-number" id="memberCount" style="color: #ffd700; text-shadow: 0 0 10px #ffd700; font-size: 2.5rem;">80</div>
-                    <div style="color: white;">Happy Users <span style="font-size: 0.8rem; display: block; color: #ffd700;">Worldwide!</span></div>
+                <div class="stat-item" id="stat4" style="margin: 0; padding: 25px 15px; border: 2px solid #ffd700; cursor: pointer; transition: all 0.3s ease; background: rgba(255, 215, 0, 0.05); position: relative; overflow: hidden;" onclick="window.open('https://discord.gg/DbNQgMWJ8G', '_blank');">
+                    <div class="stat-number" style="color: #ffd700; text-shadow: 0 0 10px #ffd700; font-size: 2.2rem;">80</div>
+                    <div style="color: white; font-size: 0.9rem;">Happy Users <span style="font-size: 0.7rem; display: block; color: #ffd700;">Worldwide!</span></div>
                 </div>
             </div>
             
             <div style="display: flex; flex-direction: column; gap: 20px;">
                 <a href="https://discord.gg/DbNQgMWJ8G" target="_blank" class="link-item" id="link1" style="margin: 0; display: block; padding: 25px;">
-                    <div>Discord Community</div>
-                    <div class="link-desc">Join our Discord server for tools, updates, and community</div>
+                    <div style="font-size: 1.1rem;">Discord Community</div>
+                    <div class="link-desc" style="font-size: 0.85rem;">Join our Discord server for tools, updates, and community</div>
                 </a>
                 
                 <a href="https://guns.lol/whynexoo" target="_blank" class="link-item" id="link2" style="margin: 0; display: block; padding: 25px;">
-                    <div>Guns.lol Profile</div>
-                    <div class="link-desc">Check out our profile on guns.lol</div>
+                    <div style="font-size: 1.1rem;">Guns.lol Profile</div>
+                    <div class="link-desc" style="font-size: 0.85rem;">Check out our profile on guns.lol</div>
                 </a>
                 
                 <a href="#tools" class="link-item" id="link3" style="margin: 0; display: block; padding: 25px;">
-                    <div>Our Tools</div>
-                    <div class="link-desc">Browse our collection of available tools</div>
+                    <div style="font-size: 1.1rem;">Our Tools</div>
+                    <div class="link-desc" style="font-size: 0.85rem;">Browse our collection of available tools</div>
                 </a>
             </div>
         </div>
