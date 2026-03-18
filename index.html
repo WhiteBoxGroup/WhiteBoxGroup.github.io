@@ -1,4 +1,4 @@
-u<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -74,6 +74,8 @@ u<!DOCTYPE html>
             background: var(--accent-glow);
             box-shadow: 0 0 10px var(--accent-glow);
         }
+
+    
 
         html {
             scroll-behavior: smooth;
@@ -980,6 +982,110 @@ u<!DOCTYPE html>
         .tool-card.purple-theme .tool-icon {
             color: var(--purple-color);
             text-shadow: 0 0 20px var(--purple-glow), 0 0 40px rgba(157, 0, 255, 0.3);
+        }
+
+        /* Trustpilot Custom Button */
+        .trustpilot-custom-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 30px;
+            background: rgba(8,8,8,0.9);
+            border: 1px solid #00b67a;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 182, 122, 0.2);
+        }
+
+        .trustpilot-custom-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .trustpilot-custom-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: #00e676;
+            box-shadow: 0 0 30px rgba(0, 182, 122, 0.5);
+            background: rgba(0, 182, 122, 0.1);
+        }
+
+        .trustpilot-custom-btn .tp-btn-text {
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .trustpilot-custom-btn .tp-logo {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            margin: 0 2px;
+        }
+
+        .trustpilot-custom-btn .tp-star-group {
+            position: relative;
+            display: inline-flex;
+            gap: 2px;
+            font-size: 1.1rem;
+            line-height: 1;
+            color: #666;
+        }
+
+        .trustpilot-custom-btn .tp-star-base {
+            color: #444;
+            transition: all 0.2s ease;
+        }
+
+        .trustpilot-custom-btn .tp-stars-filled {
+            position: absolute;
+            top: 0;
+            left: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            color: #00b67a;
+            display: inline-flex;
+            gap: 2px;
+            pointer-events: none;
+            transition: width 0.2s ease;
+        }
+
+        .trustpilot-custom-btn .tp-star-filled {
+            color: #00b67a;
+            filter: drop-shadow(0 0 5px rgba(0, 182, 122, 0.5));
+        }
+
+        .trustpilot-custom-btn:hover .tp-stars-filled {
+            animation: tpStarPulse 1s infinite ease-in-out;
+        }
+
+        @keyframes tpStarPulse {
+            0% { filter: drop-shadow(0 0 2px rgba(0, 230, 118, 0.5)); }
+            50% { filter: drop-shadow(0 0 8px rgba(0, 230, 118, 1)); }
+            100% { filter: drop-shadow(0 0 2px rgba(0, 230, 118, 0.5)); }
+        }
+
+        @media (max-width: 480px) {
+            .trustpilot-custom-btn {
+                padding: 14px 20px;
+                font-size: 0.9rem;
+            }
+            .trustpilot-custom-btn .tp-star-group {
+                font-size: 1rem;
+            }
         }
 
         .tool-card.white-theme .tool-icon {
@@ -2133,17 +2239,29 @@ u<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- TRUSTPILOT WIDGET -->
-        <div style="max-width: 1000px; margin: 30px auto; padding: 0 20px;">
-            <div class="trustpilot-widget" 
-                data-locale="en-US" 
-                data-template-id="56278e9abfbbba0bdcd568bc" 
-                data-businessunit-id="69bb2a0b7f0367e7e132db42" 
-                data-style-height="52px" 
-                data-style-width="100%" 
-                data-token="106b48c1-ef04-438c-b4a4-df2eef9e2503">
-                <a href="https://www.trustpilot.com/review/whiteboxgroup.site" target="_blank" rel="noopener">Trustpilot</a>
-            </div>
+        <!-- TRUSTPILOT CUSTOM BUTTON -->
+        <div style="display: flex; justify-content: center; margin: 30px auto; padding: 0 20px;">
+            <a href="https://www.trustpilot.com/review/whiteboxgroup.site" target="_blank" rel="noopener" class="trustpilot-custom-btn" id="trustpilotBtn">
+                <span class="tp-btn-text">Review us on</span>
+                <span class="tp-logo">
+                    <span class="tp-star-group">
+                        <i class="fa-regular fa-star tp-star-base"></i>
+                        <i class="fa-regular fa-star tp-star-base"></i>
+                        <i class="fa-regular fa-star tp-star-base"></i>
+                        <i class="fa-regular fa-star tp-star-base"></i>
+                        <i class="fa-regular fa-star tp-star-base"></i>
+                        <span class="tp-stars-filled" style="width: 70%;">
+                            <i class="fa-solid fa-star tp-star-filled"></i>
+                            <i class="fa-solid fa-star tp-star-filled"></i>
+                            <i class="fa-solid fa-star tp-star-filled"></i>
+                            <i class="fa-solid fa-star tp-star-filled"></i>
+                            <i class="fa-solid fa-star tp-star-filled"></i>
+                        </span>
+                    </span>
+                </span>
+                <span class="tp-btn-text">Trustpilot</span>
+            </a>
+        </div>
         </div>
 
         <div class="copyright">&copy; 2026 WHITE BOX. ALL RIGHTS RESERVED.</div>
@@ -2299,11 +2417,13 @@ u<!DOCTYPE html>
 
     function observeAnimations() {
         const elements = [
+        const elements = [
             { id: 'heroTitle' }, { id: 'heroText' }, { id: 'heroButton' }, { id: 'scrollDown' },
             { id: 'toolsTitle' }, { id: 'searchContainer' }, { id: 'tool1' }, { id: 'tool2' },
             { id: 'tool3' }, { id: 'aboutTitle' }, { id: 'aboutText1' }, { id: 'aboutText2' },
             { id: 'aboutText3' }, { id: 'aboutText4' }, { id: 'stat1' }, { id: 'stat2' }, 
-            { id: 'stat3' }, { id: 'stat4' }, { id: 'link1' }, { id: 'link2' }, { id: 'link3' }
+            { id: 'stat3' }, { id: 'stat4' }, { id: 'link1' }, { id: 'link2' }, { id: 'link3' },
+            { id: 'trustpilotBtn' }
         ];
 
         const observer = new IntersectionObserver((entries) => {
