@@ -364,7 +364,7 @@
             border-color: #ffd700 !important;
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.5) !important;
             transform: translateY(-5px) scale(1.02);
-            background: rgba(255, 215, 0, 0.05);
+            background: rgba(255, 215, 0, 0.1) !important;
         }
         #stat4:hover .stat-number {
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.8) !important;
@@ -1809,57 +1809,55 @@
     </section>
     <section class="section" id="about">
         <h2 class="section-title" id="aboutTitle">ABOUT US</h2>
-        <div class="about-content">
-            <div class="about-text">
-                <p id="aboutText1">White Box is a professional Doxbin group founded in 2024 by our current owner <a href="http://doxbin.com/user/nexooo" target="_blank" class="owner-link">Nexoo</a>.</p>
-                <p id="aboutText2">Our team creates and distributes various tools including WHASH password cracker, DDoS tools, Discord multi-tools, rare username finders, nukers, doxxes database, and other utilities.</p>
-            </div>
+        
+        <div class="about-text" style="text-align: center; max-width: 900px; margin: 0 auto 50px auto;">
+            <p id="aboutText1" style="font-size: 1.2rem; margin-bottom: 20px;">White Box is a professional Doxbin group founded in 2024 by our current owner <a href="http://doxbin.com/user/nexooo" target="_blank" class="owner-link">Nexoo</a>.</p>
+            <p id="aboutText2" style="font-size: 1.2rem;">Our team creates and distributes various tools including WHASH password cracker, DDoS tools, Discord multi-tools, rare username finders, nukers, doxxes database, and other utilities.</p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto;">
             
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
-                <!-- LINKE BOXEN (STATS) -->
-                <div style="display: flex; flex-direction: column; gap: 20px;">
-                    <div class="stat-item" id="stat1" style="margin: 0;">
-                        <div class="stat-number">3+</div>
-                        <div>Tools Developed</div>
-                    </div>
-                    
-                    <div class="stat-item" id="stat2" style="margin: 0;">
-                        <div class="stat-number">Free/Paid</div>
-                        <div>Tools Available</div>
-                    </div>
-                    
-                    <!-- NEUE HAPPY USERS BOX (UNTER Free/Paid) -->
-                    <div class="stat-item" id="stat4" style="margin: 0; cursor: pointer; border: 2px solid rgba(255, 215, 0, 0.3); transition: all 0.3s ease;" onclick="window.open('https://discord.gg/DbNQgMWJ8G', '_blank');">
-                        <div class="stat-number" id="memberCount" style="color: #ffd700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);">162</div>
-                        <div>Happy Users <span style="font-size: 0.8rem; display: block; color: #ffd700;">Worldwide!</span></div>
-                    </div>
-                    
-                    <div class="stat-item" id="stat3" style="margin: 0;">
-                        <div class="stat-number">24/7</div>
-                        <div>Support Available</div>
-                    </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="stat-item" id="stat1" style="margin: 0; padding: 30px 20px;">
+                    <div class="stat-number">3+</div>
+                    <div>Tools Developed</div>
                 </div>
                 
-                <!-- RECHTE BOXEN (LINKS) -->
-                <div style="display: flex; flex-direction: column; gap: 20px;">
-                    <a href="https://discord.gg/DbNQgMWJ8G" target="_blank" class="link-item" id="link1" style="margin: 0; display: block;">
-                        <div>Discord Community</div>
-                        <div class="link-desc">Join our Discord server for tools, updates, and community</div>
-                    </a>
-                    
-                    <a href="https://guns.lol/whynexoo" target="_blank" class="link-item" id="link2" style="margin: 0; display: block;">
-                        <div>Guns.lol Profile</div>
-                        <div class="link-desc">Check out our profile on guns.lol</div>
-                    </a>
-                    
-                    <a href="#tools" class="link-item" id="link3" style="margin: 0; display: block;">
-                        <div>Our Tools</div>
-                        <div class="link-desc">Browse our collection of available tools</div>
-                    </a>
+                <div class="stat-item" id="stat2" style="margin: 0; padding: 30px 20px;">
+                    <div class="stat-number">Free/Paid</div>
+                    <div>Tools Available</div>
                 </div>
+                
+                <div class="stat-item" id="stat3" style="margin: 0; padding: 30px 20px;">
+                    <div class="stat-number">24/7</div>
+                    <div>Support Available</div>
+                </div>
+                
+                <div class="stat-item" id="stat4" style="margin: 0; padding: 30px 20px; border: 2px solid #ffd700; cursor: pointer; transition: all 0.3s ease; background: rgba(255, 215, 0, 0.05);" onclick="window.open('https://discord.gg/DbNQgMWJ8G', '_blank');">
+                    <div class="stat-number" style="color: #ffd700; text-shadow: 0 0 10px #ffd700; font-size: 2.5rem;">80</div>
+                    <div style="color: white;">Happy Users <span style="font-size: 0.8rem; display: block; color: #ffd700;">Worldwide!</span></div>
+                </div>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <a href="https://discord.gg/DbNQgMWJ8G" target="_blank" class="link-item" id="link1" style="margin: 0; display: block; padding: 25px;">
+                    <div>Discord Community</div>
+                    <div class="link-desc">Join our Discord server for tools, updates, and community</div>
+                </a>
+                
+                <a href="https://guns.lol/whynexoo" target="_blank" class="link-item" id="link2" style="margin: 0; display: block; padding: 25px;">
+                    <div>Guns.lol Profile</div>
+                    <div class="link-desc">Check out our profile on guns.lol</div>
+                </a>
+                
+                <a href="#tools" class="link-item" id="link3" style="margin: 0; display: block; padding: 25px;">
+                    <div>Our Tools</div>
+                    <div class="link-desc">Browse our collection of available tools</div>
+                </a>
             </div>
         </div>
     </section>
+    
     <footer>
         <div class="footer-content">
             <div>
