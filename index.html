@@ -1788,6 +1788,79 @@
             }
         }
         
+        @media (max-width: 768px) {
+            .tools-container {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 15px !important;
+                position: relative !important;
+            }
+            
+            .tool-card {
+                width: 100% !important;
+                margin: 0 auto !important;
+                padding: 25px 15px !important;
+                transform: scale(0.95) !important;
+                display: none !important;
+            }
+            
+            .tool-card.visible-mobile {
+                display: block !important;
+            }
+            
+            #tool1.visible-mobile {
+                display: block !important;
+            }
+            
+            .view-all-btn {
+                display: block !important;
+                width: 100%;
+                padding: 15px;
+                background: rgba(255, 255, 255, 0.05);
+                border: 2px solid var(--accent-color);
+                border-radius: 8px;
+                color: white;
+                font-family: 'Orbitron', sans-serif;
+                font-size: 1rem;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-top: 10px;
+                text-align: center;
+            }
+            
+            .view-all-btn:hover {
+                background: rgba(255, 255, 255, 0.1);
+                box-shadow: 0 0 20px var(--accent-glow);
+            }
+            
+            .view-all-btn i {
+                margin-left: 10px;
+            }
+            
+            .tools-container.show-all .tool-card {
+                display: block !important;
+            }
+            
+            .tools-container.show-all .view-all-btn {
+                background: rgba(255, 70, 70, 0.2);
+                border-color: #ff4444;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .tools-container {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 40px !important;
+            }
+            
+            .view-all-btn {
+                display: none !important;
+            }
+        }
+        
         @media (max-width: 480px) {
             #about .stat-number {
                 font-size: 1.3rem !important;
@@ -1915,6 +1988,9 @@
                 <p>The paid version of Nexcord with advanced features, enhanced performance, and premium tools. Purchase keys on the White Box Discord server.</p>
                 <div class="tool-link">View on WhiteBox</div>
             </a>
+        </div>
+        <div class="view-all-btn" id="viewAllBtn" onclick="toggleAllTools()">
+            VIEW ALL TOOLS <i class="fas fa-arrow-down"></i>
         </div>
     </section>
     <section class="section" id="about">
@@ -2478,6 +2554,41 @@
             renderNews();
         });
     })();
+
+        // Mobile View All Tools
+        function toggleAllTools() {
+            const container = document.getElementById('toolsContainer');
+            const btn = document.getElementById('viewAllBtn');
+            
+            container.classList.toggle('show-all');
+            
+            if (container.classList.contains('show-all')) {
+                btn.innerHTML = 'SHOW LESS <i class="fas fa-arrow-up"></i>';
+            } else {
+                btn.innerHTML = 'VIEW ALL TOOLS <i class="fas fa-arrow-down"></i>';
+            }
+        }
+        
+        // Mobile: Zeige nur Tool1 initial
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.innerWidth <= 768) {
+                document.getElementById('tool1').classList.add('visible-mobile');
+            }
+        });
+        
+        // Bei Fenstergröße ändern
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 768) {
+                if (!document.getElementById('tool1').classList.contains('visible-mobile')) {
+                    document.getElementById('tool1').classList.add('visible-mobile');
+                }
+            } else {
+                // PC: Alle Tools anzeigen
+                document.querySelectorAll('.tool-card').forEach(tool => {
+                    tool.style.display = 'block';
+                });
+            }
+        });
 </script>
 </body>
 </html>
