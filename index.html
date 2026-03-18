@@ -137,7 +137,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 5%;
-            background-color: rgba(0, 0, 0, 0.98);
+            background-color: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(15px);
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -353,104 +353,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #000000;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
+                        radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
             z-index: -1;
-            opacity: 1;
+            opacity: 0.8;
             transition: opacity 0.5s ease;
         }
-
-        .particle-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;  /* Geändert von -1 auf 0 */
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background-color: white;
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.5);
-            opacity: 0.8;
-            animation: floatParticle linear infinite;
-        }
-
-        .particle-large {
-            width: 8px;
-            height: 8px;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 1), 0 0 50px rgba(255, 255, 255, 0.7);
-            opacity: 1;
-        }
-
-        .particle-medium {
-            width: 6px;
-            height: 6px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 255, 255, 0.6);
-            opacity: 0.9;
-        }
-
-        @keyframes floatParticle {
-            0% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0.8;
-            }
-            25% {
-                transform: translate(20px, -15px) scale(1.2);
-                opacity: 1;
-            }
-            50% {
-                transform: translate(-10px, 25px) scale(0.9);
-                opacity: 0.7;
-            }
-            75% {
-                transform: translate(15px, -20px) scale(1.1);
-                opacity: 0.9;
-            }
-            100% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0.8;
-            }
-        }
-
-        .glow-spot {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(50px);
-            animation: moveGlow 20s ease-in-out infinite alternate;
-            z-index: 0; 
-        }
-
-        .glow-spot-2 {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(60px);
-            animation: moveGlow2 25s ease-in-out infinite alternate;
-            z-index: 0;  
-        }
-
-        @keyframes moveGlow {
-            0% { transform: translate(-20%, -20%) scale(0.8); opacity: 0.3; }
-            50% { transform: translate(50%, 30%) scale(1.2); opacity: 0.6; }
-            100% { transform: translate(70%, 60%) scale(1); opacity: 0.4; }
-        }
-
-        @keyframes moveGlow2 {
-            0% { transform: translate(80%, 70%) scale(1); opacity: 0.3; }
-            50% { transform: translate(30%, 20%) scale(1.3); opacity: 0.5; }
-            100% { transform: translate(-10%, -10%) scale(0.9); opacity: 0.2; }
-        }
-        
         .hero-fade {
             position: absolute;
             bottom: 0;
@@ -458,7 +367,7 @@
             width: 100%;
             height: 200px;
             background: linear-gradient(to bottom, transparent 0%, var(--pure-black) 100%);
-            z-index: -1; 
+            z-index: 0;
             pointer-events: none;
         }
 
@@ -509,8 +418,8 @@
             text-transform: uppercase;
             color: var(--accent-color);
             text-shadow: 0 0 20px var(--accent-glow);
-            opacity: 1;  
-            transform: translateY(0);  
+            opacity: 0;
+            transform: translateY(30px);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -524,8 +433,8 @@
             max-width: 800px;
             margin-bottom: 40px;
             color: var(--text-secondary);
-            opacity: 1;  
-            transform: translateY(0);  
+            opacity: 0;
+            transform: translateY(30px);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
         }
 
@@ -540,7 +449,7 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
-            opacity: 1; 
+            opacity: 0;
             transition: opacity 0.8s ease 1s;
         }
 
@@ -594,8 +503,9 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
-            opacity: 1;  
-            transform: translateY(0);  
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
         }
 
         .cta-button.visible {
@@ -673,8 +583,9 @@
             position: relative;
             display: inline-block;
             left: 50%;
-            transform: translateX(-50%) translateY(0);  
-            opacity: 1;  
+            transform: translateX(-50%);
+            opacity: 0;
+            transform: translateX(-50%) translateY(30px);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -709,8 +620,8 @@
 
         .search-container {
             position: relative;
-            opacity: 1;  
-            transform: translateY(0);  
+            opacity: 0;
+            transform: translateY(30px);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -883,8 +794,9 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            opacity: 1;  
-            transform: translateY(0) scale(1);  
+            opacity: 0;
+            transform: translateY(50px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             color: var(--text-primary);
             display: block;
@@ -1254,8 +1166,8 @@
             color: var(--text-secondary);
             font-size: 1.1rem;
             line-height: 1.8;
-            opacity: 1; 
-            transform: translateX(0); 
+            opacity: 0;
+            transform: translateX(-30px);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -1296,8 +1208,6 @@
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 1;  
-            transform: scale(1);  
         }
 
         .stat-item.visible {
@@ -1327,8 +1237,9 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             text-align: center;
             transition: all 0.3s ease;
-            opacity: 1;  
-            transform: translateY(0);  
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             color: var(--text-primary);
             display: block;
@@ -1434,8 +1345,8 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1;  
-            opacity: 0.02;  
+            z-index: -2;
+            opacity: 0.02;
         }
 
         .news-button {
@@ -1885,15 +1796,7 @@
         }
     </style>
 </head>
-
 <body>
-
-    <div class="particle-bg" id="particleBackground"></div>
-    <div class="glow-spot" style="top: 10%; left: 10%;"></div>
-    <div class="glow-spot-2" style="bottom: 10%; right: 10%;"></div>
-
-
-
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-logo">
             <img src="wh.png" alt="White Box Logo" class="loading-icon">
@@ -2107,59 +2010,6 @@
     </div>
 
 <script>
-    // Partikel-Hintergrund erstellen
-    function createParticles() {
-        console.log("createParticles wird ausgeführt");
-        const particleBg = document.getElementById('particleBackground');
-        if (!particleBg) {
-            console.log("particleBackground nicht gefunden!");
-            return;
-        }
-        
-        console.log("particleBackground gefunden, erstelle Partikel...");
-        particleBg.innerHTML = '';
-        const numberOfParticles = 80;
-        
-        for (let i = 0; i < numberOfParticles; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            // Zufällige Größe
-            const rand = Math.random();
-            if (rand < 0.2) {
-                particle.classList.add('particle-large');
-            } else if (rand < 0.5) {
-                particle.classList.add('particle-medium');
-            }
-            
-            // Zufällige Position
-            const top = Math.random() * 100;
-            const left = Math.random() * 100;
-            particle.style.top = top + '%';
-            particle.style.left = left + '%';
-            
-            // Zufällige Animationsdauer
-            const duration = 15 + Math.random() * 20;
-            particle.style.animationDuration = duration + 's';
-            
-            // Zufällige Verzögerung
-            const delay = Math.random() * 5;
-            particle.style.animationDelay = delay + 's';
-            
-            particleBg.appendChild(particle);
-        }
-        console.log(numberOfParticles + " Partikel erstellt");
-    }
-
-    // Partikel bei Laden erstellen
-    createParticles();
-
-    // Bei Fenstergröße ändern neu erstellen (optional)
-    window.addEventListener('resize', function() {
-        // Einfach neu erstellen
-        createParticles();
-    });
-    
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileCloseBtn = document.getElementById('mobileCloseBtn');
@@ -2265,17 +2115,40 @@
     const elementStates = new WeakMap();
 
     function observeAnimations() {
-        // Animationen deaktiviert - alle Elemente sofort sichtbar
         const elements = [
-            'heroTitle', 'heroText', 'heroButton', 'scrollDown',
-            'toolsTitle', 'searchContainer', 'tool1', 'tool2',
-            'tool3', 'aboutTitle', 'aboutText1', 'aboutText2',
-            'stat1', 'stat2', 'stat3', 'link1', 'link2', 'link3'
+            { id: 'heroTitle' }, { id: 'heroText' }, { id: 'heroButton' }, { id: 'scrollDown' },
+            { id: 'toolsTitle' }, { id: 'searchContainer' }, { id: 'tool1' }, { id: 'tool2' },
+            { id: 'tool3' }, { id: 'aboutTitle' }, { id: 'aboutText1' }, { id: 'aboutText2' },
+            { id: 'stat1' }, { id: 'stat2' }, { id: 'stat3' }, { id: 'link1' }, { id: 'link2' }, { id: 'link3' }
         ];
-        
-        elements.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.classList.add('visible');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const element = entry.target;
+                if (!entry.isIntersecting) {
+                    if (elementStates.has(element)) {
+                        element.classList.remove('visible');
+                        elementStates.set(element, false);
+                    }
+                }
+                if (entry.isIntersecting) {
+                    if (!elementStates.get(element)) {
+                        setTimeout(() => {
+                            element.classList.add('visible');
+                            elementStates.set(element, true);
+                        }, 100);
+                    }
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        elements.forEach(item => {
+            const element = document.getElementById(item.id);
+            if (element) {
+                animatedElements.push(element);
+                elementStates.set(element, false);
+                observer.observe(element);
+            }
         });
     }
 
