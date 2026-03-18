@@ -1788,88 +1788,37 @@
             }
         }
         
-        @media (max-width: 768px) {
+        
+        @media (max-width: 480px) {
             .tools-container {
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 15px !important;
-                position: relative !important;
+                gap: 10px !important;
             }
             
             .tool-card {
-                width: 100% !important;
-                margin: 0 auto !important;
-                padding: 25px 15px !important;
-                transform: scale(0.95) !important;
-                display: none !important;
+                padding: 15px 8px !important;
             }
             
-            .tool-card.visible-mobile {
-                display: block !important;
+            .tool-card .tool-icon-img {
+                width: 40px !important;
+                height: 40px !important;
             }
             
-            #tool1.visible-mobile {
-                display: block !important;
+            .tool-card h3 {
+                font-size: 1rem !important;
             }
             
-        .view-all-btn {
-            display: none !important;
-            width: fit-content !important;
-            margin: 20px auto 0 !important;
-            padding: 12px 25px !important;
-            background: rgba(255, 255, 255, 0.03) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            border-radius: 50px !important;
-            color: white !important;
-            font-family: 'Orbitron', sans-serif !important;
-            font-size: 0.9rem !important;
-            text-transform: uppercase !important;
-            letter-spacing: 2px !important;
-            cursor: pointer !important;
-            transition: all 0.3s ease !important;
-            text-align: center !important;
-            backdrop-filter: blur(10px) !important;
-        }
-        
-        .view-all-btn i {
-            margin: 0 8px !important;
-            font-size: 0.9rem !important;
-            transition: transform 0.3s ease !important;
-        }
-        
-        .view-all-btn:hover {
-            background: rgba(255, 255, 255, 0.1) !important;
-            border-color: rgba(255, 255, 255, 0.5) !important;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2) !important;
-            transform: scale(1.05) !important;
-        }
-        
-        .view-all-btn:hover i:last-child {
-            transform: translateY(3px) !important;
-        }
-        
-        .tools-container.show-all + .view-all-btn {
-            background: rgba(255, 70, 70, 0.1) !important;
-            border-color: #ff4444 !important;
-        }
-        
-        .tools-container.show-all + .view-all-btn i:last-child {
-            transform: rotate(180deg) !important;
-        }
-        
-        .tools-container.show-all + .view-all-btn:hover i:last-child {
-            transform: rotate(180deg) translateY(-3px) !important;
-        }
-        
-        @media (min-width: 769px) {
-            .tools-container {
-                display: grid !important;
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 40px !important;
+            .tool-price {
+                font-size: 0.8rem !important;
             }
             
-            .view-all-btn {
-                display: none !important;
+            .tool-card p {
+                font-size: 0.7rem !important;
+                -webkit-line-clamp: 2 !important;
+            }
+            
+            .tool-link {
+                font-size: 0.7rem !important;
+                padding: 4px 8px !important;
             }
         }
         
@@ -2000,9 +1949,6 @@
                 <p>The paid version of Nexcord with advanced features, enhanced performance, and premium tools. Purchase keys on the White Box Discord server.</p>
                 <div class="tool-link">View on WhiteBox</div>
             </a>
-        </div>
-        <div class="view-all-btn" id="viewAllBtn" onclick="toggleAllTools()">
-            <i class="fas fa-grid-2"></i> VIEW ALL TOOLS <i class="fas fa-chevron-down"></i>
         </div>
     </section>
 
@@ -2347,32 +2293,11 @@
         { name: 'Nexcord Basic', price: 'FREE', status: 'archived', theme: 'red', icon: 'fab fa-discord', element: document.getElementById('tool2') },
         { name: 'Nexcord Plus', price: '€3.99', status: 'paused', theme: 'gold', icon: 'fab fa-discord', element: document.getElementById('tool3') }
     ];
-
     function filterTools(searchTerm) {
         const term = searchTerm.toLowerCase().trim();
-        const container = document.getElementById('toolsContainer');
         tools.forEach(tool => {
             const matches = tool.name.toLowerCase().includes(term);
-            if (window.innerWidth <= 768) {
-                if (term !== '') {
-                    tool.element.style.display = matches ? 'block' : 'none';
-                    if (matches && !container.classList.contains('show-all')) {
-                        container.classList.add('show-all');
-                        document.getElementById('viewAllBtn').innerHTML = '<i class="fas fa-grid-2"></i> SHOW LESS <i class="fas fa-chevron-up"></i>';
-                    }
-                } else {
-                    tool.element.style.display = 'none';
-                    if (tool.name === 'WHASH') {
-                        tool.element.style.display = 'block';
-                    }
-                    if (container.classList.contains('show-all')) {
-                        container.classList.remove('show-all');
-                        document.getElementById('viewAllBtn').innerHTML = '<i class="fas fa-grid-2"></i> VIEW ALL TOOLS <i class="fas fa-chevron-down"></i>';
-                    }
-                }
-            } else {
-                tool.element.style.display = (term === '' || matches) ? 'block' : 'none';
-            }
+            tool.element.style.display = (term === '' || matches) ? 'block' : 'none';
         });
     }
 
@@ -2586,52 +2511,6 @@
             renderNews();
         });
     })();
-
-    function toggleAllTools() {
-        const container = document.getElementById('toolsContainer');
-        const btn = document.getElementById('viewAllBtn');
-        const searchValue = document.getElementById('searchInput').value.toLowerCase().trim();
-        
-        container.classList.toggle('show-all');
-        
-        if (container.classList.contains('show-all')) {
-            btn.innerHTML = '<i class="fas fa-grid-2"></i> SHOW LESS <i class="fas fa-chevron-up"></i>';
-            if (searchValue !== '') {
-                tools.forEach(tool => {
-                    const matches = tool.name.toLowerCase().includes(searchValue);
-                    tool.element.style.display = matches ? 'block' : 'none';
-                });
-            }
-        } else {
-            btn.innerHTML = '<i class="fas fa-grid-2"></i> VIEW ALL TOOLS <i class="fas fa-chevron-down"></i>';
-            if (searchValue === '') {
-                tools.forEach(tool => {
-                    tool.element.style.display = 'none';
-                    if (tool.name === 'WHASH') {
-                        tool.element.style.display = 'block';
-                    }
-                });
-            }
-        }
-    }
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        if (window.innerWidth <= 768) {
-            document.getElementById('tool1').classList.add('visible-mobile');
-        }
-    });
-    
-    window.addEventListener('resize', function() {
-        if (window.innerWidth <= 768) {
-            if (!document.getElementById('tool1').classList.contains('visible-mobile')) {
-                document.getElementById('tool1').classList.add('visible-mobile');
-            }
-        } else {
-            document.querySelectorAll('.tool-card').forEach(tool => {
-                tool.style.display = 'block';
-            });
-        }
-    });
 </script>
 </body>
 </html>
