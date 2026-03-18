@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🌸 PARTY AT THE BEACH 🌸</title>
+    <link rel="icon" type="image/png" href="wh.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto+Mono:wght@300;400;500;700&family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --hot-pink: #ff1a8c;
+            --dark-pink: #cc0066;
+            --light-pink: #ff99cc;
+            --pink-glow: rgba(255, 26, 140, 0.8);
+            --pink-bg: #1a0012;
+            --pink-card: #330026;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: var(--pink-bg);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff1a8c, #99004d);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .loading-emoji {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 30px white);
+            animation: spin 2s infinite linear;
+        }
+
+        .loading-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 20px white, 0 0 40px white;
+            letter-spacing: 5px;
+        }
+
+        .loading-dots {
+            display: inline-block;
+            width: 60px;
+            text-align: left;
+        }
+
+        .loading-dots::after {
+            content: '...';
+            animation: dots 1.5s infinite;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(255, 26, 140, 0.3);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 2px solid var(--hot-pink);
+            box-shadow: 0 0 30px var(--hot-pink);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: white;
+            text-decoration: none;
+            text-shadow: 0 0 15px white;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: white;
+            filter: drop-shadow(0 0 10px white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px white;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-links a:hover {
+            background: white;
+            color: var(--hot-pink);
+            box-shadow: 0 0 30px white;
+            transform: scale(1.1);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            text-shadow: 0 0 15px white;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 0 0 30px white, 0 0 60px white;
+            animation: glow 2s infinite alternate;
+            font-family: 'Comic Neue', cursive;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+            color: white;
+            text-shadow: 0 0 15px white;
+        }
+
+        .beach-emoji {
+            font-size: 4rem;
+            margin: 20px;
+            animation: bounce 1s infinite;
+        }
+
+        .floating-gifs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
+        }
+
+        .floating-gifs.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .gif-item {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            pointer-events: none;
+            animation: float-around 15s infinite linear;
+            filter: drop-shadow(0 0 20px white);
+        }
+
+        .gif-item:nth-child(1) { top: 10%; left: 5%; animation-duration: 12s; }
+        .gif-item:nth-child(2) { top: 20%; right: 10%; animation-duration: 18s; }
+        .gif-item:nth-child(3) { bottom: 15%; left: 15%; animation-duration: 14s; }
+        .gif-item:nth-child(4) { bottom: 25%; right: 20%; animation-duration: 16s; }
+        .gif-item:nth-child(5) { top: 50%; left: 30%; animation-duration: 20s; }
+        .gif-item:nth-child(6) { top: 70%; right: 30%; animation-duration: 13s; }
+        .gif-item:nth-child(7) { top: 40%; left: 70%; animation-duration: 17s; }
+        .gif-item:nth-child(8) { bottom: 40%; right: 50%; animation-duration: 15s; }
+        .gif-item:nth-child(9) { top: 80%; left: 50%; animation-duration: 19s; }
+        .gif-item:nth-child(10) { bottom: 60%; right: 70%; animation-duration: 14s; }
+
+        @keyframes float-around {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, 50px) rotate(90deg); }
+            50% { transform: translate(50px, 150px) rotate(180deg); }
+            75% { transform: translate(-50px, 50px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        .party-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 26, 140, 0.3);
+            backdrop-filter: blur(15px);
+            z-index: 99998;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .party-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .party-modal-content {
+            background: linear-gradient(135deg, #ff4da6, #b3005c);
+            border: 4px solid white;
+            border-radius: 50px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 50px white, 0 0 100px white;
+            transform: scale(0.8);
+            transition: all 0.5s ease;
+        }
+
+        .party-modal-overlay.active .party-modal-content {
+            transform: scale(1);
+        }
+
+        .party-modal-content h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px white;
+            font-family: 'Comic Neue', cursive;
+        }
+
+        .party-modal-content p {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px white;
+        }
+
+        .party-btn {
+            background: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--hot-pink);
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            box-shadow: 0 0 30px white;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+
+        .party-btn:hover {
+            transform: scale(1.1);
+            background: var(--hot-pink);
+            color: white;
+            box-shadow: 0 0 50px white;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            text-shadow: 0 0 10px white;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 30px white, 0 0 60px white; }
+            to { text-shadow: 0 0 50px white, 0 0 90px white; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes dots {
+            0% { content: '.'; }
+            33% { content: '..'; }
+            66% { content: '...'; }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .hero p { font-size: 1.2rem; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .gif-item { width: 100px; height: 100px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-emoji">🌸🏖️🌸</div>
+            <div class="loading-text">PARTY AT THE BEACH<span class="loading-dots"></span></div>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <i class="fas fa-umbrella-beach"></i>
+            <span>PATB</span>
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/#tools">Tools</a>
+            <a href="/#about">About</a>
+            <a href="https://discord.gg/DbNQgMWJ8G" target="_blank">Discord</a>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <div class="hero">
+        <div class="beach-emoji">🏖️🌸🏄‍♀️</div>
+        <h1>PARTY AT THE BEACH</h1>
+        <p>the pinkest place on the whole internet ✨💖✨</p>
+        <div class="beach-emoji">🌊🐚🍹</div>
+    </div>
+
+    <div class="party-modal-overlay active" id="partyModal">
+        <div class="party-modal-content">
+            <h2>🌸 HEY BESTIE! 🌸</h2>
+            <p>wanna party at the beach?</p>
+            <button class="party-btn" id="partyBtn">YEA SURE! 💖</button>
+        </div>
+    </div>
+
+    <div class="floating-gifs" id="floatingGifs">
+        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG8yNnAyZzVsaDFzenJ6dmgxdTh2YzkzaHJqbWZ4ajBpemU3dGtxaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zkClqyWQzUZI22S5mI/giphy.gif" class="gif-item">
+        <img src="https://tenor.com/o1s7dcOzPmT.gif" class="gif-item">
+        <img src="https://tenor.com/bFbvi.gif" class="gif-item">
+        <img src="https://tenor.com/h2gbslEm1Co.gif" class="gif-item">
+        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG8yNnAyZzVsaDFzenJ6dmgxdTh2YzkzaHJqbWZ4ajBpemU3dGtxaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zkClqyWQzUZI22S5mI/giphy.gif" class="gif-item">
+        <img src="https://tenor.com/o1s7dcOzPmT.gif" class="gif-item">
+        <img src="https://tenor.com/bFbvi.gif" class="gif-item">
+        <img src="https://tenor.com/h2gbslEm1Co.gif" class="gif-item">
+        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG8yNnAyZzVsaDFzenJ6dmgxdTh2YzkzaHJqbWZ4ajBpemU3dGtxaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zkClqyWQzUZI22S5mI/giphy.gif" class="gif-item">
+        <img src="https://tenor.com/o1s7dcOzPmT.gif" class="gif-item">
+    </div>
+
+    <div class="footer">
+        <p>🌸 made with love and glitter 🌸</p>
+    </div>
+
+    <script>
+        const loadingScreen = document.getElementById('loadingScreen');
+        const partyModal = document.getElementById('partyModal');
+        const partyBtn = document.getElementById('partyBtn');
+        const floatingGifs = document.getElementById('floatingGifs');
+        let audio = null;
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+            }, 2000);
+        });
+
+        partyBtn.addEventListener('click', () => {
+            partyModal.classList.remove('active');
+            floatingGifs.classList.add('active');
+            
+            if (!audio) {
+                audio = new Audio('https://files.catbox.moe/m0vj67.mp3');
+                audio.loop = true;
+                audio.volume = 0.7;
+                
+                audio.play().catch(e => {
+                    console.log('Audio play failed:', e);
+                    document.addEventListener('click', function initAudio() {
+                        audio.play();
+                        document.removeEventListener('click', initAudio);
+                    }, { once: true });
+                });
+            }
+        });
+
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                const newGif = document.createElement('img');
+                const gifs = [
+                    'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG8yNnAyZzVsaDFzenJ6dmgxdTh2YzkzaHJqbWZ4ajBpemU3dGtxaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zkClqyWQzUZI22S5mI/giphy.gif',
+                    'https://tenor.com/o1s7dcOzPmT.gif',
+                    'https://tenor.com/bFbvi.gif',
+                    'https://tenor.com/h2gbslEm1Co.gif'
+                ];
+                newGif.src = gifs[Math.floor(Math.random() * gifs.length)];
+                newGif.className = 'gif-item';
+                newGif.style.top = Math.random() * 90 + '%';
+                newGif.style.left = Math.random() * 90 + '%';
+                newGif.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                floatingGifs.appendChild(newGif);
+            }, i * 500);
+        }
+
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                alert('🌸 Mobile menu would open here but we\'re too busy partying! 🌸');
+            });
+        }
+    </script>
+</body>
+</html>
