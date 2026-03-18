@@ -2083,50 +2083,10 @@
         setTimeout(() => {
             loadingScreen.classList.add('hidden');
             setTimeout(() => mainLogo.classList.add('loaded'), 300);
-            animate();
             startTerminalRotation();
             observeAnimations();
         }, 1500);
     });
-
-    const canvas = document.getElementById('matrixCanvas');
-    const ctx = canvas.getContext('2d');
-
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-
-    resizeCanvas();
-
-    const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
-    const chars = matrixChars.split("");
-    const fontSize = 14;
-    let columns = canvas.width / fontSize;
-    let drops = [];
-
-    function initDrops() {
-        drops = [];
-        columns = canvas.width / fontSize;
-        for (let i = 0; i < columns; i++) {
-            drops[i] = Math.floor(Math.random() * canvas.height / fontSize) * fontSize;
-        }
-    }
-
-    initDrops();
-
-    function drawMatrix() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#ffffff";
-        ctx.font = `${fontSize}px 'Roboto Mono', monospace`;
-        for (let i = 0; i < drops.length; i++) {
-            const text = chars[Math.floor(Math.random() * chars.length)];
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            drops[i] += fontSize;
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        }
-    }
 
     const terminalLines = [
         document.getElementById('terminal-line-1'),
@@ -2215,17 +2175,7 @@
     }
 
     window.addEventListener('hashchange', (e) => e.preventDefault(), false);
-
-    function animate() {
-        drawMatrix();
-        requestAnimationFrame(animate);
-    }
-
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', () => {
-        resizeCanvas();
-        initDrops();
-    });
 
     window.addEventListener('beforeunload', () => {
         if (rotationInterval) clearInterval(rotationInterval);
@@ -2286,6 +2236,7 @@
         { name: 'Nexcord Basic', price: 'FREE', status: 'archived', theme: 'red', icon: 'fab fa-discord', element: document.getElementById('tool2') },
         { name: 'Nexcord Plus', price: '€3.99', status: 'paused', theme: 'gold', icon: 'fab fa-discord', element: document.getElementById('tool3') }
     ];
+
     function filterTools(searchTerm) {
         const term = searchTerm.toLowerCase().trim();
         tools.forEach(tool => {
