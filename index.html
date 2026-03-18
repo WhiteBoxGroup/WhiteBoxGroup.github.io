@@ -353,13 +353,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
-                        radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
+            background: #000000;
             z-index: -1;
-            opacity: 0.8;
-            transition: opacity 0.5s ease;
         }
+        
         .hero-fade {
             position: absolute;
             bottom: 0;
@@ -1338,7 +1335,7 @@
             font-size: 0.9rem;
         }
 
-        .matrix-bg {
+        .stars-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -1346,7 +1343,47 @@
             height: 100%;
             pointer-events: none;
             z-index: -2;
-            opacity: 0.02;
+            background: #000000;
+        }
+
+        .stars-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(3px 3px at 80px 190px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 120px 350px, #fff, rgba(0,0,0,0)),
+                radial-gradient(4px 4px at 150px 50px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 200px 420px, #fff, rgba(0,0,0,0)),
+                radial-gradient(3px 3px at 260px 180px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 300px 520px, #fff, rgba(0,0,0,0)),
+                radial-gradient(4px 4px at 350px 280px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 380px 620px, #fff, rgba(0,0,0,0)),
+                radial-gradient(3px 3px at 420px 90px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 470px 450px, #fff, rgba(0,0,0,0)),
+                radial-gradient(4px 4px at 500px 210px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 550px 380px, #fff, rgba(0,0,0,0)),
+                radial-gradient(3px 3px at 590px 110px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 630px 540px, #fff, rgba(0,0,0,0)),
+                radial-gradient(4px 4px at 670px 320px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 700px 180px, #fff, rgba(0,0,0,0)),
+                radial-gradient(3px 3px at 750px 490px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 800px 70px, #fff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 850px 700px;
+            animation: starsMove 180s linear infinite;
+            opacity: 0.9;
+        }
+
+        @keyframes starsMove {
+            from { transform: translateY(0); }
+            to { transform: translateY(-700px); }
         }
 
         .news-button {
@@ -1804,7 +1841,7 @@
         </div>
     </div>
 
-    <canvas class="matrix-bg" id="matrixCanvas"></canvas>
+    <div class="stars-bg" id="starsBg"></div>
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
     <nav class="navbar" id="navbar">
