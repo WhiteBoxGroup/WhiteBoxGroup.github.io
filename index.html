@@ -360,6 +360,16 @@
             z-index: -1;
         }
 
+        #stat4:hover {
+            border-color: #ffd700 !important;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5) !important;
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 215, 0, 0.05);
+        }
+        #stat4:hover .stat-number {
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8) !important;
+        }
+
         .hero h1 {
             font-size: 4rem;
             margin-bottom: 20px;
@@ -1797,49 +1807,59 @@
             </a>
         </div>
     </section>
-
     <section class="section" id="about">
         <h2 class="section-title" id="aboutTitle">ABOUT US</h2>
-        <div class="about-content" style="grid-template-columns: 1fr;">
-            <div class="about-text" style="text-align: center; max-width: 800px; margin: 0 auto;">
-                <p id="aboutText1" style="font-size: 1.2rem; margin-bottom: 20px;">White Box is a professional Doxbin group founded in 2024 by our current owner <a href="http://doxbin.com/user/nexooo" target="_blank" class="owner-link">Nexoo</a>.</p>
-                <p id="aboutText2" style="font-size: 1.2rem; margin-bottom: 40px;">Our team creates and distributes various tools including WHASH password cracker, DDoS tools, Discord multi-tools, rare username finders, nukers, doxxes database, and other utilities.</p>
-                
-                <!-- BOXEN IM ALTEN STYLE -->
-                <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 30px;">
-                    
-                    <!-- EXISTIERENDE BOXEN -->
-                    <div style="background: #080808; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 25px 35px; min-width: 180px;">
-                        <div style="font-size: 2.5rem; font-weight: 900; color: var(--accent-color); margin-bottom: 10px;">3+</div>
-                        <div style="color: var(--text-secondary);">Tools Developed</div>
-                    </div>
-                    
-                    <div style="background: #080808; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 25px 35px; min-width: 180px;">
-                        <div style="font-size: 2.5rem; font-weight: 900; color: var(--accent-color); margin-bottom: 10px;">Free/Paid</div>
-                        <div style="color: var(--text-secondary);">Tools Available</div>
-                    </div>
-                    
-                    <!-- NEUE HAPPY USERS BOX -->
-                    <div style="background: #080808; border: 2px solid rgba(255, 215, 0, 0.5); border-radius: 8px; padding: 25px 35px; min-width: 180px; box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);">
-                        <div style="font-size: 2.5rem; font-weight: 900; color: #ffd700; margin-bottom: 10px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);" id="memberCount">162</div>
-                        <div style="color: var(--text-secondary);">Happy Users <span style="font-size: 0.8rem; display: block; color: #ffd700;">Worldwide!</span></div>
-                    </div>
-                    
-                    <div style="background: #080808; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 25px 35px; min-width: 180px;">
-                        <div style="font-size: 2.5rem; font-weight: 900; color: var(--accent-color); margin-bottom: 10px;">24/7</div>
-                        <div style="color: var(--text-secondary);">Support Available</div>
-                    </div>
-                </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p id="aboutText1">White Box is a professional Doxbin group founded in 2024 by our current owner <a href="http://doxbin.com/user/nexooo" target="_blank" class="owner-link">Nexoo</a>.</p>
+                <p id="aboutText2">Our team creates and distributes various tools including WHASH password cracker, DDoS tools, Discord multi-tools, rare username finders, nukers, doxxes database, and other utilities.</p>
             </div>
             
-            <div class="links-container" style="margin-top: 50px;">
-                <a href="https://discord.gg/DbNQgMWJ8G" target="_blank" class="link-item" id="link1"><div>Discord Community</div><div class="link-desc">Join our Discord server for tools, updates, and community</div></a>
-                <a href="https://guns.lol/whynexoo" target="_blank" class="link-item" id="link2"><div>Guns.lol Profile</div><div class="link-desc">Check out our profile on guns.lol</div></a>
-                <a href="#tools" class="link-item" id="link3"><div>Our Tools</div><div class="link-desc">Browse our collection of available tools</div></a>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
+                <!-- LINKE BOXEN (STATS) -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div class="stat-item" id="stat1" style="margin: 0;">
+                        <div class="stat-number">3+</div>
+                        <div>Tools Developed</div>
+                    </div>
+                    
+                    <div class="stat-item" id="stat2" style="margin: 0;">
+                        <div class="stat-number">Free/Paid</div>
+                        <div>Tools Available</div>
+                    </div>
+                    
+                    <!-- NEUE HAPPY USERS BOX (UNTER Free/Paid) -->
+                    <div class="stat-item" id="stat4" style="margin: 0; cursor: pointer; border: 2px solid rgba(255, 215, 0, 0.3); transition: all 0.3s ease;" onclick="window.open('https://discord.gg/DbNQgMWJ8G', '_blank');">
+                        <div class="stat-number" id="memberCount" style="color: #ffd700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);">162</div>
+                        <div>Happy Users <span style="font-size: 0.8rem; display: block; color: #ffd700;">Worldwide!</span></div>
+                    </div>
+                    
+                    <div class="stat-item" id="stat3" style="margin: 0;">
+                        <div class="stat-number">24/7</div>
+                        <div>Support Available</div>
+                    </div>
+                </div>
+                
+                <!-- RECHTE BOXEN (LINKS) -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <a href="https://discord.gg/DbNQgMWJ8G" target="_blank" class="link-item" id="link1" style="margin: 0; display: block;">
+                        <div>Discord Community</div>
+                        <div class="link-desc">Join our Discord server for tools, updates, and community</div>
+                    </a>
+                    
+                    <a href="https://guns.lol/whynexoo" target="_blank" class="link-item" id="link2" style="margin: 0; display: block;">
+                        <div>Guns.lol Profile</div>
+                        <div class="link-desc">Check out our profile on guns.lol</div>
+                    </a>
+                    
+                    <a href="#tools" class="link-item" id="link3" style="margin: 0; display: block;">
+                        <div>Our Tools</div>
+                        <div class="link-desc">Browse our collection of available tools</div>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
-
     <footer>
         <div class="footer-content">
             <div>
