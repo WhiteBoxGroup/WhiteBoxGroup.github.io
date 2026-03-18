@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🌸 PARTY AT THE BEACH 🌸</title>
+    <title>Party Box | Has everything you need</title>
     <link rel="icon" type="image/png" href="wh.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto+Mono:wght@300;400;500;700&family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
@@ -356,14 +356,14 @@
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-content">
             <div class="loading-emoji">🌸🏖️🌸</div>
-            <div class="loading-text">PARTY AT THE BEACH<span class="loading-dots"></span></div>
+            <div class="loading-text">PARTY BOX<span class="loading-dots"></span></div>
         </div>
     </div>
 
     <nav class="navbar">
         <a href="/" class="logo">
             <i class="fas fa-umbrella-beach"></i>
-            <span>PATB</span>
+            <span>PARTY BOX</span>
         </a>
         <div class="nav-links">
             <a href="/">Home</a>
@@ -378,7 +378,7 @@
 
     <div class="hero">
         <div class="beach-emoji">🏖️🌸🏄‍♀️</div>
-        <h1>PARTY AT THE BEACH</h1>
+        <h1>PARTY BOX</h1>
         <p>the pinkest place on the whole internet ✨💖✨</p>
         <div class="beach-emoji">🌊🐚🍹</div>
     </div>
@@ -391,18 +391,7 @@
         </div>
     </div>
 
-    <div class="floating-gifs" id="floatingGifs">
-        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG8yNnAyZzVsaDFzenJ6dmgxdTh2YzkzaHJqbWZ4ajBpemU3dGtxaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zkClqyWQzUZI22S5mI/giphy.gif" class="gif-item">
-        <img src="https://tenor.com/o1s7dcOzPmT.gif" class="gif-item">
-        <img src="https://tenor.com/bFbvi.gif" class="gif-item">
-        <img src="https://tenor.com/h2gbslEm1Co.gif" class="gif-item">
-        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG8yNnAyZzVsaDFzenJ6dmgxdTh2YzkzaHJqbWZ4ajBpemU3dGtxaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zkClqyWQzUZI22S5mI/giphy.gif" class="gif-item">
-        <img src="https://tenor.com/o1s7dcOzPmT.gif" class="gif-item">
-        <img src="https://tenor.com/bFbvi.gif" class="gif-item">
-        <img src="https://tenor.com/h2gbslEm1Co.gif" class="gif-item">
-        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG8yNnAyZzVsaDFzenJ6dmgxdTh2YzkzaHJqbWZ4ajBpemU3dGtxaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zkClqyWQzUZI22S5mI/giphy.gif" class="gif-item">
-        <img src="https://tenor.com/o1s7dcOzPmT.gif" class="gif-item">
-    </div>
+    <div class="floating-gifs" id="floatingGifs"></div>
 
     <div class="footer">
         <p>🌸 made with love and glitter 🌸</p>
@@ -421,47 +410,49 @@
             }, 2000);
         });
 
+        function createGif() {
+            const gif = document.createElement('img');
+            gif.src = 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG8yNnAyZzVsaDFzenJ6dmgxdTh2YzkzaHJqbWZ4ajBpemU3dGtxaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zkClqyWQzUZI22S5mI/giphy.gif';
+            gif.className = 'gif-item';
+            gif.style.top = Math.random() * 90 + '%';
+            gif.style.left = Math.random() * 90 + '%';
+            gif.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            gif.style.width = '100px';
+            gif.style.height = '100px';
+            return gif;
+        }
+
         partyBtn.addEventListener('click', () => {
             partyModal.classList.remove('active');
             floatingGifs.classList.add('active');
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    floatingGifs.appendChild(createGif());
+                }, i * 100);
+            }
             
             if (!audio) {
                 audio = new Audio('https://files.catbox.moe/m0vj67.mp3');
                 audio.loop = true;
                 audio.volume = 0.7;
                 
-                audio.play().catch(e => {
-                    console.log('Audio play failed:', e);
-                    document.addEventListener('click', function initAudio() {
-                        audio.play();
-                        document.removeEventListener('click', initAudio);
-                    }, { once: true });
-                });
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        document.body.addEventListener('click', function initAudio() {
+                            audio.play();
+                            document.body.removeEventListener('click', initAudio);
+                        }, { once: true });
+                    });
+                }
             }
         });
-
-        for (let i = 0; i < 20; i++) {
-            setTimeout(() => {
-                const newGif = document.createElement('img');
-                const gifs = [
-                    'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG8yNnAyZzVsaDFzenJ6dmgxdTh2YzkzaHJqbWZ4ajBpemU3dGtxaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zkClqyWQzUZI22S5mI/giphy.gif',
-                    'https://tenor.com/o1s7dcOzPmT.gif',
-                    'https://tenor.com/bFbvi.gif',
-                    'https://tenor.com/h2gbslEm1Co.gif'
-                ];
-                newGif.src = gifs[Math.floor(Math.random() * gifs.length)];
-                newGif.className = 'gif-item';
-                newGif.style.top = Math.random() * 90 + '%';
-                newGif.style.left = Math.random() * 90 + '%';
-                newGif.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                floatingGifs.appendChild(newGif);
-            }, i * 500);
-        }
 
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         if (mobileMenuBtn) {
             mobileMenuBtn.addEventListener('click', () => {
-                alert('🌸 Mobile menu would open here but we\'re too busy partying! 🌸');
+                alert('🌸 PARTY BOX - Mobile Menu coming soon! 🌸');
             });
         }
     </script>
