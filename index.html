@@ -1685,42 +1685,49 @@
             }
         }
         
+
+        #about {
+            margin-bottom: 40px;
+        }
+
+        #about > div:last-child {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        #about > div:last-child > div:first-child {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
         @media (max-width: 768px) {
             #about > div:last-child {
                 grid-template-columns: 1fr !important;
-                gap: 20px !important;
             }
+            
             #about .stat-item {
                 padding: 15px 8px !important;
                 min-height: 90px !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important;
-                align-items: center !important;
             }
+            
             #about .stat-number {
                 font-size: 1.5rem !important;
-                margin-bottom: 3px !important;
             }
-            #about .stat-item div:last-child {
-                font-size: 0.7rem !important;
-                line-height: 1.2 !important;
-            }
+            
             #about .link-item {
                 padding: 15px !important;
                 min-height: 80px !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important;
             }
-            #about .link-item div:first-child {
-                font-size: 0.9rem !important;
-                margin-bottom: 3px !important;
-            }
+            
             #about .link-desc {
                 font-size: 0.65rem !important;
-                line-height: 1.2 !important;
             }
+            
             .about-text p {
                 font-size: 0.9rem !important;
                 margin-bottom: 10px !important;
@@ -1853,52 +1860,6 @@
         </div>
     </section>
 
-    <section class="section" id="tools">
-        <h2 class="section-title" id="toolsTitle">OUR TOOLS</h2>
-        <div class="search-wrapper">
-            <div class="search-container" id="searchContainer">
-                <input type="text" class="search-box" id="searchInput" placeholder="Search tools..." autocomplete="off">
-                <i class="fas fa-search search-icon"></i>
-                <div class="search-preview" id="searchPreview"></div>
-            </div>
-        </div>
-
-        <div class="tools-container" id="toolsContainer">
-            <div class="tool-card disabled-theme" id="tool1" data-name="whash" data-price="coming soon" data-status="development">
-                <div class="in-development-badge">IN DEVELOPMENT</div>
-                <div class="tool-icon">
-                    <img src="whash.png" alt="WHASH Logo" class="tool-icon-img">
-                </div>
-                <h3>WHASH</h3>
-                <div class="tool-price">COMING SOON</div>
-                <p>The fastest password cracker White Box has ever made. Main feature is a Rare Username Finder for Doxbin.com, Discord, TikTok, YouTube and more. Ultra-fast performance with advanced algorithms.</p>
-                <div class="tool-link">Get Tool</div>
-            </div>
-            
-            <a href="/NexcordBasic" class="tool-card red-theme" id="tool2" data-name="nexcord basic" data-price="free" data-status="archived">
-                <div class="archived-badge">ARCHIVED</div>
-                <div class="tool-icon">
-                    <i class="fab fa-discord"></i>
-                </div>
-                <h3>Nexcord Basic</h3>
-                <div class="tool-price">FREE</div>
-                <p>The free version of a Discord nuker tool named Nexcord made by the owner of White Box. Basic features for server management and moderation.</p>
-                <div class="tool-link">View on WhiteBox</div>
-            </a>
-            
-            <a href="/NexcordPlus" class="tool-card gold-theme" id="tool3" data-name="nexcord plus" data-price="€3.99" data-status="paused">
-                <div class="paused-badge">PAUSED</div>
-                <div class="tool-icon">
-                    <i class="fab fa-discord"></i>
-                </div>
-                <h3>Nexcord Plus</h3>
-                <div class="tool-price">€3.99</div>
-                <p>The paid version of Nexcord with advanced features, enhanced performance, and premium tools. Purchase keys on the White Box Discord server.</p>
-                <div class="tool-link">View on WhiteBox</div>
-            </a>
-        </div>
-    </section>
-
     <section class="section" id="about">
         <h2 class="section-title" id="aboutTitle">ABOUT US</h2>
         
@@ -1947,6 +1908,52 @@
                     <div class="link-desc" style="font-size: 0.75rem; color: var(--text-secondary);">Browse our collection of available tools</div>
                 </a>
             </div>
+        </div>
+    </section>
+
+    <section class="section" id="tools">
+        <h2 class="section-title" id="toolsTitle">OUR TOOLS</h2>
+        <div class="search-wrapper">
+            <div class="search-container" id="searchContainer">
+                <input type="text" class="search-box" id="searchInput" placeholder="Search tools..." autocomplete="off">
+                <i class="fas fa-search search-icon"></i>
+                <div class="search-preview" id="searchPreview"></div>
+            </div>
+        </div>
+
+        <div class="tools-container" id="toolsContainer">
+            <div class="tool-card disabled-theme" id="tool1" data-name="whash" data-price="coming soon" data-status="development">
+                <div class="in-development-badge">IN DEVELOPMENT</div>
+                <div class="tool-icon">
+                    <img src="whash.png" alt="WHASH Logo" class="tool-icon-img">
+                </div>
+                <h3>WHASH</h3>
+                <div class="tool-price">COMING SOON</div>
+                <p>The fastest password cracker White Box has ever made. Main feature is a Rare Username Finder for Doxbin.com, Discord, TikTok, YouTube and more. Ultra-fast performance with advanced algorithms.</p>
+                <div class="tool-link">Get Tool</div>
+            </div>
+            
+            <a href="/NexcordBasic" class="tool-card red-theme" id="tool2" data-name="nexcord basic" data-price="free" data-status="archived">
+                <div class="archived-badge">ARCHIVED</div>
+                <div class="tool-icon">
+                    <i class="fab fa-discord"></i>
+                </div>
+                <h3>Nexcord Basic</h3>
+                <div class="tool-price">FREE</div>
+                <p>The free version of a Discord nuker tool named Nexcord made by the owner of White Box. Basic features for server management and moderation.</p>
+                <div class="tool-link">View on WhiteBox</div>
+            </a>
+            
+            <a href="/NexcordPlus" class="tool-card gold-theme" id="tool3" data-name="nexcord plus" data-price="€3.99" data-status="paused">
+                <div class="paused-badge">PAUSED</div>
+                <div class="tool-icon">
+                    <i class="fab fa-discord"></i>
+                </div>
+                <h3>Nexcord Plus</h3>
+                <div class="tool-price">€3.99</div>
+                <p>The paid version of Nexcord with advanced features, enhanced performance, and premium tools. Purchase keys on the White Box Discord server.</p>
+                <div class="tool-link">View on WhiteBox</div>
+            </a>
         </div>
     </section>
     
