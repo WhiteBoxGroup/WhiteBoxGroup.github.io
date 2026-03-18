@@ -1812,41 +1812,53 @@
                 display: block !important;
             }
             
-            .view-all-btn {
-                display: block !important;
-                width: 100%;
-                padding: 15px;
-                background: rgba(255, 255, 255, 0.05);
-                border: 2px solid var(--accent-color);
-                border-radius: 8px;
-                color: white;
-                font-family: 'Orbitron', sans-serif;
-                font-size: 1rem;
-                text-transform: uppercase;
-                letter-spacing: 2px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                margin-top: 10px;
-                text-align: center;
-            }
-            
-            .view-all-btn:hover {
-                background: rgba(255, 255, 255, 0.1);
-                box-shadow: 0 0 20px var(--accent-glow);
-            }
-            
-            .view-all-btn i {
-                margin-left: 10px;
-            }
-            
-            .tools-container.show-all .tool-card {
-                display: block !important;
-            }
-            
-            .tools-container.show-all .view-all-btn {
-                background: rgba(255, 70, 70, 0.2);
-                border-color: #ff4444;
-            }
+        .view-all-btn {
+            display: none !important;
+            width: fit-content !important;
+            margin: 20px auto 0 !important;
+            padding: 12px 25px !important;
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 50px !important;
+            color: white !important;
+            font-family: 'Orbitron', sans-serif !important;
+            font-size: 0.9rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 2px !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            text-align: center !important;
+            backdrop-filter: blur(10px) !important;
+        }
+        
+        .view-all-btn i {
+            margin: 0 8px !important;
+            font-size: 0.9rem !important;
+            transition: transform 0.3s ease !important;
+        }
+        
+        .view-all-btn:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-color: rgba(255, 255, 255, 0.5) !important;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2) !important;
+            transform: scale(1.05) !important;
+        }
+        
+        .view-all-btn:hover i:last-child {
+            transform: translateY(3px) !important;
+        }
+        
+        .tools-container.show-all + .view-all-btn {
+            background: rgba(255, 70, 70, 0.1) !important;
+            border-color: #ff4444 !important;
+        }
+        
+        .tools-container.show-all + .view-all-btn i:last-child {
+            transform: rotate(180deg) !important;
+        }
+        
+        .tools-container.show-all + .view-all-btn:hover i:last-child {
+            transform: rotate(180deg) translateY(-3px) !important;
         }
         
         @media (min-width: 769px) {
@@ -1990,9 +2002,10 @@
             </a>
         </div>
         <div class="view-all-btn" id="viewAllBtn" onclick="toggleAllTools()">
-            VIEW ALL TOOLS <i class="fas fa-arrow-down"></i>
+            <i class="fas fa-grid-2"></i> VIEW ALL TOOLS <i class="fas fa-chevron-down"></i>
         </div>
     </section>
+
     <section class="section" id="about">
         <h2 class="section-title" id="aboutTitle">ABOUT US</h2>
         
@@ -2075,7 +2088,6 @@
             </div>
         </div>
         <div class="copyright">&copy; 2026 WHITE BOX. ALL RIGHTS RESERVED.</div>
-
     </footer>
 
     <div class="news-button" id="newsButton">
@@ -2094,6 +2106,7 @@
             <button class="toggle-news-btn" id="toggleNewsBtn" style="display: none;">SHOW MORE</button>
         </div>
     </div>
+
 <script>
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -2337,9 +2350,29 @@
 
     function filterTools(searchTerm) {
         const term = searchTerm.toLowerCase().trim();
+        const container = document.getElementById('toolsContainer');
         tools.forEach(tool => {
             const matches = tool.name.toLowerCase().includes(term);
-            tool.element.style.display = (term === '' || matches) ? 'block' : 'none';
+            if (window.innerWidth <= 768) {
+                if (term !== '') {
+                    tool.element.style.display = matches ? 'block' : 'none';
+                    if (matches && !container.classList.contains('show-all')) {
+                        container.classList.add('show-all');
+                        document.getElementById('viewAllBtn').innerHTML = '<i class="fas fa-grid-2"></i> SHOW LESS <i class="fas fa-chevron-up"></i>';
+                    }
+                } else {
+                    tool.element.style.display = 'none';
+                    if (tool.name === 'WHASH') {
+                        tool.element.style.display = 'block';
+                    }
+                    if (container.classList.contains('show-all')) {
+                        container.classList.remove('show-all');
+                        document.getElementById('viewAllBtn').innerHTML = '<i class="fas fa-grid-2"></i> VIEW ALL TOOLS <i class="fas fa-chevron-down"></i>';
+                    }
+                }
+            } else {
+                tool.element.style.display = (term === '' || matches) ? 'block' : 'none';
+            }
         });
     }
 
@@ -2421,7 +2454,6 @@
         }
     });
 
-    // News functionality
     (function() {
         const newsButton = document.getElementById('newsButton');
         if (!newsButton) return;
@@ -2555,40 +2587,51 @@
         });
     })();
 
-        // Mobile View All Tools
-        function toggleAllTools() {
-            const container = document.getElementById('toolsContainer');
-            const btn = document.getElementById('viewAllBtn');
-            
-            container.classList.toggle('show-all');
-            
-            if (container.classList.contains('show-all')) {
-                btn.innerHTML = 'SHOW LESS <i class="fas fa-arrow-up"></i>';
-            } else {
-                btn.innerHTML = 'VIEW ALL TOOLS <i class="fas fa-arrow-down"></i>';
-            }
-        }
+    function toggleAllTools() {
+        const container = document.getElementById('toolsContainer');
+        const btn = document.getElementById('viewAllBtn');
+        const searchValue = document.getElementById('searchInput').value.toLowerCase().trim();
         
-        // Mobile: Zeige nur Tool1 initial
-        document.addEventListener('DOMContentLoaded', function() {
-            if (window.innerWidth <= 768) {
-                document.getElementById('tool1').classList.add('visible-mobile');
-            }
-        });
+        container.classList.toggle('show-all');
         
-        // Bei Fenstergröße ändern
-        window.addEventListener('resize', function() {
-            if (window.innerWidth <= 768) {
-                if (!document.getElementById('tool1').classList.contains('visible-mobile')) {
-                    document.getElementById('tool1').classList.add('visible-mobile');
-                }
-            } else {
-                // PC: Alle Tools anzeigen
-                document.querySelectorAll('.tool-card').forEach(tool => {
-                    tool.style.display = 'block';
+        if (container.classList.contains('show-all')) {
+            btn.innerHTML = '<i class="fas fa-grid-2"></i> SHOW LESS <i class="fas fa-chevron-up"></i>';
+            if (searchValue !== '') {
+                tools.forEach(tool => {
+                    const matches = tool.name.toLowerCase().includes(searchValue);
+                    tool.element.style.display = matches ? 'block' : 'none';
                 });
             }
-        });
+        } else {
+            btn.innerHTML = '<i class="fas fa-grid-2"></i> VIEW ALL TOOLS <i class="fas fa-chevron-down"></i>';
+            if (searchValue === '') {
+                tools.forEach(tool => {
+                    tool.element.style.display = 'none';
+                    if (tool.name === 'WHASH') {
+                        tool.element.style.display = 'block';
+                    }
+                });
+            }
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.innerWidth <= 768) {
+            document.getElementById('tool1').classList.add('visible-mobile');
+        }
+    });
+    
+    window.addEventListener('resize', function() {
+        if (window.innerWidth <= 768) {
+            if (!document.getElementById('tool1').classList.contains('visible-mobile')) {
+                document.getElementById('tool1').classList.add('visible-mobile');
+            }
+        } else {
+            document.querySelectorAll('.tool-card').forEach(tool => {
+                tool.style.display = 'block';
+            });
+        }
+    });
 </script>
 </body>
 </html>
