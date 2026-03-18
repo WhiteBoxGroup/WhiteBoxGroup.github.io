@@ -365,7 +365,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 0;  /* Geändert von -1 auf 0 */
             overflow: hidden;
         }
 
@@ -425,7 +425,7 @@
             border-radius: 50%;
             filter: blur(50px);
             animation: moveGlow 20s ease-in-out infinite alternate;
-            z-index: -1;
+            z-index: 0; 
         }
 
         .glow-spot-2 {
@@ -436,7 +436,7 @@
             border-radius: 50%;
             filter: blur(60px);
             animation: moveGlow2 25s ease-in-out infinite alternate;
-            z-index: -1;
+            z-index: 0;  
         }
 
         @keyframes moveGlow {
@@ -458,7 +458,7 @@
             width: 100%;
             height: 200px;
             background: linear-gradient(to bottom, transparent 0%, var(--pure-black) 100%);
-            z-index: 0;
+            z-index: -1; 
             pointer-events: none;
         }
 
@@ -1436,8 +1436,8 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -2;
-            opacity: 0.02;
+            z-index: -1;  
+            opacity: 0.1; 
         }
 
         .news-button {
@@ -1889,6 +1889,12 @@
 </head>
 
 <body>
+
+    <div style="position: fixed; top: 10px; left: 10px; width: 20px; height: 20px; background: white; border-radius: 50%; box-shadow: 0 0 30px white; z-index: 9999;"></div>
+    <div style="position: fixed; top: 10px; right: 10px; width: 20px; height: 20px; background: white; border-radius: 50%; box-shadow: 0 0 30px white; z-index: 9999;"></div>
+    <div style="position: fixed; bottom: 10px; left: 10px; width: 20px; height: 20px; background: white; border-radius: 50%; box-shadow: 0 0 30px white; z-index: 9999;"></div>
+    <div style="position: fixed; bottom: 10px; right: 10px; width: 20px; height: 20px; background: white; border-radius: 50%; box-shadow: 0 0 30px white; z-index: 9999;"></div>
+    
     <div class="particle-bg" id="particleBackground"></div>
     <div class="glow-spot" style="top: 10%; left: 10%;"></div>
     <div class="glow-spot-2" style="bottom: 10%; right: 10%;"></div>
@@ -2110,11 +2116,16 @@
 <script>
     // Partikel-Hintergrund erstellen
     function createParticles() {
+        console.log("createParticles wird ausgeführt");
         const particleBg = document.getElementById('particleBackground');
-        if (!particleBg) return;
+        if (!particleBg) {
+            console.log("particleBackground nicht gefunden!");
+            return;
+        }
         
+        console.log("particleBackground gefunden, erstelle Partikel...");
         particleBg.innerHTML = '';
-        const numberOfParticles = 80; // Anzahl der Partikel
+        const numberOfParticles = 80;
         
         for (let i = 0; i < numberOfParticles; i++) {
             const particle = document.createElement('div');
@@ -2134,7 +2145,7 @@
             particle.style.top = top + '%';
             particle.style.left = left + '%';
             
-            // Zufällige Animationsdauer (zwischen 15 und 35 Sekunden)
+            // Zufällige Animationsdauer
             const duration = 15 + Math.random() * 20;
             particle.style.animationDuration = duration + 's';
             
@@ -2144,6 +2155,7 @@
             
             particleBg.appendChild(particle);
         }
+        console.log(numberOfParticles + " Partikel erstellt");
     }
 
     // Partikel bei Laden erstellen
