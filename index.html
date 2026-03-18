@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="wh.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --pure-black: #000000;
@@ -92,6 +93,10 @@
             transition: opacity 0.8s ease, visibility 0.8s ease;
         }
 
+        canvas {
+            display: block;
+        }
+
         .loading-screen.hidden {
             opacity: 0;
             visibility: hidden;
@@ -101,6 +106,17 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        #starsCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            display: block;
         }
 
         .loading-icon {
@@ -1923,7 +1939,7 @@
         </div>
     </div>
 
-    <div class="stars-bg" id="starsBg"></div>
+    <canvas id="starsCanvas"></canvas>
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
     <nav class="navbar" id="navbar">
@@ -2129,6 +2145,72 @@
     </div>
 
 <script>
+    // STARFIELD CANVAS
+    const starsCanvas = document.getElementById('starsCanvas');
+    const starsCtx = starsCanvas.getContext('2d');
+    let starsWidth, starsHeight;
+    let stars = [];
+    
+    function initStars() {
+        starsWidth = window.innerWidth;
+        starsHeight = window.innerHeight;
+        starsCanvas.width = starsWidth;
+        starsCanvas.height = starsHeight;
+        
+        // 500 STERNE - RICHTIG VIELE!
+        stars = [];
+        for (let i = 0; i < 500; i++) {
+            stars.push({
+                x: Math.random() * starsWidth,
+                y: Math.random() * starsHeight,
+                radius: Math.random() * 2.5 + 0.5, // 0.5px bis 3px
+                speed: Math.random() * 0.5 + 0.2,
+                brightness: Math.random() * 0.7 + 0.3
+            });
+        }
+    }
+    
+    function drawStars() {
+        starsCtx.clearRect(0, 0, starsWidth, starsHeight);
+        
+        for (let i = 0; i < stars.length; i++) {
+            const s = stars[i];
+            
+            // Sterne nach unten bewegen
+            s.y += s.speed;
+            
+            // Wenn Stern unten raus, oben wieder rein
+            if (s.y > starsHeight) {
+                s.y = 0;
+                s.x = Math.random() * starsWidth; // neue zufällige X-Position
+            }
+            
+            // Stern zeichnen mit Glow
+            starsCtx.beginPath();
+            starsCtx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+            
+            // Glow effect
+            starsCtx.shadowColor = 'white';
+            starsCtx.shadowBlur = s.radius * 3;
+            
+            // Farbe mit Helligkeit
+            starsCtx.fillStyle = `rgba(255, 255, 255, ${s.brightness})`;
+            starsCtx.fill();
+            
+            // Shadow zurücksetzen für nächsten Stern
+            starsCtx.shadowBlur = 0;
+        }
+        
+        requestAnimationFrame(drawStars);
+    }
+    
+    window.addEventListener('resize', () => {
+        initStars();
+    });
+    
+    initStars();
+    drawStars();
+    
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileCloseBtn = document.getElementById('mobileCloseBtn');
