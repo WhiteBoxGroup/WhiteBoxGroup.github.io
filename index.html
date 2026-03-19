@@ -2291,7 +2291,7 @@
     </div>
 
 <script>
-    // STARFIELD CANVAS - NUR HEADER, KEINE BEWEGUNG
+    // STARFIELD CANVAS - NUR HEADER, LANGSAME BEWEGUNG
     const starsCanvas = document.getElementById('starsCanvas');
     if (starsCanvas) {
         const starsCtx = starsCanvas.getContext('2d');
@@ -2308,18 +2308,17 @@
             starsCanvas.width = starsWidth;
             starsCanvas.height = starsHeight;
             
-            // 150 STERNE - FESTE POSITIONEN
+            // 150 STERNE - mit Geschwindigkeit für langsame Bewegung
             stars = [];
             for (let i = 0; i < 150; i++) {
                 stars.push({
                     x: Math.random() * starsWidth,
                     y: Math.random() * starsHeight,
                     radius: Math.random() * 2 + 0.5,
+                    speed: Math.random() * 0.15 + 0.05, // LANGSAME Geschwindigkeit
                     brightness: Math.random() * 0.6 + 0.3
                 });
             }
-            
-            drawStars();
         }
         
         function drawStars() {
@@ -2329,6 +2328,15 @@
             for (let i = 0; i < stars.length; i++) {
                 const s = stars[i];
                 
+                // Sterne langsam nach unten bewegen
+                s.y += s.speed;
+                
+                // Wenn Stern unten aus dem Header raus, oben wieder rein
+                if (s.y > starsHeight) {
+                    s.y = 0;
+                    s.x = Math.random() * starsWidth;
+                }
+                
                 starsCtx.beginPath();
                 starsCtx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
                 starsCtx.shadowColor = 'white';
@@ -2337,6 +2345,8 @@
                 starsCtx.fill();
                 starsCtx.shadowBlur = 0;
             }
+            
+            requestAnimationFrame(drawStars);
         }
         
         window.addEventListener('resize', () => {
@@ -2346,6 +2356,7 @@
         // Kurz warten bis Hero geladen
         setTimeout(() => {
             initStars();
+            drawStars();
         }, 100);
     }
     drawStars();
