@@ -1675,14 +1675,14 @@ footer > div:has(.trustpilot-custom-btn) {
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            box-shadow: none;
             backdrop-filter: blur(8px);
         }
 
         .news-button:hover {
             transform: scale(1.1);
             border-color: white;
-            box-shadow: 0 0 30px rgba(255,255,255,0.7);
+            box-shadow: none;
         }
 
         .news-bold {
@@ -1922,28 +1922,9 @@ footer > div:has(.trustpilot-custom-btn) {
                 width: 50px;
                 height: 50px;
                 font-size: 1.5rem;
+                box-shadow: none;
             }
-            .news-modal-content {
-                padding: 20px;
-            }
-            .news-modal-title {
-                font-size: 1.5rem;
-            }
-            .news-entry-title {
-                font-size: 1.2rem;
-            }
-            .news-meta {
-                flex-direction: column;
-                gap: 5px;
-            }
-            .chat-button {
-                bottom: 90px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 1.5rem;
-            }
-        }
+            
         @keyframes loadingPulse {
             0% { transform: scale(1); filter: drop-shadow(0 0 5px black); }
             100% { transform: scale(1.1); filter: drop-shadow(0 0 8px black); }
