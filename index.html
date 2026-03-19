@@ -112,7 +112,7 @@
         }
 
         #starsCanvas {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
@@ -120,6 +120,13 @@
             pointer-events: none;
             z-index: 0;
             display: block;
+        }
+        
+       
+        @media (max-width: 768px) {
+            #starsCanvas {
+                display: none;
+            }
         }
 
         .loading-icon {
@@ -2284,65 +2291,46 @@
     </div>
 
 <script>
-    // STARFIELD CANVAS
+    // STARFIELD CANVAS - NUR HEADER, KEINE BEWEGUNG
     const starsCanvas = document.getElementById('starsCanvas');
-    const starsCtx = starsCanvas.getContext('2d');
-    let starsWidth, starsHeight;
-    let stars = [];
-    
-    function initStars() {
-        starsWidth = window.innerWidth;
-        starsHeight = window.innerHeight; // Immer volle Bildschirmhöhe für fixed Canvas
+    if (starsCanvas) {
+        const starsCtx = starsCanvas.getContext('2d');
+        let starsWidth, starsHeight;
+        let stars = [];
         
-        starsCanvas.width = starsWidth;
-        starsCanvas.height = starsHeight;
-        
-        // 250 STERNE - aber NUR im oberen Bereich (Hero-Höhe) platzieren
-        const heroSection = document.querySelector('.hero');
-        const heroHeight = heroSection ? heroSection.offsetHeight : window.innerHeight;
-        
-        stars = [];
-        for (let i = 0; i < 250; i++) {
-            stars.push({
-                x: Math.random() * starsWidth,
-                // Sterne NUR im Hero-Bereich spawnen
-                y: Math.random() * heroHeight,
-                radius: Math.random() * 2.5 + 0.5,
-                speed: Math.random() * 0.2 + 0.05, // LANGSAM
-                brightness: Math.random() * 0.7 + 0.3
-            });
-        }
-    }
-    
-    function drawStars() {
-        starsCtx.clearRect(0, 0, starsWidth, starsHeight);
-        
-        // Hero-Höhe für Begrenzung
-        const heroSection = document.querySelector('.hero');
-        const heroHeight = heroSection ? heroSection.offsetHeight : starsHeight;
-        const scrollY = window.scrollY; // Aktuelle Scroll-Position
-        
-        for (let i = 0; i < stars.length; i++) {
-            const s = stars[i];
+        function initStars() {
+            const heroSection = document.querySelector('.hero');
+            if (!heroSection) return;
             
-            // Sterne NACH UNTEN bewegen (langsam und smooth)
-            s.y += s.speed;
+            starsWidth = window.innerWidth;
+            starsHeight = heroSection.offsetHeight;
             
-            // Wenn Stern unten aus dem Hero-Bereich raus, oben wieder rein
-            if (s.y > heroHeight) {
-                s.y = 0;
-                s.x = Math.random() * starsWidth;
+            starsCanvas.width = starsWidth;
+            starsCanvas.height = starsHeight;
+            
+            // 150 STERNE - FESTE POSITIONEN
+            stars = [];
+            for (let i = 0; i < 150; i++) {
+                stars.push({
+                    x: Math.random() * starsWidth,
+                    y: Math.random() * starsHeight,
+                    radius: Math.random() * 2 + 0.5,
+                    brightness: Math.random() * 0.6 + 0.3
+                });
             }
             
-            // Berechne die tatsächliche Position auf dem Bildschirm
-            // Fixed Position = y-Koordinate im Canvas (unabhängig von scrollY)
-            const screenY = s.y;
+            drawStars();
+        }
+        
+        function drawStars() {
+            if (!starsCtx) return;
+            starsCtx.clearRect(0, 0, starsWidth, starsHeight);
             
-            // Nur zeichnen, wenn der Stern im sichtbaren Bereich ist
-            // und innerhalb des Hero-Bereichs (damit sie nicht in About Us sind)
-            if (screenY >= 0 && screenY <= heroHeight) {
+            for (let i = 0; i < stars.length; i++) {
+                const s = stars[i];
+                
                 starsCtx.beginPath();
-                starsCtx.arc(s.x, screenY, s.radius, 0, Math.PI * 2);
+                starsCtx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
                 starsCtx.shadowColor = 'white';
                 starsCtx.shadowBlur = s.radius * 3;
                 starsCtx.fillStyle = `rgba(255, 255, 255, ${s.brightness})`;
@@ -2351,14 +2339,15 @@
             }
         }
         
-        requestAnimationFrame(drawStars);
+        window.addEventListener('resize', () => {
+            initStars();
+        });
+        
+        // Kurz warten bis Hero geladen
+        setTimeout(() => {
+            initStars();
+        }, 100);
     }
-    
-    window.addEventListener('resize', () => {
-        initStars();
-    });
-    
-    initStars();
     drawStars();
     
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
