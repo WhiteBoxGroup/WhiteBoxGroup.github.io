@@ -112,7 +112,7 @@
         }
 
         #starsCanvas {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
@@ -2291,19 +2291,22 @@
     let stars = [];
     
     function initStars() {
+        // Hole die Höhe der Hero-Sektion, nicht den ganzen Screen
+        const heroSection = document.querySelector('.hero');
+        starsHeight = heroSection ? heroSection.offsetHeight : window.innerHeight;
         starsWidth = window.innerWidth;
-        starsHeight = window.innerHeight;
+        
         starsCanvas.width = starsWidth;
         starsCanvas.height = starsHeight;
         
-        // 250 STERNE - PERFEKTE ANZAHL
+        // 250 STERNE
         stars = [];
         for (let i = 0; i < 250; i++) {
             stars.push({
                 x: Math.random() * starsWidth,
                 y: Math.random() * starsHeight,
-                radius: Math.random() * 2.5 + 0.5, 
-                speed: Math.random() * 0.2 + 0.05, 
+                radius: Math.random() * 2.5 + 0.5,
+                speed: Math.random() * 0.2 + 0.05,
                 brightness: Math.random() * 0.7 + 0.3
             });
         }
@@ -2318,7 +2321,7 @@
             // Sterne nach unten bewegen
             s.y += s.speed;
             
-            // Wenn Stern unten raus, oben wieder rein
+            // Wenn Stern unten raus, oben wieder rein (innerhalb der Hero-Höhe)
             if (s.y > starsHeight) {
                 s.y = 0;
                 s.x = Math.random() * starsWidth;
@@ -2327,16 +2330,10 @@
             // Stern zeichnen mit Glow
             starsCtx.beginPath();
             starsCtx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-            
-            // Glow effect
             starsCtx.shadowColor = 'white';
             starsCtx.shadowBlur = s.radius * 3;
-            
-            // Farbe mit Helligkeit
             starsCtx.fillStyle = `rgba(255, 255, 255, ${s.brightness})`;
             starsCtx.fill();
-            
-            // Shadow zurücksetzen
             starsCtx.shadowBlur = 0;
         }
         
