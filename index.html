@@ -1664,8 +1664,8 @@ footer > div:has(.trustpilot-custom-btn) {
             left: 25px;
             width: 55px;
             height: 55px;
-            background: var(--black-2, #111);
-            border: 2px solid rgba(255, 255, 255, 0.5);
+            background: transparent;
+            border: none;
             border-radius: 50%;
             color: white;
             font-size: 1.8rem;
@@ -1676,12 +1676,12 @@ footer > div:has(.trustpilot-custom-btn) {
             justify-content: center;
             transition: all 0.3s ease;
             box-shadow: none;
-            backdrop-filter: blur(8px);
+            backdrop-filter: none;
         }
 
         .news-button:hover {
-            transform: scale(1.1);
-            border-color: white;
+            transform: scale(1.2);
+            border: none;
             box-shadow: none;
         }
 
@@ -1922,6 +1922,8 @@ footer > div:has(.trustpilot-custom-btn) {
                 width: 50px;
                 height: 50px;
                 font-size: 1.5rem;
+                background: transparent;
+                border: none;
                 box-shadow: none;
             }
             
